@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 
-const BOOKS = 'https://lea-geek-text.herokuapp.com/books/'
+const BOOKS = '/books/'
 
 export default class Browser extends React.Component {
 

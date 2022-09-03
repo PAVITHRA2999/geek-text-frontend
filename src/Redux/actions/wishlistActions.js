@@ -4,7 +4,7 @@ import axios from "axios";
 
 //add item to wishlist
 export const addToWishlist = (id) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/books/${id}`);
+    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${id}`);
 
     dispatch({
         type: actionTypes.ADD_TO_WISHLIST,

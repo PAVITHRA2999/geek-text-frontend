@@ -5,7 +5,7 @@ import axios from "axios";
 export const getBooks = () => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOKS_REQUEST });
-    const { data } = await axios.get("/books");
+    const { data } = await axios.get("https://lea-geek-text.herokuapp.com/books");
     dispatch({
       type: actionTypes.GET_BOOKS_SUCCESS,
       payload: data,
@@ -26,7 +26,7 @@ export const getBooks = () => async (dispatch) => {
 export const getBookDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOK_DETAILS_REQUEST });
-    const { data } = await axios.get(`/books/${id}`);
+    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${id}`);
     dispatch({
       type: actionTypes.GET_BOOK_DETAILS_SUCCESS,
       payload: data,

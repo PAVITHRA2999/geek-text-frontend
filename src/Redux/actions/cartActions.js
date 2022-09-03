@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Add a book to cart
 export const addToCart = (id, qty, saved) => async (dispatch, getState) => {
-    const { data } = await axios.get(`/books/${id}`);
+    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${id}`);
 
     dispatch({
         type: actionTypes.ADD_TO_CART,
