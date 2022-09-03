@@ -1,12 +1,13 @@
 import * as actionTypes from "../constants/authorConstants";
 import axios from "axios";
 
-
+//${process.env.HEROKU_DOMAIN}
 // Get a specific author from database
 export const getBooksByAuthor = (id) => async (dispatch) => {
+
   try {
     dispatch({ type: actionTypes.GET_AUTHOR_BOOKS_REQUEST });
-    const { data } = await axios.get(`/authors/getbooksby/${id}`);
+    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/authors/getbooksby/${id}`);
     dispatch({
       type: actionTypes.GET_AUTHOR_BOOKS_SUCCESS,
       payload: data,

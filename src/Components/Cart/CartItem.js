@@ -40,8 +40,8 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, 
               <button className="saveforlater_button"
                 onClick={() => saveForLaterHandler(item.book, item.qty)}>
                 Save for later
-          </button>
-      &emsp;|&emsp;
+              </button>
+              &emsp;|&emsp;
               <button className="cartItem__deleteBtn"
                 onClick={() => removeHandler(item.book, item.title)}>
                 <i className="fa fa-trash fa-lg"></i>
@@ -54,7 +54,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, 
                 onChange={(e) => qtyChangeHandler(item.book, e.target.value)}
                 className="cartItem__select"
               >
-                {[...Array(100).keys()].map((x) => (
+                {[...Array(10).keys()].map((x) => (
                   <option key={x + 1} value={x + 1}>
                     {x + 1}
                   </option>
@@ -103,9 +103,9 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, 
             <button className="saveforlater_button"
               onClick={() => addBackToCartHandler(item.book, item.qty)}>
               Add back to cart
-              </button>
-              &emsp;|&emsp;
-              <button className="cartItem__deleteBtn"
+            </button>
+            &emsp;|&emsp;
+            <button className="cartItem__deleteBtn"
               onClick={() => removeHandler(item.book, item.title)}>
               <i className="fa fa-trash fa-lg"></i>
             </button>

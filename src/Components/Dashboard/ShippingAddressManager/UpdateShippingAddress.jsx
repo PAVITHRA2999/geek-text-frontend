@@ -75,8 +75,8 @@ export const UpdateShippingAddress = () => {
         BlankValidation();
 
         const baseURL = {
-            dev: "https://lea-geek-text.herokuapp.com/api/updating-shipping-adress",
-            prod: ''
+            dev: "http://localhost:5000/api/updating-shipping-adress",
+            prod: "https://lea-geek-text.herokuapp.com/api/updating-shipping-adress"
         }
         const url = process.env.NODE_ENV === "production" ? baseURL.prod : baseURL.dev;
         const form_data = new FormData();

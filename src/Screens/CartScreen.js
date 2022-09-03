@@ -18,10 +18,10 @@ const CartScreen = (props) => {
   const { cartItems } = cart;
 
   // Confirm Dialog
-  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+  const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' });
 
   // Signin First Dialog
-  const [signInFirstDialog, setSignInFirstDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+  const [signInFirstDialog, setSignInFirstDialog] = useState({ isOpen: false, title: '', subTitle: '' });
 
   // Notification
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
@@ -37,7 +37,7 @@ const CartScreen = (props) => {
 
   // Change quantity of item
   const qtyChangeHandler = (id, qty) => {
-    dispatch(addToCart(id, qty, false))
+    dispatch(addToCart(id, qty, false));
   };
 
   // Save an item for later
@@ -47,7 +47,7 @@ const CartScreen = (props) => {
 
   // Add item from 'saved for later' to shopping cart
   const addBackToCartHandler = (id, qty) => {
-    dispatch(addToCart(id, qty, false))
+    dispatch(addToCart(id, qty, false));
   };
 
   // Remove an item from shopping cart and display message
@@ -58,48 +58,48 @@ const CartScreen = (props) => {
       message: `"${title}" was removed from cart`,
       type: 'error',
       typeStyle: 'specific'
-    })
+    });
   };
 
   // Checkout every book in cart close dialog and display success message
   const onContinue = () => {
-    inCart.map((item) => checkout(item.book, item.qty))
+    inCart.map((item) => checkout(item.book, item.qty));
     setConfirmDialog({
       ...confirmDialog,
       isOpen: false
-    })
+    });
     setNotify({
       isOpen: true,
       message: 'Checkout completed successfully',
       type: 'success',
       typeStyle: ''
-    })
-  }
+    });
+  };
 
   // Update sold count of book and stop displaying it in cart
   const checkout = (id, qty) => {
     // TODO: Database update: add books to user's purchased books
-    axios.patch(`/books/purchase/${id}`, {
+    axios.patch(`https://lea-geek-text.herokuapp.com/books/purchase/${id}`, {
       sold: qty,
-    })
+    });
     dispatch(removeFromCart(id));
-  }
+  };
 
   // Checkout all books in cart and display success message
   const checkoutHandler = () => {
     token ?
-    setConfirmDialog({
-      isOpen: true,
-      title: 'Are you sure you want to checkout?',
-      subTitle: "You can't undo this operation",
-      onContinue: () => { onContinue() }
-    }):
-    setSignInFirstDialog({
-      isOpen: true,
-      title: 'You are not signed in',
-      subTitle: 'Please sign in before checkout',
-    })
-  }
+      setConfirmDialog({
+        isOpen: true,
+        title: 'Are you sure you want to checkout?',
+        subTitle: "You can't undo this operation",
+        onContinue: () => { onContinue(); }
+      }) :
+      setSignInFirstDialog({
+        isOpen: true,
+        title: 'You are not signed in',
+        subTitle: 'Please sign in before checkout',
+      });
+  };
 
   // Get number of items saved for later
   const getSavedCount = () => {
@@ -190,9 +190,9 @@ const CartScreen = (props) => {
               setConfirmDialog={setConfirmDialog}
             />
             <SignInFirstDialog
-            signInFirstDialog={signInFirstDialog}
-            setSignInFirstDialog={setSignInFirstDialog}
-          />
+              signInFirstDialog={signInFirstDialog}
+              setSignInFirstDialog={setSignInFirstDialog}
+            />
           </div>
         </div>
 
