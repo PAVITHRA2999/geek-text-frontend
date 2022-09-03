@@ -9,7 +9,7 @@ import MessageDialog from "../Components/Cart/UI/MessageDialog";
 
 
 
-const WishlistScreen = ({history}) => {
+const WishlistScreen = ({ history }) => {
 
 
 
@@ -17,7 +17,7 @@ const WishlistScreen = ({history}) => {
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist);
   const { wishlistItems } = wishlist;
-  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '' });
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
@@ -28,9 +28,9 @@ const WishlistScreen = ({history}) => {
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully added to Shopping Cart',
-      onViewCart: () => { onViewCart() },
-      onKeepShopping: () => { onKeepShopping() }
-    })
+      onViewCart: () => { onViewCart(); },
+      onKeepShopping: () => { onKeepShopping(); }
+    });
   };
 
 
@@ -39,18 +39,11 @@ const WishlistScreen = ({history}) => {
     dispatch(removeFromWishlist(id));
   };
 
-
-
-  // Get number of items in shopping cart
-  const getWishlistCount = () => {
-    return wishlistItems.length;
-  };
-
   const addToCartHandler = (id) => {
     (cartItems.some(item => item.book === id)) ?
       addToCartExistent(id, (cartItems.find((item) => item.book === id).qty))
       :
-      addToCartNew(id)
+      addToCartNew(id);
   };
 
   // Close dialog and go to cart
@@ -58,19 +51,19 @@ const WishlistScreen = ({history}) => {
     setMessageDialog({
       ...messageDialog,
       isOpen: false
-    })
+    });
     history.push(`/cart`);
-  }
+  };
 
   // Close dialog and stay in current page
   const onKeepShopping = () => {
     setMessageDialog({
       ...messageDialog,
       isOpen: false
-    })
-  }
+    });
+  };
 
-  
+
 
   // Add an item already existent in cart (increment by new qty)
   const addToCartExistent = (id, currQty) => {
@@ -79,9 +72,9 @@ const WishlistScreen = ({history}) => {
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully updated in Shopping Cart',
-      onViewCart: () => { onViewCart() },
-      onKeepShopping: () => { onKeepShopping() }
-    })
+      onViewCart: () => { onViewCart(); },
+      onKeepShopping: () => { onKeepShopping(); }
+    });
   };
 
 
@@ -89,12 +82,10 @@ const WishlistScreen = ({history}) => {
     <>
       <div className="cartscreen">
         <div className="centered_cart">
-          <h1 className="wishlist_title"><b>Wishlist</b></h1>
+          <h1><b>Wishlist</b></h1>
         </div>
         <div className="cartscreen__info">
-
           {
-
             wishlistItems.length === 0 ?
               (<div className="cartscreen__center">
                 <h1>Your Wishlist is Empty!</h1>
@@ -106,7 +97,6 @@ const WishlistScreen = ({history}) => {
 
               </div>
               )
-
               :
               (wishlistItems.map((item) => (
                 <div key={item.book}>
