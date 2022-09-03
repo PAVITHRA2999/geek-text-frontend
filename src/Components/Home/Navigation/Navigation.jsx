@@ -41,11 +41,11 @@ export const Navigation = () => {
                     <h4 className="links">View Books</h4>
                     </Link>
                 </div>
-                <div className="nav-right-booklist nav-link">
+                {/* <div className="nav-right-booklist nav-link">
                 <Link to ="/listofbooks" className = "Router_Link">
                     <h4 className="links">View Books (new)</h4>
                     </Link>
-                </div>
+                </div> */}
                 {
                     token ? null : 
                 <div className="nav-right-auth nav-link">
