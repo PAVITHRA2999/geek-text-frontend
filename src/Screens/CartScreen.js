@@ -123,7 +123,7 @@ const CartScreen = (props) => {
     <>
       <div className="cartscreen">
         <div className="centered_cart">
-          <h2>Shopping Cart</h2>
+          <h1><b>Shopping Cart</b></h1>
         </div>
         <div className="cartscreen__info">
 
