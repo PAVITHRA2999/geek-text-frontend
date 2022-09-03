@@ -26,7 +26,7 @@ export const Signin = ()=> {
     form_data.append('email', email);
     form_data.append('password', password);
 
-    const url = "http://localhost:5000/api/signin"
+    const url = "https://lea-geek-text.herokuapp.com/api/signin"
 
     axios.post(url, form_data).then(res=>{
       console.log(res);

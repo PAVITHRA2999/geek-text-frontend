@@ -16,7 +16,7 @@ export const ManageCreditCard = (props) => {
     const getDataPay = async () => { // const response = await axios.post("http://localhost:3001/payment/getpayment", {IdEmail: decoded.EmailAddressReg});
         const form_data = new FormData();
         const token = localStorage.getItem('token');
-        const url = "http://localhost:5000/api/managing-credit-cardd";
+        const url = "https://lea-geek-text.herokuapp.com/api/managing-credit-cardd";
         axios.post(url, form_data, {
             headers: {
                 "x-auth-token": token
@@ -83,8 +83,8 @@ export const ManageCreditCard = (props) => {
         form_data.append('id', cardNumber);
 
         const token = localStorage.getItem('token');
-        // const url = "http://localhost:5000/api/deleting-credit-cardd";
-        const url = "http://localhost:5000/api/testing-deleteCC";
+        // const url = "https://lea-geek-text.herokuapp.com/api/deleting-credit-cardd";
+        const url = "https://lea-geek-text.herokuapp.com/api/testing-deleteCC";
         axios.post(url, form_data, {
             headers: {
                 "x-auth-token": token

@@ -133,7 +133,7 @@ export const NewCreditCard = () => {
 
         testingVars();
         const baseURL = {
-            dev: "http://localhost:5000/api/credit-card",
+            dev: "https://lea-geek-text.herokuapp.com/api/credit-card",
             prod: ''
         }
         const url = process.env.NODE_ENV === "production" ? baseURL.prod : baseURL.dev;

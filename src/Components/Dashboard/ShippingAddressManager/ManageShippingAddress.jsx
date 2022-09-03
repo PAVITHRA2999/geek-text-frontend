@@ -9,7 +9,7 @@ export const ManageShippingAddress = () => {
     const getDataPay = async () => { // const response = await axios.post("http://localhost:3001/payment/getpayment", {IdEmail: decoded.EmailAddressReg});
         const form_data = new FormData();
         const token = localStorage.getItem('token');
-        const url = "http://localhost:5000/api/managing-shipping-adress";
+        const url = "https://lea-geek-text.herokuapp.com/api/managing-shipping-adress";
         axios.post(url, form_data, {
             headers: {
                 "x-auth-token": token
@@ -53,7 +53,7 @@ export const ManageShippingAddress = () => {
         const form_data = new FormData();
         const token = localStorage.getItem('token');
         form_data.append('id', cardNumber)
-        const url = "http://localhost:5000/api/deleting-shipping-adress";
+        const url = "https://lea-geek-text.herokuapp.com/api/deleting-shipping-adress";
         axios.post(url, form_data, {
             headers: {
                 "x-auth-token": token
