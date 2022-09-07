@@ -1,6 +1,7 @@
 import "./CartItem.css";
 import { Link } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
+import QtyDropdown from "./QtyDropdown";
 
 const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, addBackToCartHandler, saved, bookId }) => {
 
@@ -11,8 +12,9 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, 
           <div id="grid_Cart">
 
             <div id="cover_Column">
-              <img src={item.cover} alt={item.title}
-                className="small" />
+              <Link to={`/book/${bookId}`}>
+                <img src={item.cover} alt={item.title} className="small" />
+              </Link>
             </div>
 
             <div id="info_Column">
@@ -48,20 +50,10 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, 
               </button>
             </div>
 
-            <div id="qty_Column">
-              <select
-                value={item.qty}
-                onChange={(e) => qtyChangeHandler(item.book, e.target.value)}
-                className="cartItem__select"
-              >
-                {[...Array(10).keys()].map((x) => (
-                  <option key={x + 1} value={x + 1}>
-                    {x + 1}
-                  </option>
-                ))}
-              </select>
-            </div>
-
+            <QtyDropdown
+              item={item}
+              qtyChangeHandler={qtyChangeHandler}
+            />
             <div id="price_Column"
               className="cartitem__price">${parseFloat(item.price).toFixed(2)}
             </div>
@@ -72,10 +64,10 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, saveForLaterHandler, 
         <div id="grid_SavedForLater">
 
           <div id="cover_Column">
-            <img src={item.cover} alt={item.title}
-              className="small" />
+            <Link to={`/book/${bookId}`}>
+              <img src={item.cover} alt={item.title} className="small" />
+            </Link>
           </div>
-
           <div id="info_Column">
             <Link to={`/book/${bookId}`} className="cartItem__name">
               {item.title}

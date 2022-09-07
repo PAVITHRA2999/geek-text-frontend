@@ -122,8 +122,8 @@ const CartScreen = (props) => {
   return (
     <>
       <div className="cartscreen">
-        <div className="centered_cart">
-          <h1><b>Shopping Cart</b></h1>
+        <div className="centered_header">
+          Shopping Cart
         </div>
         <div className="cartscreen__info">
 
@@ -135,7 +135,7 @@ const CartScreen = (props) => {
                 <p></p>
                 <p>But you have some items saved for later...</p>
                 <Link to="/browse">
-                  <div className="cart_button">
+                  <div className="btn btn-primary">
                     <p>Continue Shopping</p>
                   </div>
                 </Link>
@@ -149,7 +149,7 @@ const CartScreen = (props) => {
                   <p>Add some books!</p>
                   <div></div>
                   <Link to="/browse">
-                    <div className="cart_button">
+                    <div className="btn btn-primary btn-cart">
                       <p>Start Shopping</p>
                     </div>
                   </Link>
@@ -157,7 +157,7 @@ const CartScreen = (props) => {
           )
             :
             (
-              inCart.map((item) => (
+              inCart.map((item, i) => (
                 <div key={item.book}>
                   <CartItem
                     key={item.book}
@@ -169,7 +169,7 @@ const CartScreen = (props) => {
                     saved={false}
                     bookId={item.book}
                   />
-                  <hr />
+                  {i < inCart.length - 1 && <hr />}
                 </div>
               )))}
 
@@ -178,8 +178,8 @@ const CartScreen = (props) => {
             <div className="subtotal">&emsp;&emsp;${getCartSubTotal()}
             </div>
             <div></div>
-            <button onClick={() => checkoutHandler()} className="cart_button_checkout" disabled={inCart.length === 0}>
-              Proceed to Checkout
+            <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout" disabled={getCartCount() === 0}>
+              CHECKOUT
             </button>
             <Notification
               notify={notify}
@@ -202,7 +202,7 @@ const CartScreen = (props) => {
               <h2>Saved for Later</h2>
             </div>
             <div className="cartscreen__info_saved">
-              {savedForLater.map((item) => (
+              {savedForLater.map((item, i) => (
                 <div key={item.book}>
                   <CartItem
                     key={item.book}
@@ -214,12 +214,12 @@ const CartScreen = (props) => {
                     saved={true}
                     bookId={item.book}
                   />
-                  <hr />
+                  {i < savedForLater.length - 1 && <hr />}
                 </div>
               )
               )}
               <div className="number_of_items_saved">
-                ({getSavedCount()}) {getSavedCount() === 1 ? <>item:</> : <>items:</>}
+                ({getSavedCount()}) {getSavedCount() === 1 ? <>item</> : <>items</>}
               </div>
             </div>
           </div>

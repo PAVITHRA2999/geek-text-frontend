@@ -3,33 +3,48 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getBookDetails } from "../Redux/actions/bookActions";
 import { addToCart } from "../Redux/actions/cartActions";
-import { addToWishlist } from "../Redux/actions/wishlistActions";
+import { addToWishlist, removeFromWishlist } from "../Redux/actions/wishlistActions";
 import BookCoverModal from '../Modal/BookCoverModal';
 // import { determineGenre } from '../JonathanFiles/genreDeterminer';
 import { Link } from "react-router-dom";
 import MessageDialog from "../Components/Cart/UI/MessageDialog";
-import { CircularProgress, TextField, Checkbox, Button } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
+import CustomSelect from "../Components/CustomSelect/CustomSelect";
 //import Rating from '../Components/Cart/Rating';
 import { useParams } from "react-router";
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import Notification from "../Components/Cart/UI/Notification";
 
 const BookScreen = ({ match, history }) => {
 
   const { id } = useParams();
   const [show, setShow] = useState(false);
 
+
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const bookDetails = useSelector((state) => state.getBookDetails);
   const { loading, error, book } = bookDetails;
-  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '' });
-
+  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '', viewButton: 'View Cart' });
+  // Notification
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
 
   useEffect(() => {
     if (book && (match.params.id) !== book._id) {
       dispatch(getBookDetails(match.params.id));
     }
   }, [dispatch, book, match]);
+
+  // Determine whether item is already in wishlist and handle favorite state accordingly
+  const wishlist = useSelector((state) => state.wishlist);
+  const { wishlistItems } = wishlist;
+
+  const isFavorited = wishlistItems.some((item) => item.book === id);
+
+
+  const [favorited, setFavorited] = useState(isFavorited);
 
   // Determine whether item is already in cart and handle add operation accordingly
   const cart = useSelector((state) => state.cart);
@@ -40,6 +55,14 @@ const BookScreen = ({ match, history }) => {
       addToCartExistent(cartItems.find((item) => item.book === book._id).qty)
       :
       addToCartNew();
+  };
+
+  const onViewWishlist = () => {
+    setMessageDialog({
+      ...messageDialog,
+      isOpen: false
+    });
+    history.push(`/wishlist/` + match.params.id);
   };
 
   // Close dialog and go to cart
@@ -65,7 +88,8 @@ const BookScreen = ({ match, history }) => {
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully added to Shopping Cart',
-      onViewCart: () => { onViewCart(); },
+      viewButton: 'View Cart',
+      onView: () => { onViewCart(); },
       onKeepShopping: () => { onKeepShopping(); }
     });
   };
@@ -76,17 +100,42 @@ const BookScreen = ({ match, history }) => {
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully updated in Shopping Cart',
-      onViewCart: () => { onViewCart(); },
+      viewButton: 'View Cart',
+      onView: () => { onViewCart(); },
       onKeepShopping: () => { onKeepShopping(); }
     });
   };
 
+  // Add to cart (user can decide whether to stay in current page or view cart)
+  const addToWishlistNew = () => {
+    addToWishlistHandler();
+
+    setMessageDialog({
+      isOpen: true,
+      title: 'Item successfully added to Wishlist',
+      viewButton: 'View Wishlist',
+      onView: () => { onViewWishlist(); },
+      onKeepShopping: () => { onKeepShopping(); }
+    });
+  };
 
   const addToWishlistHandler = () => {
     dispatch(addToWishlist(book._id));
-    history.push(`/wishlist/`);
-    //add parameter and concatinate to push path after "...wishlist/"
+    setFavorited(true);
   };
+
+  const removeFromWishlistHandler = () => {
+    dispatch(removeFromWishlist(book._id));
+    setNotify({
+      isOpen: true,
+      message: `"${book.title}" was removed from your wishlist`,
+      type: 'error',
+      typeStyle: 'specific'
+    });
+    setFavorited(false);
+  };
+
+
 
   //handles going to the review page
   const createReviewHandler = () => {
@@ -100,6 +149,9 @@ const BookScreen = ({ match, history }) => {
   const genre = ((book || {}).genre || {}).name;
   const bio = ((book || {}).author || {}).bio;
   const authorID = ((book || {}).author || {})._id;
+  const commentsLength = ((book || {}).comments || {}).length;
+  const arr = Array.from({ length: 100 }, (_, index) => index + 1);
+  const items = arr.reduce((a, v) => ({ ...a, [v]: v }), {});
 
   return (
     <div className="productscreen">
@@ -113,86 +165,166 @@ const BookScreen = ({ match, history }) => {
         ) :
           (
             <>
-              <div className="productscreen__left">
-                <div className="small">
-                  <input type="image" src={book.cover} alt="book cover" className="book-cover" onClick={() => setShow(true)} />
-                  <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
-                    <img src={book.cover} alt="book cover" className="book-cover-large" />
-                  </BookCoverModal>
+              <div className="container">
+                <div className="container__main">
+                  <div className="container__left">
+                    <input type="image" src={book.cover} alt="book cover" className="book-cover" onClick={() => setShow(true)} />
+                    <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
+                      <img src={book.cover} alt="book cover" className="book-cover-large" />
+                    </BookCoverModal>
+                  </div>
+                  <Notification
+                    notify={notify}
+                    setNotify={setNotify}
+                  />
+
+                  <div className="container__right">
+                    <div >
+                      <div className="title__heading">
+                        <div>{book.title}</div>
+                        <div className="fav">
+                          {
+                            favorited ?
+                              <FavoriteIcon className="fav-icon" onClick={removeFromWishlistHandler} />
+                              :
+                              <FavoriteBorderIcon className="fav-icon" onClick={addToWishlistNew} />
+                          }
+                        </div>
+                      </div>
+                      <div className="rating__heading"><Rating name="half-rating-read" size="small" value={book.rating} precision={0.1} readOnly /> <div> {book.rating} ({commentsLength})</div></div>
+                      <div className="author__heading">by <Link to={`/authorbooks/${authorID}`}>{book.authorName}</Link></div>
+                      <hr className="top_section" />
+                    </div>
+
+
+                    <div className="middle-upper-section">
+                      <div className="price_qty_container">
+                        <div className="price">
+                          <span>${parseFloat(book.price).toFixed(2)}</span>
+                        </div>
+                        <CustomSelect
+                          className="book-details-qty"
+                          inputLabel="Qty"
+                          inputLabelId="qty-select-label"
+                          labelId="Qty"
+                          id="qty-select-rating"
+                          value={qty}
+                          handleChange={(e) => setQty(e.target.value)}
+                          items={items}
+                        />
+                      </div>
+                      <div className="add_to_cart_btn">
+                        <button className="btn btn-primary btn-full" onClick={addToCartHandler}>
+                          ADD TO CART
+                        </button>
+                      </div>
+
+                      {/* change button to selector */}
+                      <MessageDialog
+                        messageDialog={messageDialog}
+                        setMessageDialog={setMessageDialog}
+                      />
+
+                    </div>
+
+                    <div className="mini_section">
+                      <div className="book_details_heading book_details_heading_bottom">
+                        Product Details:
+                      </div>
+                      <div className="details_block text_body">
+                        <div>
+                          <div>Publisher:</div>
+                          <div>ISBN:</div>
+                          <div>Edition:</div>
+                          <div>Genre:</div>
+                        </div>
+                        <div>
+                          <div>{publisher}</div>
+                          <div>{isbn}</div>
+                          <div>{edition}</div>
+                          <div>{genre}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="left__info">
-                  <div className="left__name"><div>{book.title}</div></div>
-                  <p><Rating name="half-rating-read" value={book.rating} precision={0.1} readOnly /> {book.rating} out of 5</p>
-                  <h4>By <Link to={`/authorbooks/${authorID}`}>{book.authorName}</Link></h4>
-                  <p>Author Bio: {bio}</p>
-                  <p>Description: {book.description}</p>
-                  <p>Publisher: {publisher}</p>
-                  <p>ISBN: {isbn}</p>
-                  <p>Edition: {edition}</p>
-                  <p>Genre: {genre}</p>
-
-                  <div>Comments:</div>
-                  {(book.comments) ?
-                    (book.comments).map(comment =>
-                      <div className="comments" key={comment.commenter}>
-
-                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-                        <div> <Rating value={comment.rating} precision={0.1} readOnly />{comment.commenter} </div>
-                        <h3>{comment.title}</h3>
-                        <p>{comment.content}</p>
-                      </div>)
-                    :
-                    ""
-                  }
+                <hr />
+                <div className="section">
+                  <div className="book_details_heading_center book_details_heading book_details_heading_bottom">Overview</div>
+                  <div className="text_body overview_section"> {book.description}</div>
                 </div>
-              </div>
-              <div className="productscreen__right">
-                <div className="right__info">
-                  <p>
-                    Price:
-                    <span>${parseFloat(book.price).toFixed(2)}</span>
-                  </p>
-                  <p>
-                    Qty:
-                    <select value={qty} onChange={(e) => setQty(e.target.value)}>
-                      {[...Array(100).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </p>
-                  <p>
-                    <button type="info__button" onClick={addToCartHandler}>
-                      Add to Cart
-                    </button>
-                    < br />
-                    <button type="info__button" className="wish_button" onClick={addToWishlistHandler}>
-                      {/* &#10084;&#65039; */}
-                      {/* <i className={`fa ${checked ? "fa-light" : "fa-regular"} fa-heart`}></i> */}
+                <hr />
+                <div className="smaller_section">
+                  <div className="section smaller_section_content">
+                    <div className="book_details_heading_center book_details_heading book_details_heading_bottom">
+                      About the Author
+                    </div>
+                    <div className="text_body">
+                      {bio}
+                    </div>
+                  </div>
+                </div>
+                {/* <hr /> */}
+                <div className="large-padding">
+                  <hr />
+                  <div className="section">
+                    {
+                      <div>
+                        <div className="inline-header">
+                          <div className="author__center book_details_heading">
+                            Reviews
+                          </div>
 
-                      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-heart custom-heart" viewBox="0 0 16 16">
-                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
-                      </svg>
+                          <div className="rating__heading overall_reviews"> Overall <Rating name="half-rating-read" size="small" value={book.rating} precision={0.1} readOnly />
+                            {book.rating} | {commentsLength} Reviews <button className="btn btn-primary" onClick={createReviewHandler}>Write a review</button>
+                          </div>
 
-                    </button>
+                        </div>
 
-                    <i className="bi bi-heart"></i>
-                    {/* change button to selector */}
-                    <MessageDialog
-                      messageDialog={messageDialog}
-                      setMessageDialog={setMessageDialog}
-                    />
-                  </p>
-                  <button onClick={createReviewHandler}> Create Customer Review</button>
+                        {
+                          commentsLength > 0 ?
+                            <div>
+                              <div className="num_of_reviews">
+                                1-{commentsLength} of {commentsLength} Reviews
+                              </div>
+                              <hr />
+                              {
+
+                                (book.comments).map((comment, i) => <div key={comment.commenter}>
+                                  <div className="comment_container">
+                                    <div className="text_body commenter"><b>{comment.commenter}</b></div>
+
+                                    <div className="comments" key={comment.commenter}>
+
+                                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                                      <div className="rating_title"> <Rating value={comment.rating} precision={0.1} size="small" readOnly /> {comment.title} </div>
+                                      <div className="text_body">{comment.content}</div>
+                                    </div>
+                                  </div>
+                                  {i < commentsLength - 1 && <hr />}
+                                </div>
+
+                                )} </div> :
+                            <div className="text_body" >
+                              This item doesn't have any reviews yet.
+                            </div>
+
+                        }
+
+
+                      </div>
+                    }
+                  </div>
                 </div>
               </div>
             </>
           )
       }
+
+
     </div >
   );
 };
 
 export default BookScreen;
-
+;

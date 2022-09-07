@@ -5,7 +5,7 @@
  
 .cartscreen__center {
   margin:5rem;
-  flex:auto;
+  /* flex:auto; */
   align-self: center;
   align-items: center;
   align-content: center;
@@ -16,22 +16,14 @@
  
 .cartscreen__info {
   border: 0.1rem #ddd solid;
-  flex-wrap:wrap;
-  display:flexbox;
+  /* flex-wrap:wrap;
+  display:flexbox; */
   padding: 1rem;
-}
-
-.cartscreen__info button{
-  position:inherit;
 }
 
 .cartscreen__info p {
   padding: 8px;
   flex-wrap: wrap;
-}
-
-.comments {
-  padding: 8px;
 }
 
 .cartscreen__info_saved{
@@ -76,8 +68,9 @@
   justify-content: right;
   align-self: auto;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
   margin-right: 4rem; 
+  font-size: 16px;
 }
 
 .number_of_items_saved{
@@ -87,62 +80,26 @@
   align-self: auto;
   margin-bottom: 1rem;
   margin-top: 1rem;
+  font-size: 12px;
 }
 
-.cart_button {
-  background-color: #7A9EA7;
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display:inline-block;
-  margin-top: 1rem;
-  width: fit-content;
-  font-size: 16px;
-  padding: 1px 10px;
-  cursor: pointer;
-  bottom: 10px;
-  border-radius: 50px;
-}
-
-.cart_button_checkout{
-  background-color: #7A9EA7;
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  display:inline-block;
-  margin-top: 1rem;
-  width: fit-content;
-  font-size: 16px;
-  padding: 0.8rem 1rem;
-  cursor: pointer;
-  bottom: 10px;
-  border-radius: 50px;
-}
-.cart_button_checkout[disabled]{
+.btn-checkout[disabled]{
   background-color: #b4b6bb;
-  color: #555;
+  color: rgba(252, 252, 252, 0.799);
+  border: none;
+  outline: none;
+  opacity: none !important;
 }
 
-.centered_cart {
-  text-align: center;
-  margin: 4rem;
-}
-
-.cart_button_checkout[disabled]:hover {
-  transform: none;
-  background-color: #b4b6bb;
+.btn-checkout[disabled]:hover {
+  background-color: #b4b6bb !important;
+  color: rgba(252, 252, 252, 0.799) !important;
+  opacity: none !important;
   cursor: not-allowed;
   pointer-events: all !important;
   box-shadow: none;
-}
-
-.cart_button:hover,
-.cart_button_checkout:hover {
-  background: #7A9EA7;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
-  transform: translateY(-3px);
+  border: none;
+  outline: none;
 }
 
 .centered {
@@ -154,4 +111,10 @@
   text-align: center;
   margin-top: 4rem;
   margin-bottom: 4rem;
+}
+
+.btn-checkout {
+  padding: 0.5rem 1rem;
+  font-size: medium;
+  margin-top: 1rem;
 }

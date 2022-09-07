@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import "./MessageDialog.css";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 
@@ -29,18 +29,18 @@ const useStyles = makeStyles(theme => ({
             fontSize: '4rem',
         }
     }
-}))
+}));
 
 export default function MessageDialog(props) {
 
     const { messageDialog, setMessageDialog } = props;
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
 
         <Dialog open={messageDialog.isOpen} classes={{ paper: classes.dialog }}>
             <DialogTitle className={classes.dialogTitle}>
-            <IconButton disableRipple className={classes.titleIcon}>
+                <IconButton disableRipple className={classes.titleIcon}>
                     <CheckCircleOutlineIcon />
                 </IconButton>
             </DialogTitle>
@@ -53,22 +53,24 @@ export default function MessageDialog(props) {
                 </Typography>
             </DialogContent>
             <DialogActions className={classes.dialogAction}>
-              
-                    <div className="view_cart_button">
-                        <button
-                            onClick={messageDialog.onViewCart}>
-                            View Cart
+
+                <div >
+                    <button
+                        className="btn btn-light"
+                        onClick={messageDialog.onView}>
+                        {messageDialog.viewButton}
                     </button>
-                    </div>
-                    <div className="keep_shopping_button">
-                        <button
-                            onClick={messageDialog.onKeepShopping}>
-                            Keep Shopping
+                </div>
+                <div >
+                    <button
+                        className="btn btn-primary"
+                        onClick={messageDialog.onKeepShopping}>
+                        Keep Shopping
                     </button>
-                    </div>
-           
+                </div>
+
             </DialogActions>
         </Dialog>
 
-    )
+    );
 }

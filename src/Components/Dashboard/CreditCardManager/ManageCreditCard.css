@@ -36,7 +36,7 @@
     text-align: left;
   }
   
-  .button {
+  /* .button {
     border: none;
     outline: none;
     font-size: 11px;
@@ -50,11 +50,11 @@
     margin-left: 1.5rem;
     margin-top: 0.5rem;
     margin-right: 1.5rem;
-  }
-  
+  } */
+/*   
   .button:active {
     border: 1px solid blue;
-  }
+  } */
   
   .container {
     display: flex;

@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import WishlistItem from "../Components/Wishlist/WishlistItem";
 import { addToCart } from "../Redux/actions/cartActions";
-import { addToWish, removeFromWishlist } from "../Redux/actions/wishlistActions";
+import { removeFromWishlist } from "../Redux/actions/wishlistActions";
 import MessageDialog from "../Components/Cart/UI/MessageDialog";
-
+import Notification from "../Components/Cart/UI/Notification";
 
 
 const WishlistScreen = ({ history }) => {
@@ -20,6 +20,8 @@ const WishlistScreen = ({ history }) => {
   const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '' });
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  // Notification
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
 
   // Add item from wishlist to shopping cart
   const addToCartNew = (id) => {
@@ -28,15 +30,22 @@ const WishlistScreen = ({ history }) => {
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully added to Shopping Cart',
-      onViewCart: () => { onViewCart(); },
+      viewButton: 'View Cart',
+      onView: () => { onViewCart(); },
       onKeepShopping: () => { onKeepShopping(); }
     });
   };
 
 
   // Remove an item from wishlist
-  const removeFromWishlistHandler = (id) => {
+  const removeFromWishlistHandler = (id, title) => {
     dispatch(removeFromWishlist(id));
+    setNotify({
+      isOpen: true,
+      message: `"${title}" was removed from wishlist`,
+      type: 'error',
+      typeStyle: 'specific'
+    });
   };
 
   const addToCartHandler = (id) => {
@@ -72,7 +81,8 @@ const WishlistScreen = ({ history }) => {
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully updated in Shopping Cart',
-      onViewCart: () => { onViewCart(); },
+      viewButton: 'View Cart',
+      onView: () => { onViewCart(); },
       onKeepShopping: () => { onKeepShopping(); }
     });
   };
@@ -81,8 +91,8 @@ const WishlistScreen = ({ history }) => {
   return (
     <>
       <div className="cartscreen">
-        <div className="centered_cart">
-          <h1><b>Wishlist</b></h1>
+        <div className="centered_header">
+          Wishlist
         </div>
         <div className="cartscreen__info">
           {
@@ -98,7 +108,7 @@ const WishlistScreen = ({ history }) => {
               </div>
               )
               :
-              (wishlistItems.map((item) => (
+              (wishlistItems.map((item, i) => (
                 <div key={item.book}>
                   <WishlistItem
                     key={item.book}
@@ -107,7 +117,7 @@ const WishlistScreen = ({ history }) => {
                     bookId={item.book}
                     addToCartHandler={addToCartHandler}
                   />
-                  <hr />
+                  {i < wishlistItems.length - 1 && <hr />}
                 </div>
               )))}
         </div>
@@ -115,6 +125,10 @@ const WishlistScreen = ({ history }) => {
       <MessageDialog
         messageDialog={messageDialog}
         setMessageDialog={setMessageDialog}
+      />
+      <Notification
+        notify={notify}
+        setNotify={setNotify}
       />
     </>
   );

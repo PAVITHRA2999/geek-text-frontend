@@ -10,17 +10,34 @@
   color: #4a4a4d;
 }
 
+.centered_header{
+  font-size: x-large;
+  font-weight: bold;
+  text-align: center;
+  margin: 3rem;
+}
+hr {
+  border: none;
+  /* top    */ border-top: 1px solid #ccc;
+  /* middle */ background-color: #ddd; color: #ddd;
+  height: 1px;
+  *height: 2px; /* IE6+7 need the total height */
+}
+
 
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 
 :root {
   --primary-color: #7A9EA7;
-  --secondary-color: #0e8a54;
+  --secondary-color: #7a9ea72e;
   --tertiary-color: #333e48;
   --info-color: #117aff;
   --success-color: #4bd964;
   --danger-color: #ee1d00;
   --light-color: #efefef;
+  --background-color: #fff;
+  --yellow-color:#a78e4b;
+  --dark-color: #4d636a;
 }
 
 * {
@@ -30,7 +47,7 @@
 }
 
 body {
-  background: #fff;
+  background: var(--background-color);
   color: var(--tertiary-color);
   line-height: 1.6;
   font-family: "Open Sans", sans-serif;
@@ -38,7 +55,9 @@ body {
 
 a {
 	color: var(--primary-color);
+  text-decoration: none;
 }
+
 
 .customer_container {
   max-width: 1440px;
@@ -52,45 +71,56 @@ img {
   object-fit: cover;
 }
 
-.btn {
-  min-width: 150px;
-  padding: 14px 30px;
-  font-weight: 700;
+.btn{
   font-family: "Open Sans", sans-serif;
-  font-size: 0.7rem;
-  border-radius: 25px;
+  min-width: 130px;
+  font-weight: 700;
+  font-size: 0.8rem;
   transition: all 0.3s ease-out;
-  margin: 0 10px 0 0;
   border: none;
   cursor: pointer;
   outline-width: 0;
+  border-radius: 0px !important;
+  padding: 5px;
+  text-align: center;
 }
 
+
 .btn-primary {
-  background: var(--primary-color);
+  background-color: var(--primary-color);
   color: var(--light-color);
   border: 1px solid var(--primary-color);
 }
+
 
 .btn-block {
   width: 100%;
   display: block;
-  margin: 13px 0;
+  /* margin: 13px 0; */
 }
 
 .btn-light {
-  background: var(--light-color);
+  background: var(--background-color);
   border: 1px solid var(--primary-color);
   color: var(--primary-color);
 }
 
-.btn-primary:hover,
-.btn-light:hover {
-  background-color: var(--primary-color);
-  color: var(--light-color);
-  border: 1px solid var(--primary-color);
-  font-size: 0.72rem;
+.btn-full {
+  width: 100%;
+  display: block;
+  margin-top: 5px;
 }
+
+.btn-primary:hover{ 
+  opacity: 60%;
+}
+
+.btn-light:hover {
+  background-color: var(--dark-color);
+  border: 1px solid var(--dark-color);
+  color: var(--light-color);
+}
+
 
 .row {
   width: 100%;

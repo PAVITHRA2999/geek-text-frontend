@@ -1,4 +1,4 @@
-import './BookCoverModal.css'
+import './BookCoverModal.css';
 
 const Modal = props => {
   if (!props.show) {
@@ -9,15 +9,15 @@ const Modal = props => {
     <div className="modal" onClick={props.onClose}>
       <div className="modal-content" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h4 className="modal-title">{props.title}</h4>
         </div>
-        <div className="modal-body">{props.children}</div>
-        <div className="modal-footer">
-          <button onClick={props.onClose} className="button">Close</button>
-        </div>
+
+        <div className="modal-body">
+          {props.children}</div>
+        <button onClick={props.onClose} className="close"></button>
+
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

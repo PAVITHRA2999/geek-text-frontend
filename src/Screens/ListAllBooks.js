@@ -18,7 +18,7 @@ const ListAllBooks = () => {
 
   return (
     <div className="homescreen">
-      <h2 className="homescreen__title">Find Books!</h2>
+      <h2 className="centered_header">Find Books!</h2>
       <div className="homescreen__products">
         {loading ? (
           <div className="circular_progress">

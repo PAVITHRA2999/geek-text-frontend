@@ -4,9 +4,13 @@ import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
     root: {
-        top: theme.spacing(9)
+        top: theme.spacing(9),
+        color: 'secondary',
     }
+
+
 }));
+
 
 
 export default function Notification(props) {

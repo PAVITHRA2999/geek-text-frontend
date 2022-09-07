@@ -4,21 +4,24 @@ import { useSelector, useDispatch } from "react-redux";
 import { CircularProgress } from '@material-ui/core';
 import { getBooksByAuthor } from '../Redux/actions/authorActions';
 import Book from '../Components/Cart/Book';
-import "./ListAllBooks.css"
+import "./ListAllBooks.css";
 
 const AuthorBooksScreen = ({ match }) => {
-  
+
   const dispatch = useDispatch();
   const authorBooks = useSelector((state) => state.getBooksByAuthor);
   const { loading, error, booksByAuthor } = authorBooks;
-  
+
   useEffect(() => {
-      dispatch(getBooksByAuthor(match.params.id));
+    dispatch(getBooksByAuthor(match.params.id));
   }, [dispatch, match.params.id]);
-  
+
+  const books = (booksByAuthor.books || {})[0] || {};
+  const author = books.authorName;
+
   return (
-    <div className="homescreen">
-      <h2 className="homescreen__title">Other books by same author</h2>
+    <div className="browser">
+      <h2 className="centered_header">Other books by {author}</h2>
 
       {loading ? (
         <CircularProgress className="circular_progress_dtl" />
@@ -46,6 +49,6 @@ const AuthorBooksScreen = ({ match }) => {
 
     </div>
   );
-}
+};
 
 export default AuthorBooksScreen;

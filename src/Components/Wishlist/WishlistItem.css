@@ -4,41 +4,11 @@
     float: left;
   }
 
-  .cartItem__name {
-    text-align: left;
-    text-decoration: none;
-    color:rgb(63, 64, 65);
-    font-size: 14px;
-    font-weight: bold;
-    
-  }
+ 
 
-  .cartItem__author {
-    color:rgb(98, 99, 100);
-    font-size: 11px;
-  }
-
-  .cartItem__name:hover {
-    color: #7A9EA7;
-  }
   .rating_wishlist{
     margin-top: 3px;
   }
-
-  .cartItem__select {
-    padding: 10px 10px;
-    position:inherit;
-    border-radius: 0%;
-    cursor: pointer;
-    width: auto;
-    display: inline-block;
-  }
-
-  .cartItem__select:hover {
-    border-color:  #7A9EA7;
-    border-width: 2px;
-  }
-  
   
   img.small {
     max-width: 5.5rem;
@@ -67,20 +37,12 @@
   }
 
   .wishlistitem__price {
-    font-size: 1rem;
-    float:left;
-
-  }
-
-  .cart_button:hover{
-    background: #7A9EA7;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
-    transform: translateY(-3px);
+    font-size: 12px;
+    font-weight: bold;
   }
 
   .addtocart_button{
-     justify-self: left;
-     float: left;
+     align-self: center;
   }
   
   .addtocartfromwish_button {
@@ -97,29 +59,13 @@
     display: block;
   }
 
-  .addtocartfromwish_button2 {
-    color: rgb(63, 64, 65);
-    background-color: transparent;
-    cursor: pointer;
-    padding: 0%;
-    border: none;
-  }
-  
-  .addtocartfromwish_button:hover{
-    background: #7A9EA7;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
-  transform: translateY(-3px);
-  }
+
   .wishlist_delete_align{
       align-self: center;
   }
 
 .saveandremove{
   margin-left: 0%;
-}
-
-.cartitem__price_saved{
-  font-size: 1rem;
 }
 
 .cartitem__cover_saved{
@@ -150,8 +96,6 @@
 
   .wishlist_button:hover {
     background: #7A9EA7;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .2);
-    transform: translateY(-3px);
   }
   
   
@@ -159,7 +103,7 @@
 #grid_wishlist {
     display: grid;
     width:fit-content;
-    grid-template-columns: 1fr 30fr 8fr;
+    grid-template-columns: 1fr 30fr 5fr 3fr;
     gap: 18px;
     padding-left: 4rem;
     padding-right: 4rem;
