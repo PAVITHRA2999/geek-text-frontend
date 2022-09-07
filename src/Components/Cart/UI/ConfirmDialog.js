@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import "./MessageDialog.css";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 
@@ -29,18 +29,18 @@ const useStyles = makeStyles(theme => ({
             fontSize: '4rem',
         }
     }
-}))
+}));
 
 export default function ConfirmDialog(props) {
 
     const { confirmDialog, setConfirmDialog } = props;
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
 
         <Dialog open={confirmDialog.isOpen} classes={{ paper: classes.dialog }}>
             <DialogTitle className={classes.dialogTitle}>
-            <IconButton disableRipple className={classes.titleIcon}>
+                <IconButton disableRipple className={classes.titleIcon}>
                     <ErrorOutlineIcon />
                 </IconButton>
             </DialogTitle>
@@ -53,22 +53,24 @@ export default function ConfirmDialog(props) {
                 </Typography>
             </DialogContent>
             <DialogActions className={classes.dialogAction}>
-              
-                    <div className="cancel_cart_button">
-                        <button
-                            onClick={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}>
-                            Cancel
+
+                <div>
+                    <button
+                        className="btn btn-light"
+                        onClick={() => setConfirmDialog({ ...confirmDialog, isOpen: false })}>
+                        Cancel
                     </button>
-                    </div>
-                    <div className="continue_cart_button">
-                        <button
-                            onClick={confirmDialog.onContinue}>
-                            Continue
+                </div>
+                <div>
+                    <button
+                        className="btn btn-primary"
+                        onClick={confirmDialog.onContinue}>
+                        Continue
                     </button>
-                    </div>
-           
+                </div>
+
             </DialogActions>
         </Dialog>
 
-    )
+    );
 }

@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 import "./MessageDialog.css";
-import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core'
+import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 
 const useStyles = makeStyles(theme => ({
@@ -28,12 +28,12 @@ const useStyles = makeStyles(theme => ({
             fontSize: '4rem',
         }
     }
-}))
+}));
 
 export default function SignInFirstDialog(props) {
 
     const { signInFirstDialog, setSignInFirstDialog } = props;
-    const classes = useStyles()
+    const classes = useStyles();
 
     return (
 
@@ -53,22 +53,24 @@ export default function SignInFirstDialog(props) {
             </DialogContent>
             <DialogActions className={classes.dialogAction}>
 
-                <div className="cancel_cart_button">
+                <div>
                     <button
+                        className="btn btn-light"
                         onClick={() => setSignInFirstDialog({ ...signInFirstDialog, isOpen: false })}>
                         Cancel
                     </button>
                 </div>
-                <div className="continue_cart_button">
+                <div >
                     <button
+                        className="btn btn-primary"
                         onClick={function redirect() {
-                            setSignInFirstDialog({ ...signInFirstDialog, isOpen: false })
-                            window.location.href = "/auth"
+                            setSignInFirstDialog({ ...signInFirstDialog, isOpen: false });
+                            window.location.href = "/auth";
                         }}>
                         Sign In
                     </button>
                 </div>
             </DialogActions>
         </Dialog>
-    )
+    );
 }

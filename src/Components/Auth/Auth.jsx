@@ -124,7 +124,7 @@ const Auth = () => {
               </div>
               <div className="account__forgotpassword">
                 <Link to="/">Return to Store</Link>
-                <button className="auth" onClick={() => setShowForgotPassword(true)}>
+                <button className="link" onClick={() => setShowForgotPassword(true)}>
                   Forgotten Password?
                 </button>
               </div>
@@ -186,7 +186,7 @@ const Auth = () => {
             <h4>Sign up today and you'll be able to:</h4>
             <p>
               <i className="fas fa-check"></i>
-              <span>Speed your way through the checkout</span>
+              <span>Speed your way through checkout</span>
             </p>
             <p>
               <i className="fas fa-check"></i>

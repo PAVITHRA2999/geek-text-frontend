@@ -60,7 +60,7 @@
   width: 100%;
   display: block;
   border: 1px solid #ddd;
-  border-radius: 25px;
+  border-radius: 0px;
   outline-width: 0;
   font-size: 0.8rem;
 }
@@ -92,6 +92,11 @@
 .account__forgotpassword a:hover,
 .account__forgotpassword button:hover {
   color: var(--primary-color);
+}
+
+.account__forgotpassword-buttons{
+display: flex;
+column-gap: 1rem;
 }
 
 .account__subtext {
@@ -136,9 +141,9 @@
   border-radius: 50%;
 }
 
-.auth:hover{
-  background: #7A9EA7 !important;
-}
+/* .auth:hover{
+  color: #7A9EA7 !important;
+} */
 
 /* ========================= MEDIA QUERIES ========================= */
 @media (max-width: 992px) {

@@ -2,10 +2,12 @@ import "./Book.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { addToCart } from "../../Redux/actions/cartActions";
+import { addToWishlist, removeFromWishlist } from "../../Redux/actions/wishlistActions";
 import Notification from "./UI/Notification";
 import Rating from '@material-ui/lab/Rating';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const Book = ({ cover, description, price, title, bookId, authorName, rating, authorId }) => {
 
@@ -13,6 +15,15 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
 
   // Notification
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
+
+  // Determine whether item is already in wishlist and handle favorite state accordingly
+  const wishlist = useSelector((state) => state.wishlist);
+  const { wishlistItems } = wishlist;
+
+  const isFavorited = wishlistItems.some((item) => item.book === bookId);
+
+
+  const [favorited, setFavorited] = useState(isFavorited);
 
   // Add a new item to cart
   const addToCartNew = () => {
@@ -23,6 +34,29 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
       type: 'success',
       typeStyle: 'specific'
     });
+  };
+  // Add a new item to wishilist
+  const addToWishlistHandler = () => {
+    dispatch(addToWishlist(bookId));
+    setNotify({
+      isOpen: true,
+      message: `"${title}" was added to wishlist`,
+      type: 'success',
+      typeStyle: 'specific'
+    });
+    setFavorited(true);
+  };
+
+  // Remove item from wishilist
+  const removeFromWishlistHandler = () => {
+    dispatch(removeFromWishlist(bookId));
+    setNotify({
+      isOpen: true,
+      message: `"${title}" was removed from your wishlist`,
+      type: 'error',
+      typeStyle: 'specific'
+    });
+    setFavorited(false);
   };
 
 
@@ -50,10 +84,31 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
 
   return (
     <>
-      <div className="product">
-        <div className="center__image">
-          <img src={cover} alt={title} />
+      <div className="product" >
+        <div className="center__image" >
+          <Link to={`/book/${bookId}`}>
+            <img src={cover} alt={title} id="container" />
+          </Link>
+          <div id="infoi">
+            {
+              favorited ?
+                <FavoriteIcon className="fav" onClick={removeFromWishlistHandler}
+                  sx={{ border: "1px solid #4d636a", borderRadius: "50%", padding: "3px" }} />
+                :
+                <FavoriteBorderIcon className="fav" onClick={addToWishlistHandler}
+                  sx={{ border: "1px solid #4d636a", borderRadius: "50%", padding: "3px" }}
+                />
+            }
+          </div>
+
         </div>
+        {/* <div id="container">
+            <div id="navi">a</div>
+            <div id="infoi">
+              <FavoriteBorderIcon className="fav" />
+            </div>
+          </div> */}
+
         <div className="product__info">
 
           <Link to={`/book/${bookId}`} className="cartItem__name">
@@ -78,13 +133,17 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
           <p className="info__price">${parseFloat(price).toFixed(2)}</p>
         </div>
         <div className="browser_buttons">
-          <Link to={`/book/${bookId}`} className="info__button">
-            Details
-          </Link>
-          <button type="info__button" onClick={addToCartHandler}>
-            <AddShoppingCartIcon fontSize="small" />
+          <button type="btn" onClick={addToCartHandler} className="btn btn-primary btn-full">
+            ADD TO CART
           </button>
+
+
+          {/* <Link to={`/book/${bookId}`} className="btn btn-light btn-full">
+            Details
+          </Link> */}
         </div>
+
+
       </div>
       <Notification
         notify={notify}
