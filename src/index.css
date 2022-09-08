@@ -38,6 +38,7 @@ hr {
   --background-color: #fff;
   --yellow-color:#a78e4b;
   --dark-color: #4d636a;
+  --gray-color:#7a7c7e;
 }
 
 * {
@@ -57,6 +58,8 @@ a {
 	color: var(--primary-color);
   text-decoration: none;
 }
+
+
 
 
 .customer_container {
@@ -86,11 +89,12 @@ img {
 }
 
 
-.btn-primary {
+.btn-primary  {
   background-color: var(--primary-color);
   color: var(--light-color);
   border: 1px solid var(--primary-color);
 }
+
 
 
 .btn-block {
@@ -111,8 +115,9 @@ img {
   margin-top: 5px;
 }
 
-.btn-primary:hover{ 
-  opacity: 60%;
+.btn-primary:hover { 
+  background-color:#6b8a93;
+  border-color:#6b8a93;
 }
 
 .btn-light:hover {

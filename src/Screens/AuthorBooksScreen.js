@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CircularProgress } from '@material-ui/core';
 import { getBooksByAuthor } from '../Redux/actions/authorActions';
-import Book from '../Components/Cart/Book';
+import Book from '../Components/Book/Book';
 import "./ListAllBooks.css";
 
 const AuthorBooksScreen = ({ match }) => {

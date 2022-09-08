@@ -1,5 +1,4 @@
 import React from 'react';
-import "./MessageDialog.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
@@ -33,7 +32,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function MessageDialog(props) {
 
-    const { messageDialog, setMessageDialog } = props;
+    const { messageDialog } = props;
     const classes = useStyles();
 
     return (

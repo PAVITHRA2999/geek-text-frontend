@@ -1,19 +1,21 @@
 import Auth from './Components/Auth/Auth';
-import { Home } from './Components/Home/Home';
-import Browser from './Components/Browser/Browser';
+
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navigation } from './Components/Home/Navigation/Navigation';
+
+import { Home } from './Components/Home/Home';
 
 
 import CartScreen from "./Screens/CartScreen";
 import BookScreen from "./Screens/BookScreen";
 import ListAllBooks from "./Screens/ListAllBooks";
-import WishlistScreen from "./Screens/WishlistScreen";
+import WishlistScreen from "./Screens/WishlistScreen/WishlistScreen";
 import AuthorBooksScreen from './Screens/AuthorBooksScreen';
 import ReviewScreen from './Screens/ReviewScreen';
+import Browser from './Screens/Browser/Browser';
 
 import { SideBar } from './Components/Dashboard/SideBar/SideBar';
-import { DashboardHome } from './Components/Dashboard/DashboardHome';
+import { DashboardHome } from './Components/Dashboard/DashboardHome/DashboardHome';
 import { PersonalInfoManager } from './Components/Dashboard/PersonalInfoManager/PersonalInfoManager';
 import { LoginManager } from './Components/Dashboard/LoginManager/LoginManager';
 import { NewCreditCard } from './Components/Dashboard/CreditCardManager/NewCreditCard';

@@ -1,7 +1,7 @@
 import "./ListAllBooks.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Book from "../Components/Cart/Book";
+import Book from "../Components/Book/Book";
 import { getBooks as listBooks } from "../Redux/actions/bookActions";
 import { CircularProgress } from '@material-ui/core';
 

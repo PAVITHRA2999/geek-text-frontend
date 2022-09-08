@@ -2,11 +2,12 @@ import "./CartScreen.css";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import CartItem from "../Components/Cart/CartItem";
+import CartItem from "../Components/Cart/CartItem/CartItem";
 import Notification from "../Components/Cart/UI/Notification";
 import ConfirmDialog from "../Components/Cart/UI/ConfirmDialog";
 import SignInFirstDialog from "../Components/Cart/UI/SignInFirstDialog";
 import { addToCart, removeFromCart } from "../Redux/actions/cartActions";
+import { addToWishlist } from "../Redux/actions/wishlistActions";
 import axios from "axios";
 
 
@@ -35,6 +36,7 @@ const CartScreen = (props) => {
   // User token
   const token = localStorage.getItem('token') || false;
 
+
   // Change quantity of item
   const qtyChangeHandler = (id, qty) => {
     dispatch(addToCart(id, qty, false));
@@ -57,6 +59,18 @@ const CartScreen = (props) => {
       isOpen: true,
       message: `"${title}" was removed from cart`,
       type: 'error',
+      typeStyle: 'specific'
+    });
+  };
+
+  // Add item to wishlist, remove it from shopping cart, and display message
+  const addToWishlistHandler = (id, title) => {
+    dispatch(addToWishlist(id));
+    dispatch(removeFromCart(id));
+    setNotify({
+      isOpen: true,
+      message: `"${title}" was added to your wishlist`,
+      type: 'success',
       typeStyle: 'specific'
     });
   };
@@ -164,12 +178,12 @@ const CartScreen = (props) => {
                     item={item}
                     qtyChangeHandler={qtyChangeHandler}
                     removeHandler={removeFromCartHandler}
+                    addToWishlistHandler={addToWishlistHandler}
                     saveForLaterHandler={saveForLaterHandler}
                     addBackToCartHandler={addBackToCartHandler}
                     saved={false}
                     bookId={item.book}
                   />
-                  {i < inCart.length - 1 && <hr />}
                 </div>
               )))}
 
@@ -209,12 +223,12 @@ const CartScreen = (props) => {
                     item={item}
                     qtyChangeHandler={qtyChangeHandler}
                     removeHandler={removeFromCartHandler}
+                    addToWishlistHandler={addToWishlistHandler}
                     saveForLaterHandler={saveForLaterHandler}
                     addBackToCartHandler={addBackToCartHandler}
                     saved={true}
                     bookId={item.book}
                   />
-                  {i < savedForLater.length - 1 && <hr />}
                 </div>
               )
               )}

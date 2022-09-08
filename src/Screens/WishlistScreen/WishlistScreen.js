@@ -1,18 +1,14 @@
-import "./WishlistScreen.css";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import WishlistItem from "../Components/Wishlist/WishlistItem";
-import { addToCart } from "../Redux/actions/cartActions";
-import { removeFromWishlist } from "../Redux/actions/wishlistActions";
-import MessageDialog from "../Components/Cart/UI/MessageDialog";
-import Notification from "../Components/Cart/UI/Notification";
-
+import WishlistItem from "../../Components/Wishlist/WishlistItem";
+import { addToCart } from "../../Redux/actions/cartActions";
+import { removeFromWishlist } from "../../Redux/actions/wishlistActions";
+import MessageDialog from "../../Components/Cart/UI/MessageDialog";
+import Notification from "../../Components/Cart/UI/Notification";
+import "./WishlistScreen.css";
 
 const WishlistScreen = ({ history }) => {
-
-
-
   useEffect(() => { }, []);
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist);
@@ -73,7 +69,6 @@ const WishlistScreen = ({ history }) => {
   };
 
 
-
   // Add an item already existent in cart (increment by new qty)
   const addToCartExistent = (id, currQty) => {
     dispatch(addToCart(id, Number(currQty) + Number(1), false));
@@ -89,39 +84,58 @@ const WishlistScreen = ({ history }) => {
 
 
   return (
-    <>
-      <div className="cartscreen">
-        <div className="centered_header">
-          Wishlist
-        </div>
-        <div className="cartscreen__info">
-          {
-            wishlistItems.length === 0 ?
-              (<div className="cartscreen__center">
-                <h1>Your Wishlist is Empty!</h1>
-                <Link to="/browse" className="Router_Link">
-                  <div className="cart_button">
-                    <p>Keep Shopping</p>
-                  </div>
-                </Link>
+    <div className="wishlistscreen">
 
+
+      {
+        wishlistItems.length === 0 ?
+          (<div className="cartscreen__center">
+            SAVE YOUR FAVORITE ITEMS
+            <h1>Your Wishlist is Empty!</h1>
+            <div className="text_body">
+              Want to save the items you love? Just click on the heart icon found on the product image and it will show up here.
+            </div>
+            <Link to="/browse">
+
+              <button className="btn btn-primary btn-cart">BROWSE</button>
+
+            </Link>
+          </div>
+          )
+          :
+          (
+
+            <div>
+
+              <div className="centered_header">
+                Your Wishlist
               </div>
-              )
-              :
-              (wishlistItems.map((item, i) => (
-                <div key={item.book}>
-                  <WishlistItem
-                    key={item.book}
-                    item={item}
-                    removeHandler={removeFromWishlistHandler}
-                    bookId={item.book}
-                    addToCartHandler={addToCartHandler}
-                  />
+              <hr />
+              <div className="number_of_items_in_wishlist">
+                1 - {wishlistItems.length} of {wishlistItems.length} items
+              </div>
+              {
+                wishlistItems.map((item, i) => (<div>
+                  <div key={item.book} className="wishlistscreen__item">
+                    <WishlistItem
+                      key={item.book}
+                      item={item}
+                      removeHandler={removeFromWishlistHandler}
+                      bookId={item.book}
+                      addToCartHandler={addToCartHandler}
+                    />
+
+                  </div>
                   {i < wishlistItems.length - 1 && <hr />}
                 </div>
-              )))}
-        </div>
-      </div>
+                ))
+              }
+            </div>
+
+          )
+      }
+
+
       <MessageDialog
         messageDialog={messageDialog}
         setMessageDialog={setMessageDialog}
@@ -130,7 +144,7 @@ const WishlistScreen = ({ history }) => {
         notify={notify}
         setNotify={setNotify}
       />
-    </>
+    </div>
   );
 };
 

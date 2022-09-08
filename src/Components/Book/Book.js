@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart } from "../../Redux/actions/cartActions";
 import { addToWishlist, removeFromWishlist } from "../../Redux/actions/wishlistActions";
-import Notification from "./UI/Notification";
+import Notification from "../Cart/UI/Notification";
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -22,7 +22,6 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
 
   const isFavorited = wishlistItems.some((item) => item.book === bookId);
 
-
   const [favorited, setFavorited] = useState(isFavorited);
 
   // Add a new item to cart
@@ -35,6 +34,7 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
       typeStyle: 'specific'
     });
   };
+
   // Add a new item to wishilist
   const addToWishlistHandler = () => {
     dispatch(addToWishlist(bookId));
@@ -102,12 +102,6 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
           </div>
 
         </div>
-        {/* <div id="container">
-            <div id="navi">a</div>
-            <div id="infoi">
-              <FavoriteBorderIcon className="fav" />
-            </div>
-          </div> */}
 
         <div className="product__info">
 
@@ -117,7 +111,7 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
           <p className="info__author">By <Link to={`/authorbooks/${authorId}`} className="book__author__link">{authorName}</Link></p>
 
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-          <div className="rating__block">
+          <div className="block rating__block">
             <div className="book__rating__stars">
               < Rating
                 name="half-rating-read"

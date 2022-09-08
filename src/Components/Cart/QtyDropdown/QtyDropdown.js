@@ -1,5 +1,5 @@
 import "./QtyDropdown.css";
-import CustomSelect from "../CustomSelect/CustomSelect";
+import CustomSelect from "../../CustomSelect/CustomSelect";
 
 const QtyDropdown = ({ item, qtyChangeHandler }) => {
     const arr = Array.from({ length: 100 }, (_, index) => index + 1);
