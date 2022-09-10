@@ -1,17 +1,4 @@
-.browser {
-	margin-top: 3rem;
-	margin-bottom: 10rem;
-	margin-left: 10rem;
-	margin-right: 10rem;
-}
-.browser i:hover{
-	color:var(--primary-color);
-	cursor: pointer;
-}
-.browser i[disabled]{
-	pointer-events: none;
-	color: rgb(170, 169, 169);
-}
+
 
 .my-left-aligned {
 	text-align: left;

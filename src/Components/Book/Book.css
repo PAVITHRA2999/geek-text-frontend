@@ -60,6 +60,7 @@
 
 .info__author {
 	font-size: 11px;
+	font-style: italic;
 	color: rgb(122, 124, 126);
 }
 
@@ -84,7 +85,7 @@
 }
 .fav:hover{
 	cursor: pointer;
-	opacity: 80%;
+	background-color: rgba(205, 205, 205, 0.539);
 }
 
 #container {

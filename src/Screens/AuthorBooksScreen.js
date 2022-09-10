@@ -20,7 +20,7 @@ const AuthorBooksScreen = ({ match }) => {
   const author = books.authorName;
 
   return (
-    <div className="browser">
+    <div className="screen">
       <h2 className="centered_header">Other books by {author}</h2>
 
       {loading ? (

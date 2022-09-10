@@ -6,15 +6,15 @@ import {Link} from 'react-router-dom'
 
 
 export const DropDownMenu = () => {
-    const Logout = () => {
-        localStorage.removeItem('token');
-        window.location.reload(false)
-    }
+    // const Logout = () => {
+    //     localStorage.removeItem('token');
+    //     window.location.reload(false)
+    // }
 
     const SignOut = () => {
-        console.log("clickkkkkkkkkkkkkkkkk");
+        console.log("signed out");
         localStorage.removeItem('token');
-        window.location = "http://localhost:3000/"
+        window.location = "/"
     }
 
     return (

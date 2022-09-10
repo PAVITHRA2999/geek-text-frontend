@@ -85,8 +85,6 @@ const WishlistScreen = ({ history }) => {
 
   return (
     <div className="wishlistscreen">
-
-
       {
         wishlistItems.length === 0 ?
           (<div className="cartscreen__center">
@@ -104,9 +102,7 @@ const WishlistScreen = ({ history }) => {
           )
           :
           (
-
             <div>
-
               <div className="centered_header">
                 Your Wishlist
               </div>
@@ -115,8 +111,8 @@ const WishlistScreen = ({ history }) => {
                 1 - {wishlistItems.length} of {wishlistItems.length} items
               </div>
               {
-                wishlistItems.map((item, i) => (<div>
-                  <div key={item.book} className="wishlistscreen__item">
+                wishlistItems.map((item, i) => (<div key={item.book} >
+                  <div className="wishlistscreen__item">
                     <WishlistItem
                       key={item.book}
                       item={item}
@@ -131,11 +127,8 @@ const WishlistScreen = ({ history }) => {
                 ))
               }
             </div>
-
           )
       }
-
-
       <MessageDialog
         messageDialog={messageDialog}
         setMessageDialog={setMessageDialog}
@@ -147,7 +140,5 @@ const WishlistScreen = ({ history }) => {
     </div>
   );
 };
-
-
 
 export default WishlistScreen;

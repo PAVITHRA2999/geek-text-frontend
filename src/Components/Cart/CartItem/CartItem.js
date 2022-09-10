@@ -4,21 +4,21 @@ import Rating from '@material-ui/lab/Rating';
 import QtyDropdown from "../QtyDropdown/QtyDropdown";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
+
 const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler, saveForLaterHandler, addBackToCartHandler, saved, bookId }) => {
 
   return (
-    <div>
+    <>
       {saved === false ? (
         <div className="item">
-          <div id="grid_Cart">
-
-            <div id="cover_Column">
-              <Link to={`/book/${bookId}`}>
+          <div className="grid_Cart">
+            <div className="cover_Column">
+              <Link to={`/book/${bookId}`} href="#">
                 <img src={item.cover} alt={item.title} className="small" />
               </Link>
             </div>
 
-            <div id="info_Column" className="info">
+            <div className="info_Column info">
               <div>
                 <Link to={`/book/${bookId}`} className="cartItem__name">
                   {item.title}
@@ -41,8 +41,41 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                 </div>
                 <div className="book__rating">{parseFloat(item.rating).toFixed(1)}</div>
               </div>
-              <div>
-                <div className="block buttons__block">
+              <div className="buttons__up">
+                <div className="block buttons__block buttons__up">
+                  <button className="saveforlater_button"
+                    onClick={() => saveForLaterHandler(item.book, item.qty)}>
+                    Save for later
+                  </button>
+                  |
+                  <FavoriteBorderIcon
+                    className="fav_button"
+                    style={{ fontSize: "18px" }}
+                    color="inherit"
+                    size="sm"
+                    onClick={() => addToWishlistHandler(item.book, item.title)}
+                  />
+                  |
+                  <button className="delete_button"
+                    onClick={() => removeHandler(item.book, item.title)}>
+                    <i className="fa fa-trash-o fa-lg"></i>
+                  </button>
+                </div>
+              </div>
+
+
+              <div className="qty_Row">
+                <div className="price_Row">
+                  ${parseFloat(item.price).toFixed(2)}
+                </div>
+                <QtyDropdown
+                  item={item}
+                  qtyChangeHandler={qtyChangeHandler}
+                />
+
+              </div>
+              <div className="buttons_Row">
+                <div className="block buttons__block buttons__down">
                   <button className="saveforlater_button"
                     onClick={() => saveForLaterHandler(item.book, item.qty)}>
                     Save for later
@@ -63,29 +96,28 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                 </div>
               </div>
             </div>
-
-
-            <QtyDropdown
-              item={item}
-              qtyChangeHandler={qtyChangeHandler}
-            />
-            <div id="price_Column"
-              className="cartitem__price">${parseFloat(item.price).toFixed(2)}
+            <div className="qty_Column">
+              <QtyDropdown
+                item={item}
+                qtyChangeHandler={qtyChangeHandler}
+              />
+            </div>
+            <div className="price_Column cartitem__price">
+              ${parseFloat(item.price).toFixed(2)}
             </div>
           </div>
 
         </div>
-
       ) : (
 
-        <div id="grid_SavedForLater">
+        <div className="grid_SavedForLater">
 
-          <div id="cover_Column">
+          <div className="cover_Column">
             <Link to={`/book/${bookId}`}>
               <img src={item.cover} alt={item.title} className="small" />
             </Link>
           </div>
-          <div id="info_Column">
+          <div className="info_Column">
             <Link to={`/book/${bookId}`} className="cartItem__name">
               {item.title}
             </Link>
@@ -111,7 +143,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
             <div className="block buttons__block">
               <button className="saveforlater_button"
                 onClick={() => addBackToCartHandler(item.book, item.qty)}>
-                Add back to cart
+                Add to cart
               </button>
               |
               <FavoriteBorderIcon
@@ -130,7 +162,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
         </div>
       )
       }
-    </div>
+    </>
   );
 };
 

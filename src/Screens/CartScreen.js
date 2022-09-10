@@ -8,8 +8,10 @@ import ConfirmDialog from "../Components/Cart/UI/ConfirmDialog";
 import SignInFirstDialog from "../Components/Cart/UI/SignInFirstDialog";
 import { addToCart, removeFromCart } from "../Redux/actions/cartActions";
 import { addToWishlist } from "../Redux/actions/wishlistActions";
-import axios from "axios";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
+import axios from "axios";
 
 const CartScreen = (props) => {
 
@@ -36,6 +38,13 @@ const CartScreen = (props) => {
   // User token
   const token = localStorage.getItem('token') || false;
 
+  // Collapsible
+  const [colapse, setCollapse] = useState(false);
+
+  // Change quantity of item
+  const toggleCollapse = () => {
+    setCollapse(!colapse);
+  };
 
   // Change quantity of item
   const qtyChangeHandler = (id, qty) => {
@@ -135,44 +144,61 @@ const CartScreen = (props) => {
 
   return (
     <>
+      <div className="nav-bottom" style={{ display: getCartCount() === 0 && 'none' }}>
+        <div className="right-subtotal">
+          <div className="right-subtotal-text">
+            <div className="subtotal-description">
+              ORDER TOTAL
+            </div>
+            <div className="subtotal">&emsp;&emsp;${getCartSubTotal()}
+            </div>
+          </div>
+          <div></div>
+          <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout" disabled={getCartCount() === 0}>
+            CONTINUE TO CHECKOUT
+          </button>
+        </div>
+      </div>
+      <div className="nav-bottom" style={{ display: getCartCount() !== 0 && 'none' }}>
+        <div className="right-subtotal">
+          <Link to="/browse">
+            <div className="btn btn-primary btn-checkout">
+              CONTINUE SHOPPING
+            </div>
+          </Link>
+          <div></div>
+          <Link to="/auth">
+            <div className="btn btn-light btn-checkout">
+              SIGN IN
+            </div>
+          </Link>
+        </div>
+      </div>
       <div className="cartscreen">
         <div className="centered_header">
           Shopping Cart
         </div>
         <div className="cartscreen__info">
 
-          {inCart.length === 0 ? (
-
-            cartItems.length !== 0 ?
-              (<div className="cartscreen__center">
-                <h1>Your Shopping Cart Is Empty!</h1>
-                <p></p>
-                <p>But you have some items saved for later...</p>
-                <Link to="/browse">
-                  <div className="btn btn-primary">
-                    <p>Continue Shopping</p>
+          {inCart.length === 0 ?
+            (<>
+              <div className="cartscreen__center">
+                <div className="cart_message">
+                  <div className="cart_upper_message">
+                    <p>Your cart is empty.</p>
                   </div>
-                </Link>
+                  <div className="cart_bottom_message">
+                    <p>Add some books and get free shipping on orders of $40+.</p>
+                  </div>
+                </div>
               </div>
-              )
-              :
-              (
-                <div className="cartscreen__center">
-                  <h1>Your Shopping Cart Is Empty.</h1>
-                  <p></p>
-                  <p>Add some books!</p>
-                  <div></div>
-                  <Link to="/browse">
-                    <div className="btn btn-primary btn-cart">
-                      <p>Start Shopping</p>
-                    </div>
-                  </Link>
-                </div>)
-          )
+            </>)
             :
             (
               inCart.map((item, i) => (
+
                 <div key={item.book}>
+
                   <CartItem
                     key={item.book}
                     item={item}
@@ -184,62 +210,147 @@ const CartScreen = (props) => {
                     saved={false}
                     bookId={item.book}
                   />
+                  {i < inCart.length - 1 && <hr />}
                 </div>
               )))}
 
-          <div className="right-subtotal">
-            Subtotal ({getCartCount()}) {getCartCount() === 1 ? <>item:</> : <>items:</>}
-            <div className="subtotal">&emsp;&emsp;${getCartSubTotal()}
+          <div className="top-subtotal">
+            <div className="flex-section">
+              <div >
+                Subtotal ({getCartCount()}) {getCartCount() === 1 ? <>item:</> : <>items:</>}
+              </div>
+              <div >
+                ${getCartSubTotal()}
+              </div>
             </div>
-            <div></div>
+            <div className="flex-section">
+              <div>
+                Estimated Shipping
+              </div>
+              <div >
+                $0.00
+              </div>
+            </div>
+            <div className="flex-section">
+              <div>
+                Estimated Tax
+              </div>
+              <div >
+                $0.00
+              </div>
+            </div>
             <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout" disabled={getCartCount() === 0}>
               CHECKOUT
             </button>
-            <Notification
-              notify={notify}
-              setNotify={setNotify}
-            />
-            <ConfirmDialog
-              confirmDialog={confirmDialog}
-              setConfirmDialog={setConfirmDialog}
-            />
-            <SignInFirstDialog
-              signInFirstDialog={signInFirstDialog}
-              setSignInFirstDialog={setSignInFirstDialog}
-            />
           </div>
         </div>
-
-        {savedForLater.length !== 0 ? (
-          <div >
-            <div className="centered_saved">
-              <h2>Saved for Later</h2>
-            </div>
-            <div className="cartscreen__info_saved">
-              {savedForLater.map((item, i) => (
-                <div key={item.book}>
-                  <CartItem
-                    key={item.book}
-                    item={item}
-                    qtyChangeHandler={qtyChangeHandler}
-                    removeHandler={removeFromCartHandler}
-                    addToWishlistHandler={addToWishlistHandler}
-                    saveForLaterHandler={saveForLaterHandler}
-                    addBackToCartHandler={addBackToCartHandler}
-                    saved={true}
-                    bookId={item.book}
-                  />
-                </div>
-              )
-              )}
-              <div className="number_of_items_saved">
-                ({getSavedCount()}) {getSavedCount() === 1 ? <>item</> : <>items</>}
+        {savedForLater.length !== 0 &&
+          <>
+            <div className="collapsible_items">
+              <div className="centered_saved collapsible_header" onClick={() => toggleCollapse()}>
+                Saved for Later ({savedForLater.length})
+                {colapse ?
+                  <RemoveIcon />
+                  :
+                  <AddIcon />
+                }
               </div>
+              {colapse &&
+                <div className="cartscreen__info_saved collapsible_content">
+                  {savedForLater.map((item, i) => (
+                    <>
+                      <CartItem
+                        key={item.book}
+                        item={item}
+                        qtyChangeHandler={qtyChangeHandler}
+                        removeHandler={removeFromCartHandler}
+                        addToWishlistHandler={addToWishlistHandler}
+                        saveForLaterHandler={saveForLaterHandler}
+                        addBackToCartHandler={addBackToCartHandler}
+                        saved={true}
+                        bookId={item.book}
+                      />
+                      {i < savedForLater.length - 1 && <hr />}
+                    </>
+                  )
+                  )}
+                  <div className="number_of_items_saved">
+                    ({getSavedCount()}) {getSavedCount() === 1 ? <>item</> : <>items</>}
+                  </div>
+                </div>
+              }
+            </div>
+            <div className="non_collapsible_items">
+              <div className="centered saved_for_later_header" onClick={() => toggleCollapse()}>
+                <h3>Saved for Later ({savedForLater.length})</h3>
+              </div>
+
+              <div className="cartscreen__info_saved">
+                {savedForLater.map((item, i) => (
+                  <>
+                    <CartItem
+                      key={item.book}
+                      item={item}
+                      qtyChangeHandler={qtyChangeHandler}
+                      removeHandler={removeFromCartHandler}
+                      addToWishlistHandler={addToWishlistHandler}
+                      saveForLaterHandler={saveForLaterHandler}
+                      addBackToCartHandler={addBackToCartHandler}
+                      saved={true}
+                      bookId={item.book}
+                    />
+                    {i < savedForLater.length - 1 && <hr />}
+                  </>
+                )
+                )}
+                <div className="number_of_items_saved">
+                  ({getSavedCount()}) {getSavedCount() === 1 ? <>item</> : <>items</>}
+                </div>
+              </div>
+
+            </div>
+          </>
+        }
+        <div className="shaded_section">
+          <div className="shaded_subsection">
+            <div >
+              Subtotal ({getCartCount()} {getCartCount() === 1 ? <>item</> : <>items</>})
+            </div>
+            <div >
+              ${getCartSubTotal()}
             </div>
           </div>
-        ) : ""
-        }
+          <div className="shaded_subsection">
+            <div>
+              Estimated Shipping
+            </div>
+            <div >
+              $0.00
+            </div>
+          </div>
+          <div className="shaded_subsection">
+            <div>
+              Estimated Tax
+            </div>
+            <div >
+              $0.00
+            </div>
+          </div>
+        </div>
       </div>
+
+      <Notification
+        notify={notify}
+        setNotify={setNotify}
+      />
+      <ConfirmDialog
+        confirmDialog={confirmDialog}
+        setConfirmDialog={setConfirmDialog}
+      />
+      <SignInFirstDialog
+        signInFirstDialog={signInFirstDialog}
+        setSignInFirstDialog={setSignInFirstDialog}
+      />
     </>
   );
 };

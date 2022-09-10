@@ -152,7 +152,7 @@ const BookScreen = ({ match, history }) => {
   const items = arr.reduce((a, v) => ({ ...a, [v]: v }), {});
 
   return (
-    <div className="productscreen">
+    <div className="screen">
       {
         loading ? (
           <div className="circular_progress">
@@ -180,7 +180,7 @@ const BookScreen = ({ match, history }) => {
                     <div >
                       <div className="title__heading">
                         <div>{book.title}</div>
-                        <div className="fav">
+                        <div>
                           {
                             favorited ?
                               <FavoriteIcon className="fav-icon" onClick={removeFromWishlistHandler} />

@@ -106,7 +106,7 @@ const Auth = () => {
           {!showforgotPassword ? (
             <form className="account__form">
               <h3 className="account__form-header">Login</h3>
-              <p>Welcome back Sigin in to your account</p>
+              <p>Sign in to your existing account</p>
               <div className="form-control">
                 <label htmlFor="email_signin">Email</label>
                 <input onChange={handleLoginChange} id="email_signin" type="text" required  />

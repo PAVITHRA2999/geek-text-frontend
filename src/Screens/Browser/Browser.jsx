@@ -158,7 +158,7 @@ export default class Browser extends React.Component {
 
     render() {
         return (
-            <div className="browser">
+            <div className="screen">
                 <h2 className="centered_header">Our Top Picks</h2>
                 <div className="nav browser-nav">
                     <div className="nav-left">
@@ -228,10 +228,6 @@ export default class Browser extends React.Component {
                         <div>
                             <h2>{this.state.page} of {this.state.lastPage}</h2>
                         </div>
-
-                        {/* <div className='browser-nav'>
-                Showing {this.state.books.length} of {this.state.allBooks.length} Items
-                </div> */}
                     </div>
                     <div className=".nav-right">
                         <i className="fa-solid fa fa-chevron-right fa-lg" disabled={this.state.page === this.state.lastPage} onClick={() => this.goNext()}></i>
