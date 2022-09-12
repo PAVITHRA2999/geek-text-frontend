@@ -168,57 +168,52 @@ const CartScreen = (props) => {
   // Handle seconds from timer
   const handleUpdateIndexCallback = (newIdx) => {
     const newIndex = newIdx;
-    console.log("new:");
-    console.log(newIndex);
     setActiveIndex(newIndex);
   };
 
 
-  function ListofSaved() {
-    for (let index = 0; index < savedForLater.length; index++) {
-      return (
+  // function ListofSaved() {
+  //   for (let index = 0; index < savedForLater.length; index++) {
+  //     return (
 
-        <List
-          key={savedForLater[index].book}
-          data={savedForLater}
-        ///.filter(
-        // (item, i) => (i >= activeIndex && i < activeIndex + offset)
-        // (item, i) => (i >= (activeIndex === 0 ? activeIndex : activeIndex - 1) && i <= activeIndex + offset)
-        // )}
-        />
-      );
-    }
-  }
+  //       <List
+  //         key={savedForLater[index].book}
+  //         data={savedForLater}
+  //       ///.filter(
+  //       // (item, i) => (i >= activeIndex && i < activeIndex + offset)
+  //       // (item, i) => (i >= (activeIndex === 0 ? activeIndex : activeIndex - 1) && i <= activeIndex + offset)
+  //       // )}
+  //       />
+  //     );
+  //   }
+  // }
 
 
-  function List({ data = [] }) {
-    console.log("data");
-    console.log(data);
-    if (!data.length) return null;
-    return (
-      data.map((item) => (
-        <div key={item.book}
+  // function List({ data = [] }) {
+  //   if (!data.length) return null;
+  //   return (
+  //     data.map((item) => (
+  //       <div key={item.book}
 
-          className="carousel-item">
-          <>
-            {/* {console.log(item)} */}
-            <SavedItem
-              key={item._id}
-              title={item.title}
-              price={item.price}
-              rating={item.rating}
-              cover={item.cover}
-              book={item.book}
-              qty={item.qty}
-              authorId={item.author._id}
-              authorName={item.authorName}
-              addBackToCartHandler={addBackToCartHandler}
-              removeHandler={removeFromCartHandler}
-            /></>
-        </div>
-      ))
-    );
-  }
+  //         className="carousel-item">
+  //         <>
+  //           <SavedItem
+  //             key={item._id}
+  //             title={item.title}
+  //             price={item.price}
+  //             rating={item.rating}
+  //             cover={item.cover}
+  //             book={item.book}
+  //             qty={item.qty}
+  //             authorId={item.author._id}
+  //             authorName={item.authorName}
+  //             addBackToCartHandler={addBackToCartHandler}
+  //             removeHandler={removeFromCartHandler}
+  //           /></>
+  //       </div>
+  //     ))
+  //   );
+  // }
 
   return (
     <>
@@ -254,127 +249,150 @@ const CartScreen = (props) => {
         </div>
       </div>
       <div className="cartscreen">
-        <div className="centered_header">
-          Shopping Cart
-        </div>
-        <div className="checkout-content">
-          <div className="cartscreen__info">
+        {inCart.length !== 0 &&
+          <div className="centered_header">
+            Shopping Cart
+          </div>}
+        <div className={`checkout-content ${inCart.length === 0 ? "" : "checkout-content-non-empty"}`}>
 
-            {inCart.length === 0 ?
-              (<>
-                <div className="cartscreen__center">
-                  <div className="cart_message">
-                    <div className="cart_upper_message">
-                      <p>Your cart is empty.</p>
-                    </div>
-                    <div className="cart_bottom_message">
-                      <p>Add some books and get free shipping on orders of $40+.</p>
-                    </div>
+
+          {inCart.length === 0 ?
+            (<>
+              <div className="cartscreen__center">
+                <div className="cart_message">
+                  <div className="cart_upper_message">
+                    <p>Your cart is empty.</p>
                   </div>
+                  <div className="cart_bottom_message">
+                    <p>Add some books and get free shipping on orders of $40+.</p>
+                  </div>
+
+                  <Link to="/browse" className="btn-browse non_collapsible_items">
+                    <div className="btn btn-primary btn-checkout">
+                      START SHOPPING
+                    </div>
+                  </Link>
                 </div>
-              </>)
-              :
-              (
-                inCart.map((item, i) => (
 
-                  <div key={item.book}>
+              </div>
+            </>)
+            :
+            (<div className="cartscreen__info">
+              {inCart.map((item, i) => (
 
-                    <CartItem
-                      key={item.book}
-                      item={item}
-                      qtyChangeHandler={qtyChangeHandler}
-                      removeHandler={removeFromCartHandler}
-                      addToWishlistHandler={addCartItemToWishlistHandler}
-                      saveForLaterHandler={saveForLaterHandler}
-                      addBackToCartHandler={addBackToCartHandler}
-                      saved={false}
-                      bookId={item.book}
-                    />
-                    {i < inCart.length - 1 && <hr />}
-                  </div>
-                )))}
-          </div>
-          <div className="non_collapsible_items">
-            <div className="saved-header" onClick={() => toggleCollapse()}>
-              <h3>Saved for Later ({savedForLater.length} item{savedForLater.length > 1 && "s"})</h3>
-            </div>
-            <Carousel
-              offset={offset}
-              handleUpdateIndexCallback={handleUpdateIndexCallback}
-              totalLength={savedForLater.length}
-            >
+                <div key={item.book}>
 
-              {savedForLater.map((item) => (
-                <div key={item.book}
-
-                  className="carousel-item">
-                  <>
-                    {/* {console.log(item)} */}
-                    <SavedItem
-                      key={item._id}
-                      title={item.title}
-                      price={item.price}
-                      rating={item.rating}
-                      cover={item.cover}
-                      book={item.book}
-                      qty={item.qty}
-                      authorId={item.author._id}
-                      authorName={item.authorName}
-                      addToWishlistHandler={addToWishlistHandler}
-                      removeFromWishlistHandler={removeFromWishlistHandler}
-                      addBackToCartHandler={addBackToCartHandler}
-                      removeHandler={removeFromCartHandler}
-                    /></>
+                  <CartItem
+                    key={item.book}
+                    item={item}
+                    qtyChangeHandler={qtyChangeHandler}
+                    removeHandler={removeFromCartHandler}
+                    addToWishlistHandler={addCartItemToWishlistHandler}
+                    saveForLaterHandler={saveForLaterHandler}
+                    addBackToCartHandler={addBackToCartHandler}
+                    saved={false}
+                    bookId={item.book}
+                  />
+                  {i < inCart.length - 1 && <hr />}
                 </div>
               ))}
-            </Carousel>
-          </div>
 
-        </div>
-        <div className="top-subtotal">
-          <h2>
-            Order Summary
-          </h2>
-          <div className="summary-subsection">
-            <div className="flex-section">
-              <div>
-                Subtotal ({getCartCount()} {getCartCount() === 1 ? <>item</> : <>items</>})
-              </div>
-              <div >
-                ${getCartSubTotal()}
-              </div>
-            </div>
-            <div className="flex-section">
-              <div>
-                Estimated Shipping
-              </div>
-              <div >
-                $0.00
-              </div>
-            </div>
-            <div className="flex-section">
-              <div>
-                Estimated Tax
-              </div>
-              <div >
-                $0.00
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div className="flex-section">
-            <div>
-              <b>Order Total</b>
-            </div>
-            <div >
-              <b>${getCartSubTotal()}</b>
-            </div>
-          </div>
+            </div>)
+          }
+          {/* {inCart.length === 0 && <hr
+            className="checkout-content"
+            style={{ width: "43rem", alignItems: "center", justifySelf: "center", textAlign: "center" }}
+          />} */}
+          {savedForLater.length > 0 &&
 
-          <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
-            CHECKOUT
-          </button>
+            <div className="non_collapsible_items">
+
+              <div className="saved-header" onClick={() => toggleCollapse()}>
+
+                <h3>Saved for Later ({savedForLater.length} item{savedForLater.length > 1 && "s"})</h3>
+              </div>
+              <Carousel
+                offset={offset}
+                handleUpdateIndexCallback={handleUpdateIndexCallback}
+                totalLength={savedForLater.length}
+              >
+
+                {savedForLater.map((item) => (
+                  <div key={item.book}
+
+                    className="carousel-item">
+                    <>
+                      <SavedItem
+                        key={item._id}
+                        title={item.title}
+                        price={item.price}
+                        rating={item.rating}
+                        cover={item.cover}
+                        book={item.book}
+                        qty={item.qty}
+                        authorId={item.author._id}
+                        authorName={item.authorName}
+                        addToWishlistHandler={addToWishlistHandler}
+                        removeFromWishlistHandler={removeFromWishlistHandler}
+                        addBackToCartHandler={addBackToCartHandler}
+                        removeHandler={removeFromCartHandler}
+                      /></>
+                  </div>
+                ))}
+              </Carousel>
+            </div>}
         </div>
+        {
+          inCart.length !== 0 &&
+          <div className="top-subtotal">
+            <h2>
+              Order Summary
+            </h2>
+            <div className="summary-subsection">
+              <div className="flex-section">
+                <div>
+                  Subtotal ({getCartCount()} {getCartCount() === 1 ? <>item</> : <>items</>})
+                </div>
+                <div >
+                  ${getCartSubTotal()}
+                </div>
+              </div>
+              <div className="flex-section">
+                <div>
+                  Estimated Shipping
+                </div>
+                <div >
+                  $0.00
+                </div>
+              </div>
+              <div className="flex-section">
+                <div>
+                  Estimated Tax
+                </div>
+                <div >
+                  $0.00
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div className="flex-section">
+              <div>
+                <b>Order Total</b>
+              </div>
+              <div >
+                <b>${getCartSubTotal()}</b>
+              </div>
+            </div>
+
+            <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
+              CHECKOUT
+            </button>
+            <Link to="/auth">
+              <button className="btn btn-light btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
+                LOG IN
+              </button>
+            </Link>
+          </div>}
         {savedForLater.length !== 0 &&
           <>
             <div className="collapsible_items">
@@ -396,6 +414,7 @@ const CartScreen = (props) => {
                         qtyChangeHandler={qtyChangeHandler}
                         removeHandler={removeFromCartHandler}
                         addToWishlistHandler={addToWishlistHandler}
+                        removeFromWishlistHandler={removeFromWishlistHandler}
                         saveForLaterHandler={saveForLaterHandler}
                         addBackToCartHandler={addBackToCartHandler}
                         saved={true}
@@ -405,9 +424,6 @@ const CartScreen = (props) => {
                     </div>
                   )
                   )}
-                  <div className="number_of_items_saved">
-                    ({getSavedCount()}) {getSavedCount() === 1 ? <>item</> : <>items</>}
-                  </div>
                 </div>
               }
             </div>

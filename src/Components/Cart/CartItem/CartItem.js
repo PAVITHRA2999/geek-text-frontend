@@ -1,11 +1,32 @@
 import "./CartItem.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Rating from '@material-ui/lab/Rating';
 import QtyDropdown from "../QtyDropdown/QtyDropdown";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
-const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler, saveForLaterHandler, addBackToCartHandler, saved, bookId }) => {
+const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler, removeFromWishlistHandler, saveForLaterHandler, addBackToCartHandler, saved, bookId }) => {
+  // Determine whether item is already in wishlist and handle favorite state accordingly
+  const wishlist = useSelector((state) => state.wishlist);
+  const { wishlistItems } = wishlist;
+  const isFavorited = wishlistItems.some((book) => book.book === item.book);
+  const [favorited, setFavorited] = useState(isFavorited);
+
+  // Add a new item to wishilist
+  const wishlistAdd = () => {
+    addToWishlistHandler(item.book, item.title);
+    setFavorited(true);
+  };
+
+  // Remove item from wishilist
+  const wishlistRemove = () => {
+
+    removeFromWishlistHandler(item.book, item.title);
+    setFavorited(false);
+  };
 
   return (
     <>
@@ -48,8 +69,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                     onClick={() => saveForLaterHandler(item.book, item.qty)}>
                     Save for later
                   </button>
-                  |
-                  <FavoriteBorderIcon
+                  |<FavoriteBorderIcon
                     className="fav_button"
                     style={{ fontSize: "18px" }}
                     color="inherit"
@@ -147,12 +167,21 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                 Add to cart
               </button>
               |
-              <FavoriteBorderIcon
-                className="fav_button"
-                style={{ fontSize: "18px" }}
-                color="inherit"
-                size="sm"
-                onClick={() => addToWishlistHandler(item.book, item.title)} />
+              {favorited ?
+                <FavoriteIcon
+                  className="fav_button"
+                  style={{ fontSize: "18px" }}
+                  color="inherit"
+                  size="sm"
+                  onClick={wishlistRemove}
+                />
+                : <FavoriteBorderIcon
+                  className="fav_button"
+                  style={{ fontSize: "18px" }}
+                  color="inherit"
+                  size="sm"
+                  onClick={wishlistAdd}
+                />}
               |
               <button className="delete_button"
                 onClick={() => removeHandler(item.book, item.title)}>

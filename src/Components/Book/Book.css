@@ -41,9 +41,8 @@
 
 .product__info {
 	float: left;
-	display:flex;
-	flex-wrap: wrap;
-
+	/* display:flex;
+	flex-wrap: wrap; */
 	white-space:initial!important;
 }
 

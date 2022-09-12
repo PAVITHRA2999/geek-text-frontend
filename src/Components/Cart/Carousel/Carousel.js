@@ -10,10 +10,7 @@ export const CarouselItem = ({ children, width }) => {
 };
 const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const length = React.Children.count(children);
     const items = React.Children;
-
-    console.log(`length: ${length}`);
     const nextIndex = () => {
         let newIndex;
         if (activeIndex === totalLength - offset) {
@@ -42,17 +39,19 @@ const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) 
 
     return (
         <div className="carousel-container">
-            {(totalLength > offset || activeIndex !== 0) && <i className="fa-solid fa fa-chevron-left fa-lg" disabled={activeIndex === 0} onClick={prevIndex}></i>
+            {(totalLength > offset || activeIndex !== 0) && <i className="fa-solid fa fa-chevron-left fa-lg indicator" disabled={activeIndex === 0} onClick={prevIndex}></i>
             }
             <div className="carousel" >
                 <div className="inner" style={{ transform: `translateX(-${(activeIndex) * 25}%)` }}>
                     {items.map(children, (child) => {
-                        return React.cloneElement(child, { width: "100%" });
+                        return React.cloneElement(child, {
+                            width: "100%"
+                        });
                     })}
                 </div>
 
             </div>
-            {((totalLength > offset) || (activeIndex < totalLength - offset)) && <i className="fa-solid fa fa-chevron-right fa-lg"
+            {((totalLength > offset) || (activeIndex < totalLength - offset)) && <i className="fa-solid fa fa-chevron-right fa-lg indicator"
                 disabled={activeIndex >= totalLength - offset}
                 onClick={nextIndex}></i>}
         </div>

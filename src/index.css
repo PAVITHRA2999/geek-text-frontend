@@ -13,8 +13,10 @@
   --yellow-color:#a78e4b;
   --dark-color: #4d636a;
   --gray-color:#7a7c7e;
+  --dark-gray-color:#535456;
   --light-gray-color:#b7bbbf;
   --border-color:#ddd;
+  --disabled-color: #aaa9a9;
 }
 
 * {
@@ -59,12 +61,12 @@ a {
 	margin-right: 10rem;
 }
 .screen i:hover{
-	color:var(--primary-color);
+	color:var(--dark-gray-color);
 	cursor: pointer;
 }
 .screen i[disabled]{
 	pointer-events: none;
-	color: rgb(170, 169, 169);
+	color: var(--disabled-color);
 }
 hr {
   border: none;
@@ -73,10 +75,6 @@ hr {
   height: 1px;
   *height: 2px; /* IE6+7 need the total height */
 }
-
-
-
-
 
 .customer_container {
   max-width: 1440px;

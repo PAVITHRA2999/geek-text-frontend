@@ -1,16 +1,13 @@
 import "./SavedItem.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { addToWishlist, removeFromWishlist } from "../../../Redux/actions/wishlistActions";
-import Notification from "../UI/Notification";
+import { useSelector } from "react-redux";
 import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const SavedItem = ({ cover, description, price, rating, title, book, qty, authorName, authorId, addToWishlistHandler, removeFromWishlistHandler, addBackToCartHandler, removeHandler }) => {
 
-  const dispatch = useDispatch();
 
   // Determine whether item is already in wishlist and handle favorite state accordingly
   const wishlist = useSelector((state) => state.wishlist);

@@ -174,7 +174,7 @@ margin-bottom: 1rem;
 
 .info_Column {
   text-align: left;
-  /* line-height:normal; */
+  align-self: center;
 }
 
 .info_title_author{
@@ -221,9 +221,9 @@ display: none;
    display: none;
  }
 
-@media (max-width: 760px) {
+@media (max-width: 1080px) {
   .grid_SavedForLater {
-    gap: 1rem;
+    /* gap: 1rem; */
     /* padding-left: 1rem;
     padding-right: 1rem; */
     margin-top: 1rem;
@@ -237,10 +237,10 @@ display: none;
   }
 
   .grid_Cart {
-    gap: 5px;
+    /* gap: 5px; */
     /* padding-left: 2rem;
     padding-right: 2rem; */
-    grid-template-columns: 1fr 3fr 1fr 1fr;
+    /* grid-template-columns: 1fr 3fr 1fr 1fr; */
   
   }
   
@@ -256,7 +256,7 @@ display: none;
   .grid_Cart {
     grid-template-columns: 1fr 6fr;
     /* padding: 1rem; */
-    gap: 0px;
+    /* gap: 0px; */
   }
 
   .cartscreen__info_saved{
