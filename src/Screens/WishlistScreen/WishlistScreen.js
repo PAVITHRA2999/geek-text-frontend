@@ -84,25 +84,31 @@ const WishlistScreen = ({ history }) => {
 
 
   return (
-    <div className="wishlistscreen">
+    <>
       {
         wishlistItems.length === 0 ?
-          (<div className="cartscreen__center">
-            SAVE YOUR FAVORITE ITEMS
-            <h1>Your Wishlist is Empty!</h1>
-            <div className="text_body">
-              Want to save the items you love? Just click on the heart icon found on the product image and it will show up here.
+          (
+            <div className="cartscreen__center">
+              <div className="cart_message">
+                <div className="cart_upper_message">
+                  <p>Your wishlist is empty.</p>
+                </div>
+                <div className="cart_bottom_message">
+                  <p> Want to save your favorite items? Just click on the heart icon next to them and they will show up here.</p>
+                </div>
+                <Link to="/browse" className="btn-browse">
+                  <div className="btn btn-primary btn-checkout">
+                    BROWSE BOOKS
+                  </div>
+                </Link>
+              </div>
+
             </div>
-            <Link to="/browse">
 
-              <button className="btn btn-primary btn-cart">BROWSE</button>
-
-            </Link>
-          </div>
           )
           :
           (
-            <div>
+            <div className="wishlistscreen">
               <div className="centered_header">
                 Your Wishlist
               </div>
@@ -137,7 +143,7 @@ const WishlistScreen = ({ history }) => {
         notify={notify}
         setNotify={setNotify}
       />
-    </div>
+    </>
   );
 };
 

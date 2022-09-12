@@ -43,7 +43,7 @@ export const Navigation = () => {
                     <Link to="/auth" className="Router_Link">
                     <PermIdentityIcon
                     />
-                        <h4 className="links inlineheader">Sign-up/Sign-in</h4>
+                        <h4 className="links inlineheader">Sign In</h4>
                     </Link>
                  </div>
                  }

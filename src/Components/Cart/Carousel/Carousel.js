@@ -35,7 +35,6 @@ const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) 
         setActiveIndex(newIndex);
         handleUpdateIndexCallback(newIndex);
     };
-    console.log(activeIndex);
 
     return (
         <div className="carousel-container">

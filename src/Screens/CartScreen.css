@@ -16,7 +16,7 @@ justify-content: center;
   /* width: 60%; */
 
   /* display: block; */
-
+margin-bottom: 2rem;
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -54,7 +54,7 @@ justify-content: center;
   position: relative;
   align-items: center;
   justify-content:center;
- padding-top: 2rem;
+  padding-top: 2rem;
 }
 
 .saved-for-later-container {

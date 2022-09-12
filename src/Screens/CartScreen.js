@@ -427,12 +427,6 @@ const CartScreen = (props) => {
                 </div>
               }
             </div>
-
-
-
-
-
-
           </>
         }
         <div className="shaded_section">
