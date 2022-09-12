@@ -39,7 +39,7 @@ const WishlistScreen = ({ history }) => {
     setNotify({
       isOpen: true,
       message: `"${title}" was removed from wishlist`,
-      type: 'error',
+      type: 'success',
       typeStyle: 'specific'
     });
   };

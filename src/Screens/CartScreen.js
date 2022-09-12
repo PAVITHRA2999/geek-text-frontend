@@ -7,13 +7,11 @@ import Notification from "../Components/Cart/UI/Notification";
 import ConfirmDialog from "../Components/Cart/UI/ConfirmDialog";
 import SignInFirstDialog from "../Components/Cart/UI/SignInFirstDialog";
 import { addToCart, removeFromCart } from "../Redux/actions/cartActions";
-import { addToWishlist } from "../Redux/actions/wishlistActions";
+import { addToWishlist, removeFromWishlist } from "../Redux/actions/wishlistActions";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import SavedItem from "../Components/Cart/SavedItem/SavedItem";
-import Book from "../Components/Book/Book";
 import Carousel from "../Components/Cart/Carousel/Carousel";
-import CarouselItem from "../Components/Cart/Carousel/Carousel";
 
 import axios from "axios";
 
@@ -71,15 +69,14 @@ const CartScreen = (props) => {
     setNotify({
       isOpen: true,
       message: `"${title}" was removed from cart`,
-      type: 'error',
+      type: 'success',
       typeStyle: 'specific'
     });
   };
 
-  // Add item to wishlist, remove it from shopping cart, and display message
+  // Add item to wishlist and display message
   const addToWishlistHandler = (id, title) => {
     dispatch(addToWishlist(id));
-    dispatch(removeFromCart(id));
     setNotify({
       isOpen: true,
       message: `"${title}" was added to your wishlist`,
@@ -87,6 +84,25 @@ const CartScreen = (props) => {
       typeStyle: 'specific'
     });
   };
+
+  // Add item to wishlist, remove it from shopping cart, and display message
+  const addCartItemToWishlistHandler = (id, title) => {
+    addToWishlistHandler(id, title);
+    dispatch(removeFromCart(id));
+  };
+
+  // Add item to wishlist, remove it from shopping cart, and display message
+  const removeFromWishlistHandler = (id, title) => {
+    dispatch(removeFromWishlist(id));
+    setNotify({
+      isOpen: true,
+      message: `"${title}" was removed from your wishlist`,
+      type: 'success',
+      typeStyle: 'specific'
+    });
+  };
+
+
 
   // Checkout every book in cart close dialog and display success message
   const onContinue = () => {
@@ -161,19 +177,16 @@ const CartScreen = (props) => {
   function ListofSaved() {
     for (let index = 0; index < savedForLater.length; index++) {
       return (
-        <>
-          <div className="number_of_items_saved">
-            {activeIndex + 1}-{activeIndex + offset} of {savedForLater.length}
-          </div>
-          <List
-            key={savedForLater[index].book}
-            data={savedForLater.filter(
-              // (item, i) => (i >= activeIndex && i < activeIndex + offset)
-              (item, i) => (i >= activeIndex && i <= activeIndex + offset)
-            )}
-          />
 
-        </>);
+        <List
+          key={savedForLater[index].book}
+          data={savedForLater}
+        ///.filter(
+        // (item, i) => (i >= activeIndex && i < activeIndex + offset)
+        // (item, i) => (i >= (activeIndex === 0 ? activeIndex : activeIndex - 1) && i <= activeIndex + offset)
+        // )}
+        />
+      );
     }
   }
 
@@ -203,7 +216,8 @@ const CartScreen = (props) => {
               removeHandler={removeFromCartHandler}
             /></>
         </div>
-      )));
+      ))
+    );
   }
 
   return (
@@ -270,7 +284,7 @@ const CartScreen = (props) => {
                       item={item}
                       qtyChangeHandler={qtyChangeHandler}
                       removeHandler={removeFromCartHandler}
-                      addToWishlistHandler={addToWishlistHandler}
+                      addToWishlistHandler={addCartItemToWishlistHandler}
                       saveForLaterHandler={saveForLaterHandler}
                       addBackToCartHandler={addBackToCartHandler}
                       saved={false}
@@ -290,7 +304,29 @@ const CartScreen = (props) => {
               totalLength={savedForLater.length}
             >
 
-              {ListofSaved()}
+              {savedForLater.map((item) => (
+                <div key={item.book}
+
+                  className="carousel-item">
+                  <>
+                    {/* {console.log(item)} */}
+                    <SavedItem
+                      key={item._id}
+                      title={item.title}
+                      price={item.price}
+                      rating={item.rating}
+                      cover={item.cover}
+                      book={item.book}
+                      qty={item.qty}
+                      authorId={item.author._id}
+                      authorName={item.authorName}
+                      addToWishlistHandler={addToWishlistHandler}
+                      removeFromWishlistHandler={removeFromWishlistHandler}
+                      addBackToCartHandler={addBackToCartHandler}
+                      removeHandler={removeFromCartHandler}
+                    /></>
+                </div>
+              ))}
             </Carousel>
           </div>
 

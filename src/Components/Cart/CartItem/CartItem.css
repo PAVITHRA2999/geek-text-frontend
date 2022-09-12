@@ -174,9 +174,19 @@ margin-bottom: 1rem;
 
 .info_Column {
   text-align: left;
-  align-self: center;
+  /* line-height:normal; */
+}
+
+.info_title_author{
+vertical-align: top;
+}
+.info_stars{
 
 }
+.info_buttons{
+  vertical-align: bottom;
+}
+
 .qty_Column {
   align-self: center;
   padding-left: 1rem;

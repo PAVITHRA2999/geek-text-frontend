@@ -53,7 +53,7 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
     setNotify({
       isOpen: true,
       message: `"${title}" was removed from your wishlist`,
-      type: 'error',
+      type: 'success',
       typeStyle: 'specific'
     });
     setFavorited(false);

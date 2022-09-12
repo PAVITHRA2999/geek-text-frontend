@@ -127,7 +127,7 @@ const BookScreen = ({ match, history }) => {
     setNotify({
       isOpen: true,
       message: `"${book.title}" was removed from your wishlist`,
-      type: 'error',
+      type: 'success',
       typeStyle: 'specific'
     });
     setFavorited(false);

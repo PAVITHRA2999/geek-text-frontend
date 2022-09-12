@@ -18,8 +18,7 @@
     width: 100%;
     align-self: left;
     justify-self: left;
-    margin-right:1rem;
-    margin-top: 0.5rem;
+    display: block;
     /* margin-bottom: 1rem; */
   }
 
@@ -55,8 +54,8 @@
     width:fit-content;
     grid-template-columns: 1fr 30fr 5fr;
     gap: 18px;
-    /* padding-left: 10rem;
-    padding-right: 10rem; */
+    height: fit-content;
+    padding: 1rem 0rem;
     grid-auto-flow: column;
     grid-template-columns: repeat(auto-fit, minmax(min-content, 100fr));
 }
@@ -156,9 +155,6 @@ padding-bottom: 0px !important;
     flex-direction: row
 }
 
-#cover_column_wishlist {
-  align-self: center;
-}
 
 #info_column_wishlist {
   flex-direction: row;

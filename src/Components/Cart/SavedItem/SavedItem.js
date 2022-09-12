@@ -8,45 +8,27 @@ import Rating from '@material-ui/lab/Rating';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-const SavedItem = ({ cover, description, price, rating, title, book, qty, authorName, authorId, addBackToCartHandler, removeHandler }) => {
+const SavedItem = ({ cover, description, price, rating, title, book, qty, authorName, authorId, addToWishlistHandler, removeFromWishlistHandler, addBackToCartHandler, removeHandler }) => {
 
   const dispatch = useDispatch();
-
-  // Notification
-  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' });
 
   // Determine whether item is already in wishlist and handle favorite state accordingly
   const wishlist = useSelector((state) => state.wishlist);
   const { wishlistItems } = wishlist;
-
   const isFavorited = wishlistItems.some((item) => item.book === book);
-
   const [favorited, setFavorited] = useState(isFavorited);
 
   // Add a new item to wishilist
-  const addToWishlistHandler = () => {
-    dispatch(addToWishlist(book));
-    setNotify({
-      isOpen: true,
-      message: `"${title}" was added to wishlist`,
-      type: 'success',
-      typeStyle: 'specific'
-    });
+  const wishlistAdd = () => {
+    addToWishlistHandler(book, title);
     setFavorited(true);
   };
 
   // Remove item from wishilist
-  const removeFromWishlistHandler = () => {
-    dispatch(removeFromWishlist(book));
-    setNotify({
-      isOpen: true,
-      message: `"${title}" was removed from your wishlist`,
-      type: 'error',
-      typeStyle: 'specific'
-    });
+  const wishlistRemove = () => {
+    removeFromWishlistHandler(book, title);
     setFavorited(false);
   };
-
 
 
   return (
@@ -59,10 +41,10 @@ const SavedItem = ({ cover, description, price, rating, title, book, qty, author
           <div id="infoi">
             {
               favorited ?
-                <FavoriteIcon className="fav" onClick={removeFromWishlistHandler}
+                <FavoriteIcon className="fav" onClick={wishlistRemove}
                   sx={{ border: "1px solid #4d636a", borderRadius: "50%", padding: "3px" }} />
                 :
-                <FavoriteBorderIcon className="fav" onClick={addToWishlistHandler}
+                <FavoriteBorderIcon className="fav" onClick={wishlistAdd}
                   sx={{ border: "1px solid #4d636a", borderRadius: "50%", padding: "3px" }}
                 />
             }
@@ -115,10 +97,6 @@ const SavedItem = ({ cover, description, price, rating, title, book, qty, author
         </div>
 
       </div>
-      <Notification
-        notify={notify}
-        setNotify={setNotify}
-      />
     </>
   );
 };
