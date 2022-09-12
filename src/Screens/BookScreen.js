@@ -166,7 +166,7 @@ const BookScreen = ({ match, history }) => {
               <div className="container">
                 <div className="container__main">
                   <div className="container__left">
-                    <input type="image" src={book.cover} alt="book cover" className="book-cover" onClick={() => setShow(true)} />
+                    <input type="image" src={book.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShow(true)} />
                     <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
                       <img src={book.cover} alt="book cover" className="book-cover-large" />
                     </BookCoverModal>

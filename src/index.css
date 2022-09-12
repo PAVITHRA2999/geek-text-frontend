@@ -77,13 +77,12 @@ hr {
 
 
 
-/* 
+
 .customer_container {
   max-width: 1440px;
   width: 100%;
-  padding: 7px 15px;
-  margin: 0 auto;
-} */
+  margin-top:  3rem;
+} 
 
 img {
   width: 100%;
@@ -92,7 +91,7 @@ img {
 
 .btn{
   font-family: "Open Sans", sans-serif;
-  min-width: 130px;
+  min-width: 6.5rem;
   font-weight: 700;
   font-size: 0.8rem;
   transition: all 0.3s ease-out;

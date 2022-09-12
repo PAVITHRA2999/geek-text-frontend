@@ -10,6 +10,10 @@ import { addToCart, removeFromCart } from "../Redux/actions/cartActions";
 import { addToWishlist } from "../Redux/actions/wishlistActions";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import SavedItem from "../Components/Cart/SavedItem/SavedItem";
+import Book from "../Components/Book/Book";
+import Carousel from "../Components/Cart/Carousel/Carousel";
+import CarouselItem from "../Components/Cart/Carousel/Carousel";
 
 import axios from "axios";
 
@@ -142,8 +146,69 @@ const CartScreen = (props) => {
   };
 
 
+  const [activeIndex, setActiveIndex] = useState(0);
+  const offset = 4;
+
+  // Handle seconds from timer
+  const handleUpdateIndexCallback = (newIdx) => {
+    const newIndex = newIdx;
+    console.log("new:");
+    console.log(newIndex);
+    setActiveIndex(newIndex);
+  };
+
+
+  function ListofSaved() {
+    for (let index = 0; index < savedForLater.length; index++) {
+      return (
+        <>
+          <div className="number_of_items_saved">
+            {activeIndex + 1}-{activeIndex + offset} of {savedForLater.length}
+          </div>
+          <List
+            key={savedForLater[index].book}
+            data={savedForLater.filter(
+              // (item, i) => (i >= activeIndex && i < activeIndex + offset)
+              (item, i) => (i >= activeIndex && i <= activeIndex + offset)
+            )}
+          />
+
+        </>);
+    }
+  }
+
+
+  function List({ data = [] }) {
+    console.log("data");
+    console.log(data);
+    if (!data.length) return null;
+    return (
+      data.map((item) => (
+        <div key={item.book}
+
+          className="carousel-item">
+          <>
+            {/* {console.log(item)} */}
+            <SavedItem
+              key={item._id}
+              title={item.title}
+              price={item.price}
+              rating={item.rating}
+              cover={item.cover}
+              book={item.book}
+              qty={item.qty}
+              authorId={item.author._id}
+              authorName={item.authorName}
+              addBackToCartHandler={addBackToCartHandler}
+              removeHandler={removeFromCartHandler}
+            /></>
+        </div>
+      )));
+  }
+
   return (
     <>
+
       <div className="nav-bottom" style={{ display: getCartCount() === 0 && 'none' }}>
         <div className="right-subtotal">
           <div className="right-subtotal-text">
@@ -178,46 +243,66 @@ const CartScreen = (props) => {
         <div className="centered_header">
           Shopping Cart
         </div>
-        <div className="cartscreen__info">
+        <div className="checkout-content">
+          <div className="cartscreen__info">
 
-          {inCart.length === 0 ?
-            (<>
-              <div className="cartscreen__center">
-                <div className="cart_message">
-                  <div className="cart_upper_message">
-                    <p>Your cart is empty.</p>
-                  </div>
-                  <div className="cart_bottom_message">
-                    <p>Add some books and get free shipping on orders of $40+.</p>
+            {inCart.length === 0 ?
+              (<>
+                <div className="cartscreen__center">
+                  <div className="cart_message">
+                    <div className="cart_upper_message">
+                      <p>Your cart is empty.</p>
+                    </div>
+                    <div className="cart_bottom_message">
+                      <p>Add some books and get free shipping on orders of $40+.</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>)
-            :
-            (
-              inCart.map((item, i) => (
+              </>)
+              :
+              (
+                inCart.map((item, i) => (
 
-                <div key={item.book}>
+                  <div key={item.book}>
 
-                  <CartItem
-                    key={item.book}
-                    item={item}
-                    qtyChangeHandler={qtyChangeHandler}
-                    removeHandler={removeFromCartHandler}
-                    addToWishlistHandler={addToWishlistHandler}
-                    saveForLaterHandler={saveForLaterHandler}
-                    addBackToCartHandler={addBackToCartHandler}
-                    saved={false}
-                    bookId={item.book}
-                  />
-                  {i < inCart.length - 1 && <hr />}
-                </div>
-              )))}
+                    <CartItem
+                      key={item.book}
+                      item={item}
+                      qtyChangeHandler={qtyChangeHandler}
+                      removeHandler={removeFromCartHandler}
+                      addToWishlistHandler={addToWishlistHandler}
+                      saveForLaterHandler={saveForLaterHandler}
+                      addBackToCartHandler={addBackToCartHandler}
+                      saved={false}
+                      bookId={item.book}
+                    />
+                    {i < inCart.length - 1 && <hr />}
+                  </div>
+                )))}
+          </div>
+          <div className="non_collapsible_items">
+            <div className="saved-header" onClick={() => toggleCollapse()}>
+              <h3>Saved for Later ({savedForLater.length} item{savedForLater.length > 1 && "s"})</h3>
+            </div>
+            <Carousel
+              offset={offset}
+              handleUpdateIndexCallback={handleUpdateIndexCallback}
+              totalLength={savedForLater.length}
+            >
 
-          <div className="top-subtotal">
+              {ListofSaved()}
+            </Carousel>
+          </div>
+
+        </div>
+        <div className="top-subtotal">
+          <h2>
+            Order Summary
+          </h2>
+          <div className="summary-subsection">
             <div className="flex-section">
-              <div >
-                Subtotal ({getCartCount()}) {getCartCount() === 1 ? <>item:</> : <>items:</>}
+              <div>
+                Subtotal ({getCartCount()} {getCartCount() === 1 ? <>item</> : <>items</>})
               </div>
               <div >
                 ${getCartSubTotal()}
@@ -239,10 +324,20 @@ const CartScreen = (props) => {
                 $0.00
               </div>
             </div>
-            <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout" disabled={getCartCount() === 0}>
-              CHECKOUT
-            </button>
           </div>
+          <hr />
+          <div className="flex-section">
+            <div>
+              <b>Order Total</b>
+            </div>
+            <div >
+              <b>${getCartSubTotal()}</b>
+            </div>
+          </div>
+
+          <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
+            CHECKOUT
+          </button>
         </div>
         {savedForLater.length !== 0 &&
           <>
@@ -258,7 +353,7 @@ const CartScreen = (props) => {
               {colapse &&
                 <div className="cartscreen__info_saved collapsible_content">
                   {savedForLater.map((item, i) => (
-                    <>
+                    <div key={item.book}>
                       <CartItem
                         key={item.book}
                         item={item}
@@ -271,7 +366,7 @@ const CartScreen = (props) => {
                         bookId={item.book}
                       />
                       {i < savedForLater.length - 1 && <hr />}
-                    </>
+                    </div>
                   )
                   )}
                   <div className="number_of_items_saved">
@@ -280,35 +375,12 @@ const CartScreen = (props) => {
                 </div>
               }
             </div>
-            <div className="non_collapsible_items">
-              <div className="centered saved_for_later_header" onClick={() => toggleCollapse()}>
-                <h3>Saved for Later ({savedForLater.length})</h3>
-              </div>
 
-              <div className="cartscreen__info_saved">
-                {savedForLater.map((item, i) => (
-                  <>
-                    <CartItem
-                      key={item.book}
-                      item={item}
-                      qtyChangeHandler={qtyChangeHandler}
-                      removeHandler={removeFromCartHandler}
-                      addToWishlistHandler={addToWishlistHandler}
-                      saveForLaterHandler={saveForLaterHandler}
-                      addBackToCartHandler={addBackToCartHandler}
-                      saved={true}
-                      bookId={item.book}
-                    />
-                    {i < savedForLater.length - 1 && <hr />}
-                  </>
-                )
-                )}
-                <div className="number_of_items_saved">
-                  ({getSavedCount()}) {getSavedCount() === 1 ? <>item</> : <>items</>}
-                </div>
-              </div>
 
-            </div>
+
+
+
+
           </>
         }
         <div className="shaded_section">

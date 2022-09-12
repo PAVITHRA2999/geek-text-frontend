@@ -87,7 +87,7 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
       <div className="product" >
         <div className="center__image" >
           <Link to={`/book/${bookId}`}>
-            <img src={cover} alt={title} id="container" />
+            <img src={cover} alt={title} id="container" title="view details" />
           </Link>
           <div id="infoi">
             {
@@ -106,9 +106,9 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
         <div className="product__info">
 
           <Link to={`/book/${bookId}`} className="cartItem__name">
-            <p className="info__name">{title}</p>
+            <p className="info__name" title={title}>{title}</p>
           </Link>
-          <p className="info__author">By <Link to={`/authorbooks/${authorId}`} className="book__author__link">{authorName}</Link></p>
+          <p className="info__author">By <Link to={`/authorbooks/${authorId}`} className="book__author__link" title={authorName}>{authorName}</Link></p>
 
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
           <div className="block rating__block">
@@ -127,7 +127,7 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
           <p className="info__price">${parseFloat(price).toFixed(2)}</p>
         </div>
         <div className="browser_buttons">
-          <button type="btn" onClick={addToCartHandler} className="btn btn-primary btn-full">
+          <button type="btn" onClick={addToCartHandler} className="btn btn-primary btn-full" title="add to cart">
             ADD TO CART
           </button>
 

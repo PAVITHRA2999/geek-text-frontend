@@ -25,7 +25,6 @@
 }
 
 .book__author__link:hover {
-	color: var(--primary-color);
 	cursor: pointer;
 	text-decoration:underline;
 }
@@ -42,6 +41,10 @@
 
 .product__info {
 	float: left;
+	display:flex;
+	flex-wrap: wrap;
+
+	white-space:initial!important;
 }
 
 .info__price {
@@ -50,9 +53,12 @@
 }
 
 .info__name {
-	font-size: 12px;
-	overflow: hidden;
-	font-weight: bold;
+	font-size: 12px !important;
+	overflow: hidden !important;
+	font-weight: bold !important;
+	display:flex !important;
+	flex-wrap: wrap !important;
+	display: block !important;
 }
 .info__name:hover{
 	text-decoration:underline;

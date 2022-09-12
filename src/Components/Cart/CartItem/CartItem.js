@@ -14,7 +14,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
           <div className="grid_Cart">
             <div className="cover_Column">
               <Link to={`/book/${bookId}`} href="#">
-                <img src={item.cover} alt={item.title} className="small" />
+                <img src={item.cover} alt={item.title} className="small" title="view details" />
               </Link>
             </div>
 
