@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
-//components
-//import Header from "./Header";
-import ReviewList from "../Components//Reviews/ReviewList";
-import ReviewForm from "../Components/Reviews/ReviewForm";
-import Button from "@material-ui/lab/Rating";
-import { getBookDetails } from "../Redux/actions/bookActions";
+import ReviewList from "../../Components/Reviews/ReviewList";
+import ReviewForm from "../../Components/Reviews/ReviewForm";
+import { getBookDetails } from "../../Redux/actions/bookActions";
 import { useSelector, useDispatch } from "react-redux";
 
 function ReviewScreen({ match, history }) {
@@ -12,18 +9,18 @@ function ReviewScreen({ match, history }) {
     const { loading, error, book } = bookDetails;
     const dispatch = useDispatch();
     const backToBook = () => {
-        history.push(`/book/` + match.params.id );
-      }
-    
+        history.push(`/book/` + match.params.id);
+    };
+
     useEffect(() => {
         if (book && (match.params.id) !== book._id) {
-          dispatch(getBookDetails(match.params.id));
+            dispatch(getBookDetails(match.params.id));
         }
-      }, [dispatch, book, match]);
+    }, [dispatch, book, match]);
 
-//var comments = book.comments;
-      //console.log(JSON.stringify(comments));      
-      const [reviewList, setReviewList] = useState([]);
+    //var comments = book.comments;
+    //console.log(JSON.stringify(comments));      
+    const [reviewList, setReviewList] = useState([]);
 
     const addReview = (
         titleInput,
@@ -51,7 +48,7 @@ function ReviewScreen({ match, history }) {
     };
     return (
         <div className="ReviewScreen">
-        <button onClick={backToBook}>Back to Book</button>
+            <button onClick={backToBook}>Back to Book</button>
             <h1>Add a Review</h1>
             <ReviewForm addReview={addReview} />
             <h1>Reviews List</h1>

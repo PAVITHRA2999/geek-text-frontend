@@ -1,19 +1,20 @@
 import "./CartScreen.css";
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import CartItem from "../Components/Cart/CartItem/CartItem";
-import Notification from "../Components/Cart/UI/Notification";
-import ConfirmDialog from "../Components/Cart/UI/ConfirmDialog";
-import SignInFirstDialog from "../Components/Cart/UI/SignInFirstDialog";
-import { addToCart, removeFromCart } from "../Redux/actions/cartActions";
-import { addToWishlist, removeFromWishlist } from "../Redux/actions/wishlistActions";
+import { useSelector, useDispatch } from "react-redux";
+import { addToCart, removeFromCart } from "../../Redux/actions/cartActions";
+import { addToWishlist, removeFromWishlist } from "../../Redux/actions/wishlistActions";
+import axios from "axios";
+
+import CartItem from "../../Components/Cart/CartItem/CartItem";
+import Notification from "../../Components/Cart/UI/Notification";
+import ConfirmDialog from "../../Components/Cart/UI/ConfirmDialog";
+import SignInFirstDialog from "../../Components/Cart/UI/SignInFirstDialog";
+import SavedItem from "../../Components/Cart/SavedItem/SavedItem";
+import Carousel from "../../Components/Cart/Carousel/Carousel";
+
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import SavedItem from "../Components/Cart/SavedItem/SavedItem";
-import Carousel from "../Components/Cart/Carousel/Carousel";
-
-import axios from "axios";
 
 const CartScreen = (props) => {
 
@@ -102,8 +103,6 @@ const CartScreen = (props) => {
     });
   };
 
-
-
   // Checkout every book in cart close dialog and display success message
   const onContinue = () => {
     inCart.map((item) => checkout(item.book, item.qty));
@@ -170,50 +169,6 @@ const CartScreen = (props) => {
     const newIndex = newIdx;
     setActiveIndex(newIndex);
   };
-
-
-  // function ListofSaved() {
-  //   for (let index = 0; index < savedForLater.length; index++) {
-  //     return (
-
-  //       <List
-  //         key={savedForLater[index].book}
-  //         data={savedForLater}
-  //       ///.filter(
-  //       // (item, i) => (i >= activeIndex && i < activeIndex + offset)
-  //       // (item, i) => (i >= (activeIndex === 0 ? activeIndex : activeIndex - 1) && i <= activeIndex + offset)
-  //       // )}
-  //       />
-  //     );
-  //   }
-  // }
-
-
-  // function List({ data = [] }) {
-  //   if (!data.length) return null;
-  //   return (
-  //     data.map((item) => (
-  //       <div key={item.book}
-
-  //         className="carousel-item">
-  //         <>
-  //           <SavedItem
-  //             key={item._id}
-  //             title={item.title}
-  //             price={item.price}
-  //             rating={item.rating}
-  //             cover={item.cover}
-  //             book={item.book}
-  //             qty={item.qty}
-  //             authorId={item.author._id}
-  //             authorName={item.authorName}
-  //             addBackToCartHandler={addBackToCartHandler}
-  //             removeHandler={removeFromCartHandler}
-  //           /></>
-  //       </div>
-  //     ))
-  //   );
-  // }
 
   return (
     <>
@@ -299,10 +254,7 @@ const CartScreen = (props) => {
 
             </div>)
           }
-          {/* {inCart.length === 0 && <hr
-            className="checkout-content"
-            style={{ width: "43rem", alignItems: "center", justifySelf: "center", textAlign: "center" }}
-          />} */}
+
           {savedForLater.length > 0 &&
 
             <div className="non_collapsible_items">

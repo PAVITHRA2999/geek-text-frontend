@@ -1,19 +1,23 @@
 import "./BookScreen.css";
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getBookDetails } from "../Redux/actions/bookActions";
-import { addToCart } from "../Redux/actions/cartActions";
-import { addToWishlist, removeFromWishlist } from "../Redux/actions/wishlistActions";
-import BookCoverModal from '../Components/Modal/BookCoverModal';
+import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import MessageDialog from "../Components/Cart/UI/MessageDialog";
+
+import { useSelector, useDispatch } from "react-redux";
+import { getBookDetails } from "../../Redux/actions/bookActions";
+import { addToCart } from "../../Redux/actions/cartActions";
+import { addToWishlist, removeFromWishlist } from "../../Redux/actions/wishlistActions";
+
+import MessageDialog from "../../Components/Cart/UI/MessageDialog";
+import BookCoverModal from '../../Components/Modal/BookCoverModal';
+import CustomSelect from "../../Components/CustomSelect/CustomSelect";
+import Notification from "../../Components/Cart/UI/Notification";
+
 import { CircularProgress } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
-import CustomSelect from "../Components/CustomSelect/CustomSelect";
-import { useParams } from "react-router";
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import Notification from "../Components/Cart/UI/Notification";
+
 
 const BookScreen = ({ match, history }) => {
 

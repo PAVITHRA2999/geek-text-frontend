@@ -1,10 +1,9 @@
-import "./BookScreen.css";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CircularProgress } from '@material-ui/core';
-import { getBooksByAuthor } from '../Redux/actions/authorActions';
-import Book from '../Components/Book/Book';
-import "./ListAllBooks.css";
+import { getBooksByAuthor } from '../../Redux/actions/authorActions';
+import Book from '../../Components/Book/Book';
+
 
 const AuthorBooksScreen = ({ match }) => {
 
@@ -21,8 +20,7 @@ const AuthorBooksScreen = ({ match }) => {
 
   return (
     <div className="screen">
-      <h2 className="centered_header">Other books by {author}</h2>
-
+      <h2 className="centered_header">Books by {author}</h2>
       {loading ? (
         <CircularProgress className="circular_progress_dtl" />
       ) : error ? (

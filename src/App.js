@@ -6,12 +6,11 @@ import { Navigation } from './Components/Home/Navigation/Navigation';
 import { Home } from './Components/Home/Home';
 
 
-import CartScreen from "./Screens/CartScreen";
-import BookScreen from "./Screens/BookScreen";
-import ListAllBooks from "./Screens/ListAllBooks";
+import CartScreen from "./Screens/CartScreen/CartScreen";
+import BookScreen from "./Screens/BookScreen/BookScreen";
 import WishlistScreen from "./Screens/WishlistScreen/WishlistScreen";
-import AuthorBooksScreen from './Screens/AuthorBooksScreen';
-import ReviewScreen from './Screens/ReviewScreen';
+import AuthorBooksScreen from './Screens/AuthorBooksScreen/AuthorBooksScreen';
+import ReviewScreen from './Screens/ReviewScreen/ReviewScreen';
 import Browser from './Screens/Browser/Browser';
 
 import { SideBar } from './Components/Dashboard/SideBar/SideBar';
@@ -128,7 +127,6 @@ function App() {
 
         <Route exact path='/book/:id' component={BookScreen} />
         <Route exact path='/wishlist/:id?' component={WishlistScreen} />
-        <Route exact path='/listofbooks' component={ListAllBooks} />
         <Route exact path='/authorbooks/:id' component={AuthorBooksScreen} />
         <Route exact path='/book/:id/reviews' component={ReviewScreen} />
       </Switch>
