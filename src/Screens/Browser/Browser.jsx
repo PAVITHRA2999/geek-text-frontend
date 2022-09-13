@@ -50,11 +50,11 @@ export default class Browser extends React.Component {
 
     sortTypes = {
         "Top Sellers": "getByTS",
-        "Title: alphabetical": "getByTitle",
-        "Rating": "getByRating",
-        "Release Date": "getByRD",
-        "Price: high to low": "getByPrice",
-        "Author Name: alphabetical": "getByAuthor",
+        "Newest to Oldest": "getByRD",
+        "Price - High to Low": "getByPrice",
+        "Title - A to Z": "getByTitle",
+        "Rating - High to Low": "getByRating",
+        "Author - A to Z": "getByAuthor",
     };
 
     //Get Books from db

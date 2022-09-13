@@ -12,6 +12,7 @@ import MessageDialog from "../../Components/Cart/UI/MessageDialog";
 import BookCoverModal from '../../Components/Modal/BookCoverModal';
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import Notification from "../../Components/Cart/UI/Notification";
+import Accordion from "../../Components/Accordion/Accordion";
 
 import { CircularProgress } from '@material-ui/core';
 import Rating from '@material-ui/lab/Rating';
@@ -144,7 +145,8 @@ const BookScreen = ({ match, history }) => {
     history.push(`/book/` + match.params.id + "/reviews");
   };
 
-
+  const aBook = (book || {});
+  const description = (book || {}).description;
   const publisher = ((book || {}).publishingInfo || {}).publisher;
   const isbn = ((book || {}).publishingInfo || {}).isbn;
   const edition = ((book || {}).publishingInfo || {}).edition;
@@ -155,176 +157,302 @@ const BookScreen = ({ match, history }) => {
   const arr = Array.from({ length: 100 }, (_, index) => index + 1);
   const items = arr.reduce((a, v) => ({ ...a, [v]: v }), {});
 
-  return (
-    <div className="screen">
-      {
-        loading ? (
-          <div className="circular_progress">
-            <CircularProgress className="circular_progress" color="inherit" />
-          </div>
-        ) : error ? (
-          <h2>{error}</h2>
-        ) :
-          (
-            <>
-              <div className="container">
-                <div className="container__main">
-                  <div className="container__left">
-                    <input type="image" src={book.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShow(true)} />
-                    <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
-                      <img src={book.cover} alt="book cover" className="book-cover-large" />
-                    </BookCoverModal>
-                  </div>
-                  <Notification
-                    notify={notify}
-                    setNotify={setNotify}
-                  />
 
-                  <div className="container__right">
-                    <div >
-                      <div className="title__heading">
-                        <div>{book.title}</div>
-                        <div>
-                          {
-                            favorited ?
-                              <FavoriteIcon className="fav-icon" onClick={removeFromWishlistHandler} />
-                              :
-                              <FavoriteBorderIcon className="fav-icon" onClick={addToWishlistNew} />
-                          }
-                        </div>
-                      </div>
-                      <div className="rating__heading"><Rating name="half-rating-read" size="small" value={book.rating} precision={0.1} readOnly /> <div> {book.rating} ({commentsLength})</div></div>
-                      <div className="author__heading">by <Link to={`/authorbooks/${authorID}`}>{book.authorName}</Link></div>
-                      <hr className="top_section" />
+  const Heart = ({ favorited, heartClass }) => {
+    return (
+      <div className={`heart ${heartClass}`}>
+        {
+          favorited ?
+            <FavoriteIcon className="fav-icon" onClick={removeFromWishlistHandler} />
+            :
+            <FavoriteBorderIcon className="fav-icon" onClick={addToWishlistNew} />
+        }
+      </div>
+    );
+  };
+
+
+  const TopSection = ({ className, book }) => {
+    return (<div className={className}>
+      <div className="title__heading">
+        <div>{book.title}</div>
+        <Heart
+          heartClass="heart__heading"
+          favorited={favorited}
+        />
+      </div>
+      <div className="author__heading">
+        by <Link to={`/authorbooks/${authorID}`}>{book.authorName}</Link>
+      </div>
+      <div className="rating__heading">
+        <Rating
+          name="half-rating-read"
+          size="small"
+          value={book.rating}
+          precision={0.1}
+          readOnly
+        />
+        <div>
+          {book.rating} ({commentsLength})
+        </div>
+      </div>
+    </div>);
+  };
+
+  const ProductDetails = () => {
+    return (
+      <div className="details_block text_body">
+        <div>
+          <div>Publisher:</div>
+          <div>ISBN:</div>
+          <div>Edition:</div>
+          <div>Genre:</div>
+        </div>
+        <div>
+          <div>{publisher}</div>
+          <div>{isbn}</div>
+          <div>{edition}</div>
+          <div>{genre}</div>
+        </div>
+      </div>
+    );
+  };
+
+  const AddToCart = ({ book }) => {
+    return (<div className="middle-upper-section">
+      <div className="price_qty_container">
+        <div className="price">
+          <span>${parseFloat(book.price).toFixed(2)}</span>
+        </div>
+        <CustomSelect
+          className="book-details-qty"
+          inputLabel="Qty"
+          inputLabelId="qty-select-label"
+          labelId="Qty"
+          id="qty-select-rating"
+          value={qty}
+          handleChange={(e) => setQty(e.target.value)}
+          items={items}
+        />
+      </div>
+
+      <button className="btn btn-primary btn-full btn-checkout" onClick={addToCartHandler}>
+        ADD TO CART
+      </button>
+
+    </div>);
+  };
+
+
+  const RatingHeader = ({ rating }) => {
+    return (<div className="rating-header"><div className="ave_rating">
+      Average Customer Ratings
+    </div>
+      <div className="rating__heading overall_reviews">
+
+        Overall
+        <Rating name="half-rating-read"
+          size="small"
+          value={rating}
+          precision={0.1}
+          readOnly
+        />
+        {rating}
+        <div className="reviews_number">
+          |
+        </div>
+        <div className="reviews_number">
+          {commentsLength} Reviews
+        </div>
+        <button
+          className="btn btn-primary btn-stars"
+          onClick={createReviewHandler}>
+          Write a review
+        </button>
+      </div>
+    </div>);
+  };
+
+
+  const accordion_data = [
+    {
+      heading: 'Product Details',
+      content: <ProductDetails />
+    },
+    {
+      heading: 'Overview',
+      content: description
+    },
+    {
+      heading: 'About the Author',
+      content: bio
+    }
+  ];
+  return (
+    <>
+      <div className="nav-bottom add-to-cart-nav">
+        <AddToCart book={aBook} />
+      </div>
+      <div className="screen">
+        <Notification
+          notify={notify}
+          setNotify={setNotify}
+        />
+        <MessageDialog
+          messageDialog={messageDialog}
+          setMessageDialog={setMessageDialog}
+        />
+        {
+          loading ? (
+            <div className="circular_progress">
+              <CircularProgress className="circular_progress" color="inherit" />
+            </div>
+          ) : error ? (
+            <h2>{error}</h2>
+          ) :
+            (
+              <>
+
+                <div className="book-screen-container">
+
+                  <div className="container__main">
+                    <TopSection className="top__section__top" book={aBook} />
+                    <div className="container__left">
+                      <input type="image" src={aBook.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShow(true)} />
+                      <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
+                        <img src={aBook.cover} alt="book cover" className="book-cover-large" />
+                      </BookCoverModal>
+                    </div>
+                    <div className="fav-icon-text">
+                      <Heart
+                        favorited={favorited}
+                      />
+                      {favorited ?
+                        <div onClick={removeFromWishlistHandler}>Remove from Wishlist</div>
+                        :
+                        <div onClick={addToWishlistNew}>Add to Wishlist</div>}
+
+
                     </div>
 
-
-                    <div className="middle-upper-section">
-                      <div className="price_qty_container">
-                        <div className="price">
-                          <span>${parseFloat(book.price).toFixed(2)}</span>
-                        </div>
-                        <CustomSelect
-                          className="book-details-qty"
-                          inputLabel="Qty"
-                          inputLabelId="qty-select-label"
-                          labelId="Qty"
-                          id="qty-select-rating"
-                          value={qty}
-                          handleChange={(e) => setQty(e.target.value)}
-                          items={items}
+                    <hr className="hide-to-compact-before top_section_divider section_divider" />
+                    <div className="container__right">
+                      <TopSection
+                        className="hide-to-compact"
+                        book={aBook} />
+                      <hr className="hide-to-compact section_divider add-to-cart-non-nav" />
+                      <div className="add-to-cart-non-nav">
+                        <AddToCart
+                          book={aBook}
                         />
                       </div>
-                      <div className="add_to_cart_btn">
-                        <button className="btn btn-primary btn-full" onClick={addToCartHandler}>
-                          ADD TO CART
-                        </button>
-                      </div>
 
-                      {/* change button to selector */}
-                      <MessageDialog
-                        messageDialog={messageDialog}
-                        setMessageDialog={setMessageDialog}
+                      <div className="mini_section hide-to-compact">
+                        <div className="book_details_heading book_details_heading_bottom">
+                          Product Details
+                        </div>
+
+                        <ProductDetails />
+                      </div>
+                    </div>
+                    <div className="accordion">
+                      <Accordion
+                        data={accordion_data}
                       />
-
                     </div>
-
-                    <div className="mini_section">
-                      <div className="book_details_heading book_details_heading_bottom">
-                        Product Details:
+                  </div>
+                  <hr className="hide-to-compact" />
+                  <div className="section hide-to-compact">
+                    <div className="book_details_heading_center book_details_heading book_details_heading_bottom">Overview</div>
+                    <div className="text_body overview_section"> {aBook.description}</div>
+                  </div>
+                  <hr className="hide-to-compact" />
+                  <div className="smaller_section hide-to-compact">
+                    <div className="section smaller_section_content">
+                      <div className="book_details_heading_center book_details_heading book_details_heading_bottom">
+                        About the Author
                       </div>
-                      <div className="details_block text_body">
-                        <div>
-                          <div>Publisher:</div>
-                          <div>ISBN:</div>
-                          <div>Edition:</div>
-                          <div>Genre:</div>
-                        </div>
-                        <div>
-                          <div>{publisher}</div>
-                          <div>{isbn}</div>
-                          <div>{edition}</div>
-                          <div>{genre}</div>
-                        </div>
+                      <div className="text_body">
+                        {bio}
                       </div>
                     </div>
                   </div>
-                </div>
-                <hr />
-                <div className="section">
-                  <div className="book_details_heading_center book_details_heading book_details_heading_bottom">Overview</div>
-                  <div className="text_body overview_section"> {book.description}</div>
-                </div>
-                <hr />
-                <div className="smaller_section">
-                  <div className="section smaller_section_content">
-                    <div className="book_details_heading_center book_details_heading book_details_heading_bottom">
-                      About the Author
-                    </div>
-                    <div className="text_body">
-                      {bio}
-                    </div>
-                  </div>
-                </div>
-                {/* <hr /> */}
-                <div className="large-padding">
-                  <hr />
-                  <div className="section">
-                    {
-                      <div>
-                        <div className="inline-header">
-                          <div className="author__center book_details_heading">
-                            Reviews
-                          </div>
-
-                          <div className="rating__heading overall_reviews"> Overall <Rating name="half-rating-read" size="small" value={book.rating} precision={0.1} readOnly />
-                            {book.rating} | {commentsLength} Reviews <button className="btn btn-primary" onClick={createReviewHandler}>Write a review</button>
-                          </div>
-
-                        </div>
-
-                        {
-                          commentsLength > 0 ?
-                            <div>
-                              <div className="num_of_reviews">
-                                1-{commentsLength} of {commentsLength} Reviews
-                              </div>
-                              <hr />
-                              {
-
-                                (book.comments).map((comment, i) => <div key={comment.commenter}>
-                                  <div className="comment_container">
-                                    <div className="text_body commenter"><b>{comment.commenter}</b></div>
-
-                                    <div className="comments" key={comment.commenter}>
-
-                                      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-                                      <div className="rating_title"> <Rating value={comment.rating} precision={0.1} size="small" readOnly /> {comment.title} </div>
-                                      <div className="text_body">{comment.content}</div>
-                                    </div>
-                                  </div>
-                                  {i < commentsLength - 1 && <hr />}
-                                </div>
-
-                                )} </div> :
-                            <div className="text_body" >
-                              This item doesn't have any reviews yet.
+                  {/* <hr /> */}
+                  <div className="large-padding">
+                    <hr />
+                    <div className="section">
+                      {
+                        <div>
+                          <div className="inline-header">
+                            <div className="author__center book_details_heading">
+                              Reviews
                             </div>
+                            <div className="overall-flex">
+                              <RatingHeader
+                                rating={aBook.rating}
+                              />
+                            </div>
+                            <button
+                              className="btn btn-primary btn-heading"
+                              onClick={createReviewHandler}>
+                              Write a review
+                            </button>
+                          </div>
+                          <div className="overall-block">
+                            <RatingHeader
+                              rating={aBook.rating}
+                            />
+                          </div>
+                          {
+                            commentsLength > 0 ?
+                              <div>
+                                <div className="num_of_reviews">
+                                  1-{commentsLength} of {commentsLength} Reviews
+                                </div>
+                                <hr />
+                                {
+                                  (aBook.comments).map((comment, i) => <div key={comment.commenter}>
+                                    <div className="comment_container">
+                                      <div className="text_body commenter left_commenter" ><b>{comment.commenter}</b></div>
 
-                        }
+                                      <div className="comments" key={comment.commenter}>
 
+                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+                                        <div className="book_details_rating" id="book_details_rating">
+                                          <div className="rating_stars" id="rating_stars">
+                                            <Rating value={comment.rating}
+                                              precision={0.1}
+                                              size="small"
+                                              readOnly
+                                            />
+                                          </div>
+                                          <div className="rating_title" id="rating_title">  {comment.title}</div>
+                                          <div className="text_body commenter block_commenter" id="commenter"><b>{comment.commenter}</b></div>
+                                        </div>
 
-                      </div>
-                    }
+                                        <div className="text_body">{comment.content}</div>
+                                      </div>
+                                    </div>
+                                    {i < commentsLength - 1 && <hr />}
+                                  </div>
+
+                                  )} </div> :
+                              <div className="text_body" >
+                                This item doesn't have any reviews yet.
+                              </div>
+                          }
+                        </div>
+                      }
+                    </div>
                   </div>
                 </div>
-              </div>
-            </>
-          )
-      }
+              </>
+            )
+        }
 
 
-    </div >
+      </div >
+    </>
   );
 };
 

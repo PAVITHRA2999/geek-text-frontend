@@ -93,7 +93,9 @@ padding-bottom: 0px !important;
 
 @media (max-width:1020px) {
   .wishlistscreen{
-      max-width: 70%;
+      max-width: 100%;
+      margin: 1rem;
+      padding-top: 2rem;
   }
 }
 
@@ -116,8 +118,9 @@ padding-bottom: 0px !important;
     width: 100%;
     align-self: left;
     justify-self: left;
-    margin-right:1rem;
-    margin-top: 0.5rem;
+    
+    /* 
+    margin-top: 0.5rem; */
   }
 
 
@@ -149,7 +152,6 @@ padding-bottom: 0px !important;
     display: grid;
     width:fit-content;
     grid-template-columns: 1fr 30fr;
-    gap: 5px;
     grid-auto-flow: column;
     grid-template-columns: repeat(auto-fit, minmax(min-content, 100fr));
     flex-direction: row

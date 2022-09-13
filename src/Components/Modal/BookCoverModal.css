@@ -53,3 +53,9 @@
 .close:after {
   transform: rotate(-45deg);
 }
+
+@media (max-width:560px) {
+.close {
+  top: 70px;
+  right: 20px;
+}}
