@@ -1,0 +1,15 @@
+
+
+.number_of_items_in_wishlist{
+padding-bottom: 2rem;
+padding-top: 2rem;
+font-size: 14px;
+text-align: right;
+}
+
+@media (max-width:450px) {
+
+    .number_of_items_in_wishlist{
+        text-align: center;
+        }
+}

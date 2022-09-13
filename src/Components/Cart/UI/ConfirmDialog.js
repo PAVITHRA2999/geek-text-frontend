@@ -1,5 +1,4 @@
 import React from 'react';
-import "./MessageDialog.css";
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, makeStyles, IconButton } from '@material-ui/core';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 

@@ -2,21 +2,21 @@ import "./WishlistItem.css";
 import { Link } from "react-router-dom";
 import Rating from '@material-ui/lab/Rating';
 
-const WishlistItem = ({ item, removeHandler, addToCartHandler, bookId, moveToWishlistHandler }) => {
+const WishlistItem = ({ item, removeHandler, addToCartHandler, bookId }) => {
 
   return (
-    <div>
+    <div className="item">
       <div id="grid_wishlist">
 
         <div id="cover_column_wishlist">
           <Link to={`/book/${bookId}`}>
-            <img src={item.cover} alt={item.title} className="small" />
+            <img src={item.cover} alt={item.title} className="medium" />
           </Link>
         </div>
 
 
         <div id="info_column_wishlist">
-          <Link to={`/book/${bookId}`} className="cartItem__name">
+          <Link to={`/book/${bookId}`} className="cartItem__name wishlistItem__name">
             {item.title}
           </Link>
           <div className="cartItem___author">
@@ -25,7 +25,7 @@ const WishlistItem = ({ item, removeHandler, addToCartHandler, bookId, moveToWis
 
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
-          <div className="rating__block">
+          <div className="block rating__block">
             <div className="book__rating__stars">
               < Rating
                 name="half-rating-read"
@@ -37,29 +37,28 @@ const WishlistItem = ({ item, removeHandler, addToCartHandler, bookId, moveToWis
             </div>
             <div className="book__rating">{parseFloat(item.rating).toFixed(1)}</div>
           </div>
-
-          < br />
-
           <div className="wishlistitem__price">
             ${parseFloat(item.price).toFixed(2)}
           </div>
-
-
-        </div>
-        <div className="addtocart_button">
-          <button className="btn btn-primary"
-            onClick={() => addToCartHandler(bookId)}>
-            ADD TO CART
-          </button>
-        </div>
-        <div id="buttons_column_wishlist">
-          <div className="wishlist_delete_align">
-            <button className="cartItem__deleteBtn"
+          <div className="block wishlist_buttons__block">
+            <button className="btn btn-primary btn-wishlist"
+              onClick={() => addToCartHandler(bookId)}>
+              ADD TO CART
+            </button>
+            <button className="delete_button delete_button_wishlist delete_button_wishlist_bottom"
               onClick={() => removeHandler(item.book, item.title)}
             >
-              <i className="fa fa-trash fa-2x"></i>
+              <i className="fa fa-trash-o fa-lg"></i>
             </button>
           </div>
+        </div>
+
+        <div id="delete_button_column_wishlist">
+          <button className="delete_button delete_button_wishlist"
+            onClick={() => removeHandler(item.book, item.title)}
+          >
+            <i className="fa fa-trash-o fa-2x"></i>
+          </button>
         </div>
       </div>
     </div>

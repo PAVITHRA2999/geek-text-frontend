@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { cartReducer } from "./reducers/cartReducers";
-import { getBooksReducer, getBookDetailsReducer } from "./reducers/bookReducers";
+import { getBooksReducer, getBookDetailsReducer, getSortedBooksReducer } from "./reducers/bookReducers";
 import { wishlistReducer } from "./reducers/wishlistReducers";
 import { getAuthorDetailsReducer } from "./reducers/authorReducers";
 
@@ -10,6 +10,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   wishlist: wishlistReducer,
   getBooks: getBooksReducer,
+  getSortedBooks: getSortedBooksReducer,
   getBookDetails: getBookDetailsReducer,
   getBooksByAuthor: getAuthorDetailsReducer,
 });

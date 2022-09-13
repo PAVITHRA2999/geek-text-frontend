@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./Auth.css";
 import axios from 'axios';
-import {useHistory} from 'react-router-dom'
 
 // Components
 
@@ -107,7 +106,7 @@ const Auth = () => {
           {!showforgotPassword ? (
             <form className="account__form">
               <h3 className="account__form-header">Login</h3>
-              <p>Welcome back Sigin in to your account</p>
+              <p>Sign in to your existing account</p>
               <div className="form-control">
                 <label htmlFor="email_signin">Email</label>
                 <input onChange={handleLoginChange} id="email_signin" type="text" required  />
@@ -182,18 +181,20 @@ const Auth = () => {
               Register
             </button>
           </form>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+
           <div className="account__subtext">
             <h4>Sign up today and you'll be able to:</h4>
             <p>
-              <i className="fas fa-check"></i>
+              <i className="fa fa-check"></i>
               <span>Speed your way through checkout</span>
             </p>
             <p>
-              <i className="fas fa-check"></i>
+            <i className="fa fa-check"></i>
               <span>Track your orders easily</span>
             </p>
             <p>
-              <i className="fas fa-check"></i>
+            <i className="fa fa-check"></i>
               <span>Keep a record all your purchases</span>
             </p>
           </div>

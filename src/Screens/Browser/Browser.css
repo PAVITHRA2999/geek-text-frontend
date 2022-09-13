@@ -1,0 +1,72 @@
+
+
+.my-left-aligned {
+	text-align: left;
+	margin-top: 5rem;
+	margin-left: 5rem;
+}
+.my-left-aligned-books {
+	text-align: left;
+	margin-top: 1rem;
+	margin-left: 5rem;
+}
+
+.circular_progress {
+	margin-left: 20rem;
+	color: var(--primary-color);
+}
+
+.homescreen__products {
+	justify-content: space-between;    /* horizontal alignment of grid tracks */
+    align-content: space-between;
+	display: grid;
+	grid-template-columns: repeat(5,2fr);
+}
+
+@media (max-width: 1220px) {
+	.homescreen__products {
+		/* grid-template-columns: repeat(4, auto); */
+	}
+}
+
+
+@media (max-width: 1150px) {
+	
+
+
+
+
+}
+
+
+
+@media (max-width: 1040px) {
+	.homescreen__products {
+		grid-template-columns: repeat(4, auto);
+	}
+}
+
+@media (max-width: 860px) {
+	.homescreen__products {
+		grid-template-columns: repeat(3, auto);
+	}
+}
+
+@media (max-width: 600px) {
+	.homescreen__products {
+		grid-template-columns: repeat(2, auto);
+	}
+}
+
+.browser-nav{
+	font-size: small;
+}
+
+.centered-footer{
+	text-align: center;
+	font-size: small;
+}
+
+.nav-total-items{
+	margin: 8px;
+}

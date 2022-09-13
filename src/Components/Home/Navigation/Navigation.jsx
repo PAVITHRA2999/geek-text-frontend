@@ -1,23 +1,18 @@
 import React from 'react'
-import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import Logo from '../../../Assets/geek-text-logo.png'
 import './Navigation.css'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+
 import {Avatar} from '@material-ui/core';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import {DropDownMenu} from '../UserDropDownMenu/DropDownMenu'
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import SearchIcon from '@mui/icons-material/Search';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import CartIcon from '../../Cart/CartIcon/CartIcon';
 export const Navigation = () => {
 
-    // Get Number of items in Shopping Cart
-    const cart = useSelector((state) => state.cart);
-    const { cartItems } = cart;
-    const getCartCount = () => {
-        return cartItems.filter(({ saved }) => saved !== true)
-            .reduce((qty, item) => Number(item.qty) + qty, 0);
-    };
 
     const SignOut = () => {
         localStorage.removeItem('token');
@@ -26,44 +21,37 @@ export const Navigation = () => {
     const token = localStorage.getItem('token') || false;
 
     return (
-        <div className="nav">
+        <div className="nav nav-top">
             <div className="nav-left">
                 <Link to="/" className="Router_Link">
                     <img className="resize" src={Logo} alt="logo" />
-                    <h1 className="inlineheader">Geek Text</h1>
+                    <h1 className="inlineheader app-name">Geek Text</h1>
                 </Link>
             </div>
 
             <div className="nav-right">
                 
-                <div className="nav-right-booklist nav-link">
+                <div className="nav-link">
                 <Link to ="/browse" className = "Router_Link">
-                    <h4 className="links">View Books</h4>
+                <SearchIcon/>
+                    <h4 className="links inlineheader">View Books</h4>
                     </Link>
                 </div>
-                {/* <div className="nav-right-booklist nav-link">
-                <Link to ="/listofbooks" className = "Router_Link">
-                    <h4 className="links">View Books (new)</h4>
-                    </Link>
-                </div> */}
                 {
                     token ? null : 
-                <div className="nav-right-auth nav-link">
+                <div className="nav-link">
                     <Link to="/auth" className="Router_Link">
-                        <h4 className="links">Sign-up/Sign-in</h4>
+                    <PermIdentityIcon
+                    />
+                        <h4 className="links inlineheader">Sign In</h4>
                     </Link>
                  </div>
                  }
 
-                {/* <div className="nav-right-addBook nav-link">
-                    <Link to="/listofbooks" className="Router_Link">
-                        <h4 className="links">Add New Book</h4>
-                    </Link>
-                </div> */}
-
-                <div className="nav-right-addBook nav-link">
+                <div className="nav-link">
                     <Link to="/wishlist" className="Router_Link">
-                        <h4 className="links">Wishlist</h4>
+                        <FavoriteBorderIcon></FavoriteBorderIcon>
+                        <h4 className="links inlineheader">Wishlist</h4>
                     </Link>
                 </div>
                 {
@@ -87,10 +75,9 @@ export const Navigation = () => {
 
                 <div className="nav-right-cart nav-link">
                     <Link to="/cart" className="Router_Link">
-                        <div className="cartlogo_badge">{getCartCount()}</div>
-                        <ShoppingCartOutlinedIcon fontSize="small" />
+                    <CartIcon/>
                     </Link>
-                </div>  
+                </div> 
             </div>
         </div>
     )

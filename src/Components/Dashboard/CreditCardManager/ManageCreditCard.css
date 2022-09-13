@@ -28,7 +28,7 @@
   #employee th {
     padding: 10px;
     text-align: center;
-    background-color: #7A9EA7;
+    background-color: var(--primary-color);
     color: white;
   }
   
