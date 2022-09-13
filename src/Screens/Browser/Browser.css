@@ -25,7 +25,7 @@
 
 @media (max-width: 1220px) {
 	.homescreen__products {
-		grid-template-columns: repeat(4, auto);
+		/* grid-template-columns: repeat(4, auto); */
 	}
 }
 
@@ -42,21 +42,21 @@
 
 @media (max-width: 1040px) {
 	.homescreen__products {
-		grid-template-columns: repeat(3, auto);
+		grid-template-columns: repeat(4, auto);
 	}
 }
 
 @media (max-width: 860px) {
 	.homescreen__products {
+		grid-template-columns: repeat(3, auto);
+	}
+}
+
+@media (max-width: 600px) {
+	.homescreen__products {
 		grid-template-columns: repeat(2, auto);
 	}
 }
-/*
-@media (max-width: 600px) {
-	.homescreen__products {
-		grid-template-columns: 1fr;
-	}
-} */
 
 .browser-nav{
 	font-size: small;

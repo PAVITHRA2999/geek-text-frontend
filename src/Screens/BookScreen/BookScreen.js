@@ -24,12 +24,12 @@ const BookScreen = ({ match, history }) => {
 
   const { id } = useParams();
   const [show, setShow] = useState(false);
-
-
   const [qty, setQty] = useState(1);
+
   const dispatch = useDispatch();
   const bookDetails = useSelector((state) => state.getBookDetails);
   const { loading, error, book } = bookDetails;
+
   const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '', viewButton: 'View Cart' });
   // Notification
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
