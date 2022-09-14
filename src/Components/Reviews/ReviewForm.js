@@ -41,10 +41,10 @@ const ReviewForm = ({ addReview }) => {
     setAnonymousInput(false);
   };
 
-  const handleAnonymous = (e, data) =>{  
+  const handleAnonymous = (e, data) => {
     anonymousInput["anonymous"] = !anonymousInput["anonymous"];
     console.log(anonymousInput["anonymous"]);
-  }
+  };
   return (
 
     <form onSubmit={handleSubmit}>

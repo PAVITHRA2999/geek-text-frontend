@@ -1,28 +1,27 @@
-.home-banner{
-    width: 100%;
-    height: 90vh; /*View height responsive*/
-    object-fit: cover;
-    margin-top: 1.5rem;
-    clip-path:polygon(0 0,100% 0, 100% 75vh, 0 100%);
+.home-banner {
+	width: 100%;
+	height: 90vh; /*View height responsive*/
+	object-fit: cover;
+	margin-top: 1.5rem;
+	clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
 
-    background-color: aliceblue;
+	background-color: aliceblue;
 }
 /*The banner container will allow to insert items on top of the image*/
-.banner-container{
-    position: relative;
-    
+.banner-container {
+	position: relative;
 }
-.banner-text{
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    text-align: center;
-    color: var(--primary-color);
+.banner-text {
+	position: absolute;
+	top: 50%;
+	left: 25%;
+	text-align: center;
+	color: var(--primary-color);
 }
-.banner-text-header{
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    animation: slideInLeft 2s;
+.banner-text-header {
+	text-transform: uppercase;
+	letter-spacing: 10px;
+	animation: slideInLeft 2s;
 }
 /*Placing the button in the middle of the text*/
 /* .btn{
@@ -33,24 +32,22 @@
     padding: .5rem 1.5rem;/*.5 to the top , 1.5 to the left and right
 } */
 
-
-.btn:active{
-    box-shadow: 0 5px 8px rgba(0, 0, 0, .2);
-    transform: translateY(-1px);
+.btn:active {
+	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+	transform: translateY(-1px);
 }
 /*Animation for the text in the middle of the page*/
-@keyframes slideInLeft{
-    0%{
-        opacity: 0;
-        transform: translateX(-100px);
-    }
-    80%{
-        opacity: 0.5;
-        transform: translateX(20px);
-    }
-    100%{
-        opacity: 1;
-        transform: translate(0);
-    }
+@keyframes slideInLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-100px);
+	}
+	80% {
+		opacity: 0.5;
+		transform: translateX(20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0);
+	}
 }
-
