@@ -1,46 +1,46 @@
-.carousel-container{
-display: flex;
+.carousel-container {
+	display: flex;
 
-column-gap: 1rem;
-justify-content: center;
-align-items: center;
+	column-gap: 1rem;
+	justify-content: center;
+	align-items: center;
 }
 
 .carousel {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .inner {
-    white-space: nowrap;
-   transition: transform 0.3s;
-   align-content: center;
-   max-width: 32rem !important;
-   position: inherit;
+	white-space: nowrap;
+	transition: transform 0.3s;
+	align-content: center;
+	max-width: 32rem !important;
+	position: inherit;
 }
 .carousel-item {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: inherit;
-    overflow:visible;
-padding: 0rem 0.5rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: inherit;
+	overflow: visible;
+	padding: 0rem 0.5rem;
 }
 
-.indicator{
-    justify-content: center;
-    cursor: pointer;
+.indicator {
+	justify-content: center;
+	cursor: pointer;
 }
 
-.indicator:hover{
-    color: var(--dark-gray-color);
-} 
-.carousel-container i[disabled]{
+.indicator:hover {
+	color: var(--dark-gray-color);
+}
+.carousel-container i[disabled] {
 	pointer-events: none;
 	color: var(--disabled-color);
-    pointer-events: none;
+	pointer-events: none;
 }
 
-.indicatorsi[disabled]{
-    pointer-events: none;
-    color: var(--disabled-color);
+.indicatorsi[disabled] {
+	pointer-events: none;
+	color: var(--disabled-color);
 }

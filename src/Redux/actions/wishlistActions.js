@@ -31,4 +31,3 @@ export const removeFromWishlist = (id) => (dispatch, getState) => {
     });
     localStorage.setItem("wishlist", JSON.stringify(getState().wishlist.wishlistItems));
 };
-

@@ -1,8 +1,8 @@
 import * as actionTypes from "../constants/wishlistConstants";
 
 const WISHLIST_INITIAL_STATE = {
-    wishlistItems: [],
-  }
+  wishlistItems: [],
+};
 
 export const wishlistReducer = (state = WISHLIST_INITIAL_STATE, action) => {
   switch (action.type) {

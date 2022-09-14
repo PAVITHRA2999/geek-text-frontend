@@ -26,7 +26,7 @@
 
 .book__author__link:hover {
 	cursor: pointer;
-	text-decoration:underline;
+	text-decoration: underline;
 }
 
 .book__rating__stars {
@@ -43,7 +43,7 @@
 	float: left;
 	/* display:flex;
 	flex-wrap: wrap; */
-	white-space:initial!important;
+	white-space: initial !important;
 }
 
 .info__price {
@@ -55,12 +55,12 @@
 	font-size: 12px !important;
 	overflow: hidden !important;
 	font-weight: bold !important;
-	display:flex !important;
+	display: flex !important;
 	flex-wrap: wrap !important;
 	display: block !important;
 }
-.info__name:hover{
-	text-decoration:underline;
+.info__name:hover {
+	text-decoration: underline;
 }
 
 .info__author {
@@ -76,19 +76,17 @@
 	/* margin: 0rem 8rem; */
 }
 
-
 .center__image {
 	align-self: center;
 	position: relative;
-  display: flex;
-  
+	display: flex;
 }
 
-.fav{
+.fav {
 	background-color: rgba(253, 253, 253, 0.595);
 	color: var(--dark-color);
 }
-.fav:hover{
+.fav:hover {
 	cursor: pointer;
 	background-color: rgba(205, 205, 205, 0.539);
 }
@@ -97,14 +95,14 @@
 	width: 100px;
 	height: 100px;
 	position: relative;
-  }
-  #navi,
-  #infoi {
+}
+#navi,
+#infoi {
 	position: absolute;
 	top: 0;
 	right: 0;
 	padding: 2px;
-  }
-  #infoi {
+}
+#infoi {
 	z-index: 10;
-  }
+}

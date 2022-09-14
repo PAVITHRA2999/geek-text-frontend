@@ -1,5 +1,3 @@
-
-
 .my-left-aligned {
 	text-align: left;
 	margin-top: 5rem;
@@ -17,10 +15,10 @@
 }
 
 .homescreen__products {
-	justify-content: space-between;    /* horizontal alignment of grid tracks */
-    align-content: space-between;
+	justify-content: space-between; /* horizontal alignment of grid tracks */
+	align-content: space-between;
 	display: grid;
-	grid-template-columns: repeat(5,2fr);
+	grid-template-columns: repeat(5, 2fr);
 }
 
 @media (max-width: 1220px) {
@@ -29,16 +27,8 @@
 	}
 }
 
-
 @media (max-width: 1150px) {
-	
-
-
-
-
 }
-
-
 
 @media (max-width: 1040px) {
 	.homescreen__products {
@@ -58,15 +48,15 @@
 	}
 }
 
-.browser-nav{
+.browser-nav {
 	font-size: small;
 }
 
-.centered-footer{
+.centered-footer {
 	text-align: center;
 	font-size: small;
 }
 
-.nav-total-items{
+.nav-total-items {
 	margin: 8px;
 }
