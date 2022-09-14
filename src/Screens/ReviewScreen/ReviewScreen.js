@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 function ReviewScreen({ match, history }) {
     const bookDetails = useSelector((state) => state.getBookDetails);
-    const { loading, error, book } = bookDetails;
+    const { book } = bookDetails;
     const dispatch = useDispatch();
     const backToBook = () => {
         history.push(`/book/` + match.params.id);
@@ -18,8 +18,6 @@ function ReviewScreen({ match, history }) {
         }
     }, [dispatch, book, match]);
 
-    //var comments = book.comments;
-    //console.log(JSON.stringify(comments));      
     const [reviewList, setReviewList] = useState([]);
 
     const addReview = (

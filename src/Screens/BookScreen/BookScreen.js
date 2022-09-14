@@ -1,7 +1,6 @@
 import "./BookScreen.css";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getBookDetails } from "../../Redux/actions/bookActions";
@@ -14,10 +13,12 @@ import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import Notification from "../../Components/Cart/UI/Notification";
 import Accordion from "../../Components/Accordion/Accordion";
 
+import Heart from "../../Components/BookDetails/Heart";
+import TopSection from "../../Components/BookDetails/TopSection";
+import ProductDetails from "../../Components/BookDetails/ProductDetails";
+import ReviewSection from "../../Components/BookDetails/ReviewSection";
+
 import { CircularProgress } from '@material-ui/core';
-import Rating from '@material-ui/lab/Rating';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 const BookScreen = ({ match, history }) => {
@@ -43,10 +44,7 @@ const BookScreen = ({ match, history }) => {
   // Determine whether item is already in wishlist and handle favorite state accordingly
   const wishlist = useSelector((state) => state.wishlist);
   const { wishlistItems } = wishlist;
-
   const isFavorited = wishlistItems.some((item) => item.book === id);
-
-
   const [favorited, setFavorited] = useState(isFavorited);
 
   // Determine whether item is already in cart and handle add operation accordingly
@@ -112,7 +110,6 @@ const BookScreen = ({ match, history }) => {
   // Add to cart (user can decide whether to stay in current page or view cart)
   const addToWishlistNew = () => {
     addToWishlistHandler();
-
     setMessageDialog({
       isOpen: true,
       title: 'Item successfully added to Wishlist',
@@ -138,8 +135,6 @@ const BookScreen = ({ match, history }) => {
     setFavorited(false);
   };
 
-
-
   //handles going to the review page
   const createReviewHandler = () => {
     history.push(`/book/` + match.params.id + "/reviews");
@@ -158,66 +153,6 @@ const BookScreen = ({ match, history }) => {
   const items = arr.reduce((a, v) => ({ ...a, [v]: v }), {});
 
 
-  const Heart = ({ favorited, heartClass }) => {
-    return (
-      <div className={`heart ${heartClass}`}>
-        {
-          favorited ?
-            <FavoriteIcon className="fav-icon" onClick={removeFromWishlistHandler} />
-            :
-            <FavoriteBorderIcon className="fav-icon" onClick={addToWishlistNew} />
-        }
-      </div>
-    );
-  };
-
-
-  const TopSection = ({ className, book }) => {
-    return (<div className={className}>
-      <div className="title__heading">
-        <div>{book.title}</div>
-        <Heart
-          heartClass="heart__heading"
-          favorited={favorited}
-        />
-      </div>
-      <div className="author__heading">
-        by <Link to={`/authorbooks/${authorID}`}>{book.authorName}</Link>
-      </div>
-      <div className="rating__heading">
-        <Rating
-          name="half-rating-read"
-          size="small"
-          value={book.rating}
-          precision={0.1}
-          readOnly
-        />
-        <div>
-          {book.rating} ({commentsLength})
-        </div>
-      </div>
-    </div>);
-  };
-
-  const ProductDetails = () => {
-    return (
-      <div className="details_block text_body">
-        <div>
-          <div>Publisher:</div>
-          <div>ISBN:</div>
-          <div>Edition:</div>
-          <div>Genre:</div>
-        </div>
-        <div>
-          <div>{publisher}</div>
-          <div>{isbn}</div>
-          <div>{edition}</div>
-          <div>{genre}</div>
-        </div>
-      </div>
-    );
-  };
-
   const AddToCart = ({ book }) => {
     return (<div className="middle-upper-section">
       <div className="price_qty_container">
@@ -235,49 +170,20 @@ const BookScreen = ({ match, history }) => {
           items={items}
         />
       </div>
-
       <button className="btn btn-primary btn-full btn-checkout" onClick={addToCartHandler}>
         ADD TO CART
       </button>
-
     </div>);
   };
-
-
-  const RatingHeader = ({ rating }) => {
-    return (<div className="rating-header"><div className="ave_rating">
-      Average Customer Ratings
-    </div>
-      <div className="rating__heading overall_reviews">
-
-        Overall
-        <Rating name="half-rating-read"
-          size="small"
-          value={rating}
-          precision={0.1}
-          readOnly
-        />
-        {rating}
-        <div className="reviews_number">
-          |
-        </div>
-        <div className="reviews_number">
-          {commentsLength} Reviews
-        </div>
-        <button
-          className="btn btn-primary btn-stars"
-          onClick={createReviewHandler}>
-          Write a review
-        </button>
-      </div>
-    </div>);
-  };
-
 
   const accordion_data = [
     {
       heading: 'Product Details',
-      content: <ProductDetails />
+      content: <ProductDetails
+        publisher={publisher}
+        isbn={isbn}
+        edition={edition}
+        genre={genre} />
     },
     {
       heading: 'Overview',
@@ -288,35 +194,43 @@ const BookScreen = ({ match, history }) => {
       content: bio
     }
   ];
-  return (
-    <>
-      <div className="nav-bottom add-to-cart-nav">
-        <AddToCart book={aBook} />
-      </div>
-      <div className="screen">
-        <Notification
-          notify={notify}
-          setNotify={setNotify}
-        />
-        <MessageDialog
-          messageDialog={messageDialog}
-          setMessageDialog={setMessageDialog}
-        />
-        {
-          loading ? (
-            <div className="circular_progress">
-              <CircularProgress className="circular_progress" color="inherit" />
-            </div>
-          ) : error ? (
-            <h2>{error}</h2>
-          ) :
-            (
-              <>
 
+  if (loading) {
+    return (<div className="circular_progress">
+      <CircularProgress className="circular_progress" color="inherit" />
+    </div>);
+  }
+  else {
+    return (
+      <>
+        <div className="nav-bottom add-to-cart-nav">
+          <AddToCart book={aBook} />
+        </div>
+        {error ? (
+          <h2>{error}</h2>
+        ) :
+          (
+            <>
+              <div className="screen">
+                <Notification
+                  notify={notify}
+                  setNotify={setNotify}
+                />
+                <MessageDialog
+                  messageDialog={messageDialog}
+                  setMessageDialog={setMessageDialog}
+                />
                 <div className="book-screen-container">
-
                   <div className="container__main">
-                    <TopSection className="top__section__top" book={aBook} />
+                    <TopSection
+                      className="top__section__top"
+                      book={aBook}
+                      favorited={favorited}
+                      addToWishlistNew={addToWishlistNew}
+                      removeFromWishlistHandler={removeFromWishlistHandler}
+                      authorID={authorID}
+                      commentsLength={commentsLength}
+                    />
                     <div className="container__left">
                       <input type="image" src={aBook.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShow(true)} />
                       <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
@@ -325,38 +239,48 @@ const BookScreen = ({ match, history }) => {
                     </div>
                     <div className="fav-icon-text">
                       <Heart
+                        addToWishlistNew={addToWishlistNew}
+                        removeFromWishlistHandler={removeFromWishlistHandler}
                         favorited={favorited}
                       />
                       {favorited ?
                         <div onClick={removeFromWishlistHandler}>Remove from Wishlist</div>
                         :
                         <div onClick={addToWishlistNew}>Add to Wishlist</div>}
-
-
                     </div>
 
                     <hr className="hide-to-compact-before top_section_divider section_divider" />
                     <div className="container__right">
                       <TopSection
                         className="hide-to-compact"
-                        book={aBook} />
+                        book={aBook}
+                        favorited={favorited}
+                        addToWishlistNew={addToWishlistNew}
+                        removeFromWishlistHandler={removeFromWishlistHandler}
+                        authorID={authorID}
+                        commentsLength={commentsLength}
+                      />
                       <hr className="hide-to-compact section_divider add-to-cart-non-nav" />
                       <div className="add-to-cart-non-nav">
                         <AddToCart
                           book={aBook}
                         />
                       </div>
-
                       <div className="mini_section hide-to-compact">
                         <div className="book_details_heading book_details_heading_bottom">
                           Product Details
                         </div>
-
-                        <ProductDetails />
+                        <ProductDetails
+                          publisher={publisher}
+                          isbn={isbn}
+                          edition={edition}
+                          genre={genre}
+                        />
                       </div>
                     </div>
                     <div className="accordion">
                       <Accordion
+                        screen="bookscreen"
                         data={accordion_data}
                       />
                     </div>
@@ -377,84 +301,22 @@ const BookScreen = ({ match, history }) => {
                       </div>
                     </div>
                   </div>
-                  {/* <hr /> */}
                   <div className="large-padding">
                     <hr />
-                    <div className="section">
-                      {
-                        <div>
-                          <div className="inline-header">
-                            <div className="author__center book_details_heading">
-                              Reviews
-                            </div>
-                            <div className="overall-flex">
-                              <RatingHeader
-                                rating={aBook.rating}
-                              />
-                            </div>
-                            <button
-                              className="btn btn-primary btn-heading"
-                              onClick={createReviewHandler}>
-                              Write a review
-                            </button>
-                          </div>
-                          <div className="overall-block">
-                            <RatingHeader
-                              rating={aBook.rating}
-                            />
-                          </div>
-                          {
-                            commentsLength > 0 ?
-                              <div>
-                                <div className="num_of_reviews">
-                                  1-{commentsLength} of {commentsLength} Reviews
-                                </div>
-                                <hr />
-                                {
-                                  (aBook.comments).map((comment, i) => <div key={comment.commenter}>
-                                    <div className="comment_container">
-                                      <div className="text_body commenter left_commenter" ><b>{comment.commenter}</b></div>
-
-                                      <div className="comments" key={comment.commenter}>
-
-                                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-                                        <div className="book_details_rating" id="book_details_rating">
-                                          <div className="rating_stars" id="rating_stars">
-                                            <Rating value={comment.rating}
-                                              precision={0.1}
-                                              size="small"
-                                              readOnly
-                                            />
-                                          </div>
-                                          <div className="rating_title" id="rating_title">  {comment.title}</div>
-                                          <div className="text_body commenter block_commenter" id="commenter"><b>{comment.commenter}</b></div>
-                                        </div>
-
-                                        <div className="text_body">{comment.content}</div>
-                                      </div>
-                                    </div>
-                                    {i < commentsLength - 1 && <hr />}
-                                  </div>
-
-                                  )} </div> :
-                              <div className="text_body" >
-                                This item doesn't have any reviews yet.
-                              </div>
-                          }
-                        </div>
-                      }
-                    </div>
+                    <ReviewSection
+                      aBook={aBook}
+                      commentsLength={commentsLength}
+                      createReviewHandler={createReviewHandler}
+                    />
                   </div>
                 </div>
-              </>
-            )
+              </div >
+            </>
+          )
         }
-
-
-      </div >
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default BookScreen;
-;

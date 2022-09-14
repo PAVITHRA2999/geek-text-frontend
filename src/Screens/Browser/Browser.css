@@ -22,9 +22,6 @@
 }
 
 @media (max-width: 1220px) {
-	.homescreen__products {
-		/* grid-template-columns: repeat(4, auto); */
-	}
 }
 
 @media (max-width: 1150px) {

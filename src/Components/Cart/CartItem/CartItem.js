@@ -40,16 +40,14 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
             </div>
 
             <div className="info_Column info">
-              <div className="info_title_author">
-                <div>
-                  <Link to={`/book/${bookId}`} className="cartItem__name">
-                    {item.title}
-                  </Link>
-                </div>
-                <div className="cartItem___author">
-                  By <Link to={`/authorbooks/${item.author._id}`} className="cartItem__author__link">{item.authorName}</Link>
-                </div>
+
+              <Link to={`/book/${bookId}`} className="cartItem__name" title={item.title}>
+                {item.title}
+              </Link>
+              <div className="cartItem___author">
+                By <Link to={`/authorbooks/${item.author._id}`} className="cartItem__author__link" title={item.authorName}>{item.authorName}</Link>
               </div>
+
               <div className="block rating__block info_stars">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
                 <div className="book__rating__stars">
@@ -69,15 +67,16 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                     onClick={() => saveForLaterHandler(item.book, item.qty)}>
                     Save for later
                   </button>
-                  |<FavoriteBorderIcon
-                    className="fav_button"
-                    style={{ fontSize: "18px" }}
-                    color="inherit"
-                    size="sm"
-                    onClick={() => addToWishlistHandler(item.book, item.title)}
-                  />
+                  |<div title="add to wishlist" className="fav_button">
+                    <FavoriteBorderIcon
+                      style={{ fontSize: "18px" }}
+                      color="inherit"
+                      size="sm"
+                      onClick={() => addToWishlistHandler(item.book, item.title)}
+                    /></div>
                   |
                   <button className="delete_button"
+                    title="remove"
                     onClick={() => removeHandler(item.book, item.title)}>
                     <i className="fa fa-trash-o fa-lg"></i>
                   </button>

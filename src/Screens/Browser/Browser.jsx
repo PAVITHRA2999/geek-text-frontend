@@ -3,6 +3,7 @@ import Axios from 'axios';
 import './Browser.css';
 import Book from '../../Components/Book/Book';
 import CustomSelect from '../../Components/CustomSelect/CustomSelect';
+import Accordion from '../../Components/Accordion/Accordion';
 
 const BOOKS = 'https://lea-geek-text.herokuapp.com/books/';
 
@@ -55,6 +56,17 @@ export default class Browser extends React.Component {
 		'Rating - High to Low': 'getByRating',
 		'Author - A to Z': 'getByAuthor',
 	};
+
+	accordion_data = [
+		{
+			heading: 'Filters',
+			content: 'filters content',
+		},
+		{
+			heading: 'Sort By',
+			content: 'sort by content',
+		},
+	];
 
 	//Get Books from db
 	componentDidMount() {
@@ -140,6 +152,7 @@ export default class Browser extends React.Component {
 		this.setState({
 			filter: f,
 			ratingDD: event.target.value,
+			genreDD: 'All',
 		});
 		this.sortBy('getByTS', f);
 	};
@@ -150,6 +163,7 @@ export default class Browser extends React.Component {
 		this.setState({
 			filter: f,
 			genreDD: g,
+			ratingDD: 1,
 		});
 		this.sortBy('getByTS', f);
 	};
@@ -167,6 +181,7 @@ export default class Browser extends React.Component {
 	render() {
 		return (
 			<div className='screen'>
+				<Accordion screen='browser' data={this.accordion_data} />
 				<h2 className='centered_header'>Our Top Picks</h2>
 				<div className='nav browser-nav'>
 					<div className='nav-left'>
@@ -199,7 +214,6 @@ export default class Browser extends React.Component {
 							handleChange={this.handleGenreChange}
 							items={this.genres}
 						/>
-
 						<CustomSelect
 							inputLabel='Sort by'
 							inputLabelId='sort-select-label'

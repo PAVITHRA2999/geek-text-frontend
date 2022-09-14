@@ -109,6 +109,10 @@ img.small {
 	display: inline-block;
 }
 
+.fav_button {
+	display: flex;
+}
+
 .saveforlater_button:hover,
 .delete_button:hover,
 .fav_button:hover {
@@ -175,9 +179,6 @@ img.small {
 	align-self: center;
 }
 
-.info_title_author {
-	vertical-align: top;
-}
 .info_stars {
 }
 .info_buttons {
@@ -284,8 +285,9 @@ img.small {
 	}
 
 	.cartItem__name {
+		display: flex;
 		font-size: 12px;
-		inline-size: 1px;
+		line-height: 15px;
 	}
 
 	.cartItem___author {

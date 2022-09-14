@@ -2,8 +2,6 @@ import React from 'react';
 import Logo from '../../../Assets/geek-text-logo.png';
 import './Navigation.css';
 import {Link} from 'react-router-dom';
-
-import {Avatar} from '@material-ui/core';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import {DropDownMenu} from '../UserDropDownMenu/DropDownMenu';
@@ -11,11 +9,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import CartIcon from '../../Cart/CartIcon/CartIcon';
+
 export const Navigation = () => {
-	const SignOut = () => {
-		localStorage.removeItem('token');
-		window.location.replace('http://localhost:3000/');
-	};
 	const token = localStorage.getItem('token') || false;
 
 	return (
@@ -34,14 +29,27 @@ export const Navigation = () => {
 						<h4 className='links inlineheader'>View Books</h4>
 					</Link>
 				</div>
-				{token ? null : (
-					<div className='nav-link'>
+
+				<div className='nav-link'>
+					{!token ? (
 						<Link to='/auth' className='Router_Link'>
 							<PermIdentityIcon />
 							<h4 className='links inlineheader'>Sign In</h4>
 						</Link>
-					</div>
-				)}
+					) : (
+						<Popup
+							trigger={
+								<div className='Router_Link'>
+									<PermIdentityIcon />
+									<h4 className='links inlineheader'>My Account</h4>
+								</div>
+							}
+							position='bottom right'
+						>
+							<DropDownMenu />
+						</Popup>
+					)}
+				</div>
 
 				<div className='nav-link'>
 					<Link to='/wishlist' className='Router_Link'>
@@ -49,27 +57,6 @@ export const Navigation = () => {
 						<h4 className='links inlineheader'>Wishlist</h4>
 					</Link>
 				</div>
-				{token ? (
-					<div className='nav-link-user'>
-						{' '}
-						<Popup
-							trigger={
-								<Avatar
-									src=''
-									alt='User Profile'
-									style={{height: '30px', width: '30px'}}
-								/>
-							}
-							position='bottom right'
-						>
-							<DropDownMenu />
-						</Popup>
-						{/*<div className="menu-option">
-                        <h3 className="menu-text"
-                            onClick={SignOut}></h3>
-            </div>*/}{' '}
-					</div>
-				) : null}
 
 				<div className='nav-right-cart nav-link'>
 					<Link to='/cart' className='Router_Link'>

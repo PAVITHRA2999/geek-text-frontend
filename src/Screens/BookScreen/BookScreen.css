@@ -219,11 +219,18 @@
 .fav-icon {
 	color: var(--primary-color);
 	font-size: large;
+	display: flex;
+	justify-self: center;
 }
 
-.fav-icon:hover {
+.fav-icon-no-text:hover {
 	cursor: pointer;
 	color: var(--darker-primary-color);
+}
+
+.fav-icon-with-text {
+	font-size: 12px;
+	text-decoration: underline;
 }
 
 .middle-upper-section {

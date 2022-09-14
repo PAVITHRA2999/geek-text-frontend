@@ -13,11 +13,14 @@ const WishlistScreen = ({ history }) => {
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist);
   const { wishlistItems } = wishlist;
-  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '' });
+
+  // Cart
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
-  // Notification
+
+  // Notifications
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
+  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '' });
 
   // Add item from wishlist to shopping cart
   const addToCartNew = (id) => {
@@ -44,6 +47,7 @@ const WishlistScreen = ({ history }) => {
     });
   };
 
+  // Add item to cart
   const addToCartHandler = (id) => {
     (cartItems.some(item => item.book === id)) ?
       addToCartExistent(id, (cartItems.find((item) => item.book === id).qty))
@@ -102,9 +106,7 @@ const WishlistScreen = ({ history }) => {
                   </div>
                 </Link>
               </div>
-
             </div>
-
           )
           :
           (
@@ -118,9 +120,8 @@ const WishlistScreen = ({ history }) => {
               </div>
               {
                 wishlistItems.map((item, i) => (<div key={item.book} >
-                  <div className="wishlistscreen__item">
+                  <div className="wishlistscreen__item" key={item.book}>
                     <WishlistItem
-                      key={item.book}
                       item={item}
                       removeHandler={removeFromWishlistHandler}
                       bookId={item.book}
