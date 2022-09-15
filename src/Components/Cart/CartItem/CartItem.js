@@ -59,7 +59,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                     size="small"
                   />
                 </div>
-                <div className="book__rating">{parseFloat(item.rating).toFixed(1)}</div>
+                <div className="book__rating book__rating__cart">{parseFloat(item.rating).toFixed(1)}</div>
               </div>
               <div className="buttons__up info_buttons">
                 <div className="block buttons__block buttons__up">
@@ -157,7 +157,7 @@ const CartItem = ({ item, qtyChangeHandler, removeHandler, addToWishlistHandler,
                   size="small"
                 />
               </div>
-              <div className="book__rating">{parseFloat(item.rating).toFixed(1)}</div>
+              <div className="book__rating book__rating__cart">{parseFloat(item.rating).toFixed(1)}</div>
             </div>
             <div className="cartitem__price_saved">${parseFloat(item.price).toFixed(2)}</div>
             <div className="block buttons__block">

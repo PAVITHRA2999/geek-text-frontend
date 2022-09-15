@@ -329,13 +329,8 @@
 		display: block;
 	}
 
-	.screen {
-		margin-left: 1rem;
-		margin-right: 1rem;
-	}
-
 	.text_body {
-		font-size: 10px;
+		font-size: 12px;
 	}
 }
 
@@ -438,6 +433,9 @@
 
 	.book-cover-large {
 		height: 450px;
+	}
+	.text_body {
+		font-size: 10px;
 	}
 }
 

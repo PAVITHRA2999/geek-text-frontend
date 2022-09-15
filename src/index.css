@@ -2,6 +2,7 @@
 
 :root {
 	--primary-color: #7a9ea7;
+	--medium-dark-primary-color: #5a747a;
 	--darker-primary-color: #5a747a;
 	--secondary-color: #dce4e7;
 	--tertiary-color: #333e48;
@@ -120,6 +121,19 @@ img {
 	color: var(--primary-color);
 }
 
+.btn-text {
+	background: transparent;
+	border: none;
+	color: var(--medium-dark-primary-color);
+	cursor: pointer;
+	display: block;
+	margin: 0rem 0rem 1rem 0rem;
+}
+
+.btn-text:hover {
+	color: var(--darker-primary-color);
+}
+
 .btn-full {
 	width: 100%;
 	display: block;
@@ -127,8 +141,8 @@ img {
 }
 
 .btn-primary:hover {
-	background-color: #6b8a93;
-	border-color: #6b8a93;
+	background-color: var(--medium-dark-primary-color);
+	border-color: var(--medium-dark-primary-color);
 }
 
 .btn-light:hover {
@@ -196,4 +210,24 @@ input[type='number'] {
 /*Place the text Welcome User on the right side*/
 .dashboard-divider {
 	display: flex;
+}
+
+@media (max-width: 1250px) {
+	.screen {
+		margin-left: 5rem;
+		margin-right: 5rem;
+	}
+}
+
+@media (max-width: 1150px) {
+	.screen {
+		margin-left: 2rem;
+		margin-right: 2rem;
+	}
+}
+@media (max-width: 1070px) {
+	.screen {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
 }

@@ -5,6 +5,13 @@ import Book from '../../Components/Book/Book';
 import CustomSelect from '../../Components/CustomSelect/CustomSelect';
 import Accordion from '../../Components/Accordion/Accordion';
 
+import FilterHeading from '../../Components/Browsing/FilterHeading';
+import FilterContent from '../../Components/Browsing/FilterContent';
+import SortHeading from '../../Components/Browsing/SortHeading';
+import ItemsPerPageHeading from '../../Components/Browsing/ItemsPerPageHeading';
+import ItemsPerPageCompressed from '../../Components/Browsing/ItemsPerPageCompressed';
+import ListContent from '../../Components/Browsing/ListContent';
+
 const BOOKS = 'https://lea-geek-text.herokuapp.com/books/';
 
 export default class Browser extends React.Component {
@@ -18,9 +25,12 @@ export default class Browser extends React.Component {
 			lastPage: Number(10),
 			perPage: Number(10),
 			filter: {},
+			currFilter: 'All',
+			currSort: 'Top Sellers',
 			genreDD: 'All', // genre select Value for filter
 			ratingDD: 1, // Rating select Value for filter
 			sortType: 'getByTS',
+			closeAccordion: false,
 		};
 	}
 
@@ -57,16 +67,9 @@ export default class Browser extends React.Component {
 		'Author - A to Z': 'getByAuthor',
 	};
 
-	accordion_data = [
-		{
-			heading: 'Filters',
-			content: 'filters content',
-		},
-		{
-			heading: 'Sort By',
-			content: 'sort by content',
-		},
-	];
+	getKeyByValue(object, value) {
+		return Object.keys(object).find((key) => object[key] === value);
+	}
 
 	//Get Books from db
 	componentDidMount() {
@@ -83,6 +86,7 @@ export default class Browser extends React.Component {
 				if (response.data.length > 0) {
 					this.setState({
 						sortType: {aSortType},
+						currSort: this.getKeyByValue(this.sortTypes, aSortType),
 					});
 					this.setState({
 						allBooks: response.data,
@@ -144,17 +148,27 @@ export default class Browser extends React.Component {
 		this.setState({
 			perPage: event.target.value,
 		});
-		this.sortBy('getByTS', this.state.filter);
+		this.sortBy(this.state.sortType.aSortType, this.state.filter);
+	};
+
+	handlePerPageClick = (value) => {
+		this.setState({
+			perPage: value,
+		});
+		this.sortBy(this.state.sortType.aSortType, this.state.filter);
 	};
 
 	handleRatingChange = (event) => {
-		let f = {rating: {$gte: parseInt(event.target.value)}};
+		let val = parseInt(event.target.value);
+		let f = {rating: {$gte: val}};
 		this.setState({
 			filter: f,
 			ratingDD: event.target.value,
 			genreDD: 'All',
+			currFilter: `Rating - ${Object.keys(this.ratings)[val - 1]}`,
 		});
-		this.sortBy('getByTS', f);
+		this.handleCloseAccordionCallback();
+		this.sortBy(this.state.sortType.aSortType, f);
 	};
 
 	handleGenreChange = (event) => {
@@ -164,8 +178,10 @@ export default class Browser extends React.Component {
 			filter: f,
 			genreDD: g,
 			ratingDD: 1,
+			currFilter: g,
 		});
-		this.sortBy('getByTS', f);
+		this.handleCloseAccordionCallback();
+		this.sortBy(this.state.sortType.aSortType, f);
 	};
 
 	handleSortTypeChange = (event) => {
@@ -174,55 +190,109 @@ export default class Browser extends React.Component {
 		this.setState({
 			sortType: s,
 		});
-
+		this.handleCloseAccordionCallback();
 		this.sortBy(s, this.state.filter);
 	};
 
+	handleCloseAccordionCallback = () => {
+		this.setState({
+			closeAccordion: true,
+		});
+	};
+	handleOpenAccordionCallback = () => {
+		this.setState({
+			closeAccordion: null,
+		});
+	};
+
 	render() {
+		const accordion_data = [
+			{
+				heading: <FilterHeading filter={this.state.currFilter} />,
+				content: (
+					<FilterContent
+						currGenre={this.state.genreDD}
+						currRating={this.state.ratingDD}
+						handleGenreChange={this.handleGenreChange}
+						genres={this.genres}
+						ratings={this.ratings}
+						handleRatingChange={this.handleRatingChange}
+					/>
+				),
+				type: 'filter',
+			},
+			{
+				heading: <SortHeading sort={this.state.currSort} />,
+				content: (
+					<ListContent
+						items={this.sortTypes}
+						onClick={this.handleSortTypeChange}
+					/>
+				),
+				type: 'sort',
+			},
+		];
+
 		return (
 			<div className='screen'>
-				<Accordion screen='browser' data={this.accordion_data} />
 				<h2 className='centered_header'>Our Top Picks</h2>
+
 				<div className='nav browser-nav'>
 					<div className='nav-left'>
-						<CustomSelect
-							inputLabel='Items per page'
-							inputLabelId='pages-select-label'
-							labelId='ShowBooksPerPage'
-							id='select'
-							value={this.state.perPage}
-							handleChange={this.handlePerPageChange}
-							items={this.pages}
-						/>
+						<div className='separated-inputs'>
+							<CustomSelect
+								inputLabel='Items per page'
+								inputLabelId='browser-select-label'
+								labelId='ShowBooksPerPage'
+								id='select'
+								value={this.state.perPage}
+								handleChange={this.handlePerPageChange}
+								items={this.pages}
+							/>
 
-						<CustomSelect
-							inputLabel='Average Rating'
-							inputLabelId='rating-select-label'
-							labelId='Rating'
-							id='select-rating'
-							value={this.state.ratingDD}
-							handleChange={this.handleRatingChange}
-							items={this.ratings}
-						/>
+							<CustomSelect
+								inputLabel='Average Rating'
+								inputLabelId='browser-select-label'
+								labelId='Rating'
+								id='select-rating'
+								value={this.state.ratingDD}
+								handleChange={this.handleRatingChange}
+								items={this.ratings}
+							/>
 
-						<CustomSelect
-							inputLabel='Genre'
-							inputLabelId='genre-select-label'
-							labelId='Genre'
-							id='select-genre'
-							value={this.state.genreDD}
-							handleChange={this.handleGenreChange}
-							items={this.genres}
-						/>
-						<CustomSelect
-							inputLabel='Sort by'
-							inputLabelId='sort-select-label'
-							labelId='Sort'
-							id='select-sort'
-							value={this.state.sortType.aSortType || 'getByTS'}
-							handleChange={this.handleSortTypeChange}
-							items={this.sortTypes}
-						/>
+							<CustomSelect
+								inputLabel='Genre'
+								inputLabelId='browser-select-label'
+								labelId='Genre'
+								id='select-genre'
+								value={this.state.genreDD}
+								handleChange={this.handleGenreChange}
+								items={this.genres}
+							/>
+							<CustomSelect
+								inputLabel='Sort by'
+								inputLabelId='browser-select-label'
+								labelId='Sort'
+								id='select-sort'
+								value={this.state.sortType.aSortType || 'getByTS'}
+								handleChange={this.handleSortTypeChange}
+								items={this.sortTypes}
+							/>
+						</div>
+						<div className='browser-buttons'>
+							<div onClick={() => this.handlePerPageClick(10)}>
+								<ItemsPerPageCompressed
+									itemsNumber={10}
+									selected={this.state.perPage === 10}
+								/>
+							</div>
+							<div onClick={() => this.handlePerPageClick(20)}>
+								<ItemsPerPageCompressed
+									itemsNumber={20}
+									selected={this.state.perPage === 20}
+								/>
+							</div>
+						</div>
 					</div>
 					<div className='nav-right nav-total-items'>
 						{this.state.page * this.state.perPage - this.state.perPage + 1}-
@@ -230,6 +300,17 @@ export default class Browser extends React.Component {
 							this.state.perPage +
 							this.state.books.length}{' '}
 						of {this.state.allBooks.length} results
+					</div>
+				</div>
+				<div className='nav browser-nav'>
+					<div className='nav-left'>
+						<Accordion
+							screen='browser'
+							data={accordion_data}
+							closeAccordion={this.state.closeAccordion}
+							handleOpenAccordionCallback={this.handleOpenAccordionCallback}
+							handleCloseAccordionCallback={this.handleCloseAccordionCallback}
+						/>
 					</div>
 				</div>
 				<div className='homescreen__products'>
@@ -250,7 +331,7 @@ export default class Browser extends React.Component {
 					)}
 				</div>
 				<div className='nav'>
-					<div className='.nav-left'>
+					<div className='nav-left'>
 						<i
 							className='fa-solid fa fa-chevron-left fa-lg'
 							disabled={this.state.page === 1}
@@ -264,7 +345,7 @@ export default class Browser extends React.Component {
 							</h2>
 						</div>
 					</div>
-					<div className='.nav-right'>
+					<div className='nav-right'>
 						<i
 							className='fa-solid fa fa-chevron-right fa-lg'
 							disabled={this.state.page === this.state.lastPage}

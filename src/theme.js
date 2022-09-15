@@ -19,7 +19,11 @@ const theme = createMuiTheme(
                     ['@media (max-width:445px)']: { // eslint-disable-line no-useless-computed-key
                         width: '2.7rem',
                     }
-                }
+                },
+                icon: {
+                    color: "#333e48",
+                },
+
             },
             MuiButton: {
                 root: {
@@ -32,7 +36,7 @@ const theme = createMuiTheme(
             },
             MuiInputBase: {
                 root: {
-                    fontSize: "14px",
+                    fontSize: "12px",
                     color: "#333e48",
                 },
             },
@@ -57,7 +61,17 @@ const theme = createMuiTheme(
                         padding: "10.5px 10px",
                     },
                 }
-            },
+            }, MuiFormLabel: {
+                root: {
+                    color: "#333e48"
+                }
+            }, MuiInput: {
+                underline: {
+                    "&:before": {
+                        borderBottom: "1px solid #333e48",
+                    }
+                }
+            }
         }
     },
     globalTheme

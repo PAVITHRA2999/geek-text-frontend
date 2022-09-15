@@ -32,7 +32,7 @@ const WishlistItem = ({ item, removeHandler, addToCartHandler, bookId }) => {
                 size="small"
               />
             </div>
-            <div className="book__rating">{parseFloat(item.rating).toFixed(1)}</div>
+            <div className="book__rating book__rating__cart">{parseFloat(item.rating).toFixed(1)}</div>
           </div>
           <div className="wishlistitem__price">
             ${parseFloat(item.price).toFixed(2)}
