@@ -13,7 +13,7 @@ const CustomSelect = ({ inputLabel, inputLabelId, labelId, id, value, handleChan
     const useStyles = makeStyles(theme => ({
 
         formControl: {
-            margin: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(1),
+            margin: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(0),
             marginRight: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(5),
             minWidth: (inputLabelId === "qty-select-label") ? 30 : 120,
 

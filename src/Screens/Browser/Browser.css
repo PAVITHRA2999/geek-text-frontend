@@ -40,10 +40,14 @@
 }
 
 .homescreen__products {
-	justify-content: space-between; /* horizontal alignment of grid tracks */
+	justify-content: space-between;
 	align-content: space-between;
 	display: grid;
-	grid-template-columns: repeat(5, 2fr);
+	grid-template-columns: repeat(5, auto);
+	/* TODO: horizontal alignment of grid tracks */
+}
+.browser-nav {
+	margin: 2rem 0rem 1rem 0rem;
 }
 
 @media (max-width: 1040px) {
@@ -110,9 +114,9 @@
 	font-size: small;
 }
 
-.nav-total-items {
+/* .nav-total-items {
 	margin: 8px;
-}
+} */
 
 @media (max-width: 470px) {
 	.accordion_container_browser {
