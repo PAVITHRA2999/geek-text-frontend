@@ -7,20 +7,72 @@
 
 	background-color: aliceblue;
 }
+
+.banner-wrap {
+	display: grid;
+	text-align: center;
+}
+
+.banner-wrap-small {
+	background-color: var(--dark-color);
+	color: var(--light-color);
+	padding: 1rem;
+}
+
+.banner-wrap-small p {
+	font-size: 14px;
+	letter-spacing: 0.47px;
+	font-weight: 600;
+}
+
+.banner-wrap-medium {
+	background-color: var(--secondary-color);
+	color: var(--dark-color);
+	padding: 13rem;
+}
+
+.banner-items {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--dark-color);
+}
+
+.banner-item {
+	display: block;
+	margin: 2rem 4rem 0rem 4rem;
+	justify-content: center;
+	align-items: center;
+	color: var(--dark-color);
+}
+
+.banner-icon {
+	font-size: 5rem;
+	padding: 0% !important;
+	margin: 0% !important;
+}
+.banner-icon p {
+	font-size: 14px !important;
+	text-transform: uppercase;
+}
+
+.banner-button {
+	margin-top: 1rem;
+}
 /*The banner container will allow to insert items on top of the image*/
 .banner-container {
 	position: relative;
 }
 .banner-text {
 	position: absolute;
-	top: 50%;
-	left: 25%;
+	top: 5%;
+	width: 100%;
 	text-align: center;
 	color: var(--primary-color);
 }
 .banner-text-header {
 	text-transform: uppercase;
-	letter-spacing: 10px;
+	letter-spacing: 5px;
 	animation: slideInLeft 2s;
 }
 /*Placing the button in the middle of the text*/

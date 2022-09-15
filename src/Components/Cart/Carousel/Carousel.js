@@ -38,7 +38,9 @@ const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) 
 
     return (
         <div className="carousel-container">
-            {(totalLength > offset || activeIndex !== 0) && <i className="fa-solid fa fa-chevron-left fa-lg indicator" disabled={activeIndex === 0} onClick={prevIndex}></i>
+            {
+                (totalLength > offset || activeIndex !== 0) &&
+                <i className="fa-solid fa fa-chevron-left fa-lg indicator" disabled={activeIndex === 0} onClick={prevIndex}></i>
             }
             <div className="carousel" >
                 <div className="inner" style={{ transform: `translateX(-${(activeIndex) * 25}%)` }}>
