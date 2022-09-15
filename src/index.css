@@ -55,8 +55,8 @@ a {
 .screen {
 	margin-top: 4rem;
 	margin-bottom: 10rem;
-	margin-left: 10rem;
-	margin-right: 10rem;
+	margin-left: 8rem;
+	margin-right: 8rem;
 }
 .screen i:hover {
 	color: var(--dark-gray-color);
@@ -119,6 +119,11 @@ img {
 	border: 1px solid var(--primary-color);
 	color: var(--primary-color);
 }
+.btn-dark {
+	background-color: var(--dark-color);
+	border: 1px solid var(--dark-color);
+	color: var(--light-color);
+}
 
 .btn-full {
 	width: 100%;
@@ -134,6 +139,11 @@ img {
 .btn-light:hover {
 	background-color: var(--dark-color);
 	border: 1px solid var(--dark-color);
+	color: var(--light-color);
+}
+.btn-dark:hover {
+	background-color: var(--darker-primary-color);
+	border: 1px solid var(--darker-primary-color);
 	color: var(--light-color);
 }
 

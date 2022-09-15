@@ -164,7 +164,6 @@ const CartScreen = (props) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const offset = 4;
 
-  // Handle seconds from timer
   const handleUpdateIndexCallback = (newIdx) => {
     const newIndex = newIdx;
     setActiveIndex(newIndex);
@@ -263,35 +262,37 @@ const CartScreen = (props) => {
 
                 <h3>Saved for Later ({savedForLater.length} item{savedForLater.length > 1 && "s"})</h3>
               </div>
-              <Carousel
-                offset={offset}
-                handleUpdateIndexCallback={handleUpdateIndexCallback}
-                totalLength={savedForLater.length}
-              >
+              <div className="carousel-container-cart">
+                <Carousel
+                  offset={offset}
+                  handleUpdateIndexCallback={handleUpdateIndexCallback}
+                  totalLength={savedForLater.length}
+                >
 
-                {savedForLater.map((item) => (
-                  <div key={item.book}
+                  {savedForLater.map((item) => (
+                    <div key={item.book}
 
-                    className="carousel-item">
-                    <>
-                      <SavedItem
-                        key={item._id}
-                        title={item.title}
-                        price={item.price}
-                        rating={item.rating}
-                        cover={item.cover}
-                        book={item.book}
-                        qty={item.qty}
-                        authorId={item.author._id}
-                        authorName={item.authorName}
-                        addToWishlistHandler={addToWishlistHandler}
-                        removeFromWishlistHandler={removeFromWishlistHandler}
-                        addBackToCartHandler={addBackToCartHandler}
-                        removeHandler={removeFromCartHandler}
-                      /></>
-                  </div>
-                ))}
-              </Carousel>
+                      className="carousel-item">
+                      <>
+                        <SavedItem
+                          key={item._id}
+                          title={item.title}
+                          price={item.price}
+                          rating={item.rating}
+                          cover={item.cover}
+                          book={item.book}
+                          qty={item.qty}
+                          authorId={item.author._id}
+                          authorName={item.authorName}
+                          addToWishlistHandler={addToWishlistHandler}
+                          removeFromWishlistHandler={removeFromWishlistHandler}
+                          addBackToCartHandler={addBackToCartHandler}
+                          removeHandler={removeFromCartHandler}
+                        /></>
+                    </div>
+                  ))}
+                </Carousel>
+              </div>
             </div>}
         </div>
         {
