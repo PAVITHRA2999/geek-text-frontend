@@ -6,7 +6,7 @@ import axios from 'axios';
 // Components
 
 // Page breadcrumb Using the USeStateHook
-const pageRoute = [{title: 'Account', link: '/account'}];
+// const pageRoute = [{title: 'Account', link: '/account'}];
 
 const Auth = () => {
 	const [showforgotPassword, setShowForgotPassword] = useState(false);
@@ -47,7 +47,7 @@ const Auth = () => {
 				break;
 			case 'firstname_signup':
 				setFirstNameSignup(e.target.value);
-
+				break;
 			default:
 				break;
 		}

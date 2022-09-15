@@ -8,7 +8,6 @@ export const UpdateCreditCard = () => {
 	const [cardExpMonth, setcardExpMonth] = useState('');
 	const [cardExpYear, setcardExpYear] = useState('');
 	const [cardCVC, setcardCVC] = useState('');
-	const [employees, setEmployees] = useState([]);
 	const [id, setId] = useState(null);
 
 	useEffect(() => {
@@ -74,7 +73,7 @@ export const UpdateCreditCard = () => {
 	const checkCreditCardValidation = () => {
 		/* Initialization.*/
 		/* Date Class Import statement. */
-		var today = new Date();
+		let today = new Date();
 		const CreditCardNumberTmp = cardNumber;
 		const ExpMonthTmp = cardExpMonth;
 		const ExpYearTmp = cardExpYear;
@@ -92,10 +91,10 @@ export const UpdateCreditCard = () => {
 		}
 
 		/* Getting month. */
-		var mm = today.getMonth() + 1;
+		let mm = today.getMonth() + 1;
 
 		/* Getting Full Year. */
-		var yyyy = today.getFullYear();
+		let yyyy = today.getFullYear();
 
 		console.log('Year by user:' + ExpYearTmp);
 		console.log('Year by PC:' + yyyy);
@@ -106,53 +105,13 @@ export const UpdateCreditCard = () => {
 		}
 
 		/* Checking for the month */
-		if (ExpYearTmp == yyyy && ExpMonthTmp < mm) {
+		if (ExpYearTmp === yyyy && ExpMonthTmp < mm) {
 			throw 'Credit Card has expired check your month.';
 		}
 	};
 
 	const cancelFunc = () => {
 		window.location.replace('http://localhost:3000/dashboard');
-	};
-
-	const InsertInfo = (e) => {
-		e.preventDefault();
-
-		var CreditCard = [
-			{
-				cardHolder: cardHolder,
-				cardNumber: cardNumber,
-				cardExpMonth: cardExpMonth,
-				cardExpYear: cardExpYear,
-				cardCVC: cardCVC,
-				id: id,
-			},
-		];
-
-		console.log('Arrayyyyyyyyyyyyyyyyyyyyyy');
-		console.log(CreditCard[0]);
-		var email = 'bloodfear@arete.com';
-
-		const form_data = new FormData();
-		form_data.append('creditCards', CreditCard);
-
-		const token = localStorage.getItem('token');
-		const url = 'http://localhost:3000/api/updating-credit-card';
-
-		axios
-			.post(url, form_data, {
-				headers: {
-					'x-auth-token': token,
-				},
-			})
-			.then((res) => {
-				console.log(res);
-				alert('Credit card updated');
-				// window.location.reload();
-			})
-			.catch((err) => {
-				console.log(err.response.data.msg);
-			});
 	};
 
 	const UpdateInfo = (e) => {
@@ -185,7 +144,6 @@ export const UpdateCreditCard = () => {
 			.then((res) => {
 				console.log(res);
 				alert('Information successfully updated');
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err.response.data.msg);
@@ -249,9 +207,6 @@ export const UpdateCreditCard = () => {
 					</span>
 				</p>
 			</form>
-			<h2></h2>
-			<h2></h2>
-			<h2></h2>
 		</div>
 	);
 };

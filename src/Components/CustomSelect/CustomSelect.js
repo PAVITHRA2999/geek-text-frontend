@@ -6,14 +6,21 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "../../theme";
+import FilterHeading from "../Browsing/FilterHeading";
 
 const CustomSelect = ({ inputLabel, inputLabelId, labelId, id, value, handleChange, items }) => {
+
     const useStyles = makeStyles(theme => ({
 
         formControl: {
-            margin: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(1),
+            margin: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(0),
             marginRight: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(5),
             minWidth: (inputLabelId === "qty-select-label") ? 30 : 120,
+
+            ['@media (max-width:900px)']: { // eslint-disable-line no-useless-computed-key
+                minWidth: (inputLabelId === "collapsed-browser-select-label") && "100%",
+            },
+
             borderRadius: 0,
             position: 'relative',
             zIndex: 0,
@@ -42,6 +49,8 @@ const CustomSelect = ({ inputLabel, inputLabelId, labelId, id, value, handleChan
             <ThemeProvider theme={theme} >
                 <FormControl className={classes.formControl} variant={(inputLabelId === "qty-select-label") ? "outlined" : "standard"}>
                     {(inputLabelId !== "qty-select-label") && <InputLabel id={inputLabelId}>{inputLabel}</InputLabel>}
+                    {(inputLabelId === "browser-btn-select-label") && <FilterHeading filter="aFilter" />}
+
                     <Select
                         labelId={labelId}
                         id={id}

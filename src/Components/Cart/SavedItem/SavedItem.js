@@ -35,12 +35,13 @@ const SavedItem = ({ cover, description, price, rating, title, book, qty, author
           <Link to={`/book/${book}`}>
             <img src={cover} alt={title} id="container" title="view details" className="saved-small" />
           </Link>
-          <div id="infoi">
+          <div id="infoi" title={`${favorited ? "remove from wishlist" : "add to wishlist"}`}>
             {
               favorited ?
                 <FavoriteIcon className="fav" onClick={wishlistRemove}
                   sx={{ border: "1px solid #4d636a", borderRadius: "50%", padding: "3px" }} />
                 :
+
                 <FavoriteBorderIcon className="fav" onClick={wishlistAdd}
                   sx={{ border: "1px solid #4d636a", borderRadius: "50%", padding: "3px" }}
                 />
@@ -71,23 +72,13 @@ const SavedItem = ({ cover, description, price, rating, title, book, qty, author
           />
         </div>
 
-
-
-        {/* <button type="btn" onClick={() => addBackToCartHandler(book, qty)} className="btn btn-light" title="move to cart">
-          Move to cart
-        </button>
-        <div></div>
-        <button type="btn" onClick={() => removeHandler(book, title)} className="btn btn-red btn-top-margin" title="delete">
-          Remove
-        </button> */}
-
         <div className="block buttons__block">
           <button className="saveforlater_button"
             onClick={() => addBackToCartHandler(book, qty)}>
             Move to cart
           </button>
           |
-          <button className="delete_button"
+          <button className="delete_button" title="remove"
             onClick={() => removeHandler(book, title)}>
             <i className="fa fa-trash-o fa-lg"></i>
           </button>

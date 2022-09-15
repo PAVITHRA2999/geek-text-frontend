@@ -1,15 +1,9 @@
-import react from 'react';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import './DropDownMenu.css';
 import {Link} from 'react-router-dom';
 
 export const DropDownMenu = () => {
-	// const Logout = () => {
-	//     localStorage.removeItem('token');
-	//     window.location.reload(false)
-	// }
-
 	const SignOut = () => {
 		console.log('signed out');
 		localStorage.removeItem('token');

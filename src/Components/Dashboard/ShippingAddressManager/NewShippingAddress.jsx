@@ -37,27 +37,12 @@ export const NewShippingAddress = () => {
 		}
 	};
 
-	const testingVars = () => {
-		try {
-			console.log(street);
-			console.log(city);
-			console.log(state);
-			console.log(postalCode);
-			console.log(country);
-		} catch (e) {
-			alert(e);
-			window.location.reload();
-			return;
-		}
-	};
-
 	const cancelFunc = () => {
 		window.location.replace('http://localhost:3000/dashboard');
 	};
 
 	const UpdateInfo = (e) => {
 		e.preventDefault();
-		// console.log("gafsdafsadfsfdsfsafdsafassafsafa");
 		BlankValidation();
 
 		const baseURL = {
@@ -84,7 +69,6 @@ export const NewShippingAddress = () => {
 			.then((res) => {
 				console.log(res);
 				alert('Information successfully updated');
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err.response.data.msg);
@@ -141,9 +125,6 @@ export const NewShippingAddress = () => {
 					</span>
 				</p>
 			</form>
-			<h2></h2>
-			<h2></h2>
-			<h2></h2>
 		</div>
 	);
 };

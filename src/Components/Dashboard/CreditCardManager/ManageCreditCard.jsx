@@ -1,20 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import '../PersonalInfoManager/PersonalInfoManager.css';
-
 import '../CreditCardManager/ManageCreditCard.css';
 import axios from 'axios';
-
-// const URL = 'https://jsonplaceholder.typicode.com/users';
 
 export const ManageCreditCard = (props) => {
 	const [employees, setEmployees] = useState([]);
 
-	// useEffect(() => {
-	//    getDataPay();
-	// }, []);
-
 	const getDataPay = async () => {
-		// const response = await axios.post("http://localhost:3001/payment/getpayment", {IdEmail: decoded.EmailAddressReg});
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
 		const url = 'https://lea-geek-text.herokuapp.com/api/managing-credit-cardd';
@@ -28,14 +20,10 @@ export const ManageCreditCard = (props) => {
 				console.log(res);
 				console.log('credit cards resopnse', res.data.creditCards);
 				setEmployees(res.data.creditCards);
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err.response.data.msg);
 			});
-
-		/*console.log("Response" + response);*/
-		/*setEmployees(response.data.results);*/
 	};
 
 	const renderHeader = () => {
@@ -77,17 +65,12 @@ export const ManageCreditCard = (props) => {
 	};
 	// Remove Credit card info.
 	const removeData = async (cardNumber) => {
-		/*
-    window.location.reload();
-    */
-		// e.preventDefault();
 		console.log(cardNumber);
 		const form_data = new FormData();
 
 		form_data.append('id', cardNumber);
 
 		const token = localStorage.getItem('token');
-		// const url = "https://lea-geek-text.herokuapp.com/api/deleting-credit-cardd";
 		const url = 'https://lea-geek-text.herokuapp.com/api/testing-deleteCC';
 		axios
 			.post(url, form_data, {
@@ -98,15 +81,11 @@ export const ManageCreditCard = (props) => {
 			.then((res) => {
 				console.log(res);
 				console.log(res.data.creditCards);
-				// setEmployees(res.data.creditCards);
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err.response.data.msg);
 			});
-		/*
-    window.location.reload();
-    */
+
 		const del = employees.filter(
 			(employee) => cardNumber !== employee.cardNumber
 		);

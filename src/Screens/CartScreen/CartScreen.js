@@ -143,11 +143,6 @@ const CartScreen = (props) => {
       });
   };
 
-  // Get number of items saved for later
-  const getSavedCount = () => {
-    return savedForLater.length;
-  };
-
   // Get number of items in shopping cart
   const getCartCount = () => {
     return inCart.reduce((qty, item) => Number(item.qty) + qty, 0);
@@ -161,7 +156,7 @@ const CartScreen = (props) => {
   };
 
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [, setActiveIndex] = useState(0);
   const offset = 4;
 
   // Handle seconds from timer
@@ -172,7 +167,6 @@ const CartScreen = (props) => {
 
   return (
     <>
-
       <div className="nav-bottom" style={{ display: getCartCount() === 0 && 'none' }}>
         <div className="right-subtotal">
           <div className="right-subtotal-text">

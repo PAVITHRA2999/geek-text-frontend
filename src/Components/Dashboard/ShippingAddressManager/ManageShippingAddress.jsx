@@ -7,7 +7,6 @@ export const ManageShippingAddress = () => {
 	const [employees, setEmployees] = useState([]);
 
 	const getDataPay = async () => {
-		// const response = await axios.post("http://localhost:3001/payment/getpayment", {IdEmail: decoded.EmailAddressReg});
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
 		const url =
@@ -22,7 +21,6 @@ export const ManageShippingAddress = () => {
 				console.log(res);
 				console.log(res.data.shippingAddress);
 				setEmployees(res.data.shippingAddress);
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err.response.data.msg);
@@ -47,9 +45,6 @@ export const ManageShippingAddress = () => {
 
 	// Remove Credit card info.
 	const removeData = async (cardNumber) => {
-		/*
-        window.location.reload();
-        */
 		console.log('id', cardNumber);
 
 		const form_data = new FormData();
@@ -66,15 +61,10 @@ export const ManageShippingAddress = () => {
 			.then((res) => {
 				console.log(res);
 				console.log(res.data.creditCards);
-				// setEmployees(res.data.creditCards);
-				// window.location.reload();
 			})
 			.catch((err) => {
 				console.log(err.response.data.msg);
 			});
-		/*
-        window.location.reload();
-        */
 		const del = employees.filter(
 			(employee) => cardNumber !== employee.cardNumber
 		);
@@ -91,7 +81,6 @@ export const ManageShippingAddress = () => {
 			_id,
 		};
 		localStorage.setItem('shippingAdress', JSON.stringify({data}));
-		// '/dashboard/updating-shipping-adress'
 		window.location = '/dashboard/updating-shipping-adress';
 	};
 	const renderBody = () => {

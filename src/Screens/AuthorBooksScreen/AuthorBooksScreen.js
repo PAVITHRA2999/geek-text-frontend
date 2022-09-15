@@ -18,35 +18,37 @@ const AuthorBooksScreen = ({ match }) => {
   const books = (booksByAuthor.books || {})[0] || {};
   const author = books.authorName;
 
-  return (
-    <div className="screen">
-      <h2 className="centered_header">Books by {author}</h2>
-      {loading ? (
-        <CircularProgress className="circular_progress_dtl" />
-      ) : error ? (
-        <h2>{error}</h2>
-      ) : (
-        <div className="homescreen__products">
-          {(booksByAuthor.books) ?
-            (booksByAuthor.books).map(book =>
-              <Book
-                key={book._id}
-                title={book.title}
-                price={book.price}
-                rating={book.rating}
-                cover={book.cover}
-                bookId={book._id}
-                authorId={book.author}
-                authorName={book.authorName}
-              />
-            )
-            :
-            <p>No books records for this author</p>}
-        </div>)
-      }
+  if (loading)
+    return (<CircularProgress className="circular_progress_dtl" />);
 
-    </div>
-  );
+  else {
+    return (
+      <div className="screen">
+        <h2 className="centered_header">Books by {author}</h2>
+        {error ? (
+          <h2>{error}</h2>
+        ) : (
+          <div className="homescreen__products">
+            {(booksByAuthor.books) ?
+              (booksByAuthor.books).map(book =>
+                <Book
+                  key={book._id}
+                  title={book.title}
+                  price={book.price}
+                  rating={book.rating}
+                  cover={book.cover}
+                  bookId={book._id}
+                  authorId={book.author}
+                  authorName={book.authorName}
+                />
+              )
+              :
+              <p>No books records for this author</p>}
+          </div>)
+        }
+      </div>
+    );
+  }
 };
 
 export default AuthorBooksScreen;

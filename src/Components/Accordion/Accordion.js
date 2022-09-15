@@ -3,41 +3,59 @@ import React, { useState } from 'react';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-const Accordion = (props) => {
+
+const Accordion = ({ data, screen, closeAccordion, handleOpenAccordionCallback }) => {
     const [clicked, setClicked] = useState(false);
 
     const toggle = index => {
+
         if (clicked === index) {
-            //if clicked question is already active, then close it
             return setClicked(null);
         }
-
+        if (screen === "browser") { handleOpenAccordionCallback(); }
         setClicked(index);
+
+
     };
 
     return (<div className='accordion_section'>
-        <div className='accordion_container'>
-            {props.data.map((item, index) => {
+        <div className={`${screen === "browser" && "accordion_container_browser"}`}>
+            {data.map((item, index) => {
                 return (
                     <div key={index}>
-                        <div className='accordion_wrap' onClick={() => toggle(index)} key={index}>
-                            <div className="accordion_header">{item.heading}</div>
-                            <div>{clicked === index ?
-                                <ExpandLessIcon />
-                                :
-                                <ExpandMoreIcon />
-                            }
+                        <div
+                            className={`accordion_wrap ${screen === "browser" && "accordion_wrap_browser"}`}
+                            onClick={() => toggle(index)}
+                            key={index}>
+                            <div className={`accordion_header ${screen === "browser" ? "accordion_header_browser" : "accordion_header_book"} ${item.type === "sort" && "sort_header"}`}>
+                                {item.heading}
+                            </div>
+                            <div className={`${screen === "browser" && "accordion_expand_browser"}`}>
+                                {clicked === index ?
+                                    <ExpandLessIcon />
+                                    :
+                                    <ExpandMoreIcon />
+                                }
                             </div>
                         </div>
-                        {clicked === index ? (
-                            <div className='accordion_dropdown'>
+                        {
+                            (clicked === index && screen !== "browser") &&
+                            <div className="accordion_dropdown accordion_dropdown_book">
                                 {item.content}
                             </div>
-                        ) : null}
+                        }
                     </div>
                 );
-            })}
+            })
+            }
+
         </div>
+        {
+            (screen === "browser" && clicked !== false && clicked !== null && !closeAccordion) ?
+                (<div className='accordion_dropdown'>
+                    {(data || {})[clicked || 0].content}
+                </div>) : null
+        }
     </div>
     );
 };

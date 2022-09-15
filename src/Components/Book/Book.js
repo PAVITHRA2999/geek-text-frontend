@@ -89,7 +89,7 @@ const Book = ({ cover, description, price, title, bookId, authorName, rating, au
           <Link to={`/book/${bookId}`}>
             <img src={cover} alt={title} id="container" title="view details" />
           </Link>
-          <div id="infoi">
+          <div id="infoi" title={`${favorited ? "remove from wishlist" : "add to wishlist"}`}>
             {
               favorited ?
                 <FavoriteIcon className="fav" onClick={removeFromWishlistHandler}
