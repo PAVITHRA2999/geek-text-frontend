@@ -61,6 +61,7 @@ const CartScreen = (props) => {
 
   // Add item from 'saved for later' to shopping cart
   const addBackToCartHandler = (id, qty) => {
+    if ((savedForLater.length - qty) <= 0) { setCollapse(false); }
     dispatch(addToCart(id, qty, false));
   };
 
@@ -225,7 +226,7 @@ const CartScreen = (props) => {
               </div>
             </>)
             :
-            (<div className="cartscreen__info">
+            (<div className={`cartscreen__info ${!colapse && "not-collapsed-content"}`}>
               {inCart.map((item, i) => (
 
                 <div key={item.book}>
@@ -339,10 +340,13 @@ const CartScreen = (props) => {
               </button>
             </Link>
           </div>}
+        {/* <div className="filler-space"></div> */}
         {savedForLater.length !== 0 &&
           <>
             <div className="collapsible_items">
-              <div className="centered_saved collapsible_header" onClick={() => toggleCollapse()}>
+              <div className={`centered_saved collapsible_header ${!colapse && "not-collapsed-header"}`}
+                onClick={() => toggleCollapse()}
+              >
                 Saved for Later ({savedForLater.length})
                 {colapse ?
                   <RemoveIcon />
@@ -372,10 +376,13 @@ const CartScreen = (props) => {
                   )}
                 </div>
               }
+
             </div>
           </>
         }
-        <div className="shaded_section">
+
+
+        <div className={`shaded_section ${!colapse && "not-collapsed-shaded_section"}`}>
           <div className="shaded_subsection">
             <div >
               Subtotal ({getCartCount()} {getCartCount() === 1 ? <>item</> : <>items</>})

@@ -32,10 +32,12 @@
 	height: calc(100% - (185px + 50px + 100px + 42px));
 	width: 100%;
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
 	justify-self: center;
+	cursor: pointer;
 	background-color: var(--secondary-color);
 }
 
@@ -48,7 +50,7 @@
 	text-align: center;
 }
 
-#fixed-height-1 a {
+#fixed-height-1 p {
 	color: var(--background-color) !important;
 	font-weight: 600;
 	text-align: center;

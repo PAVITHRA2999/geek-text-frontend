@@ -1,29 +1,17 @@
 .cartscreen {
-	/* padding-left: 20rem;
-  padding-right: 20rem; */
 	margin-top: 3rem;
 	--margin: 16%;
-	/* padding-left: 15rem;
-padding-right: 15rem; */
 	align-items: center;
 	justify-content: center;
+	height: 100%;
 }
 
 .checkout-content {
-	/* width: 60%; */
-
-	/* display: block; */
 	margin-bottom: 2rem;
 	text-align: center;
 	align-items: center;
 	justify-content: center;
 	align-self: center;
-
-	/* width: 36rem   !important; */
-
-	/* max-width: 40%   !important; */
-	/* 
-  margin: 0rem 10rem; */
 }
 
 .checkout-content-non-empty {
@@ -73,8 +61,6 @@ padding-right: 15rem; */
 	height: fit-content;
 	grid-template-columns: 1fr 6fr 1fr 1fr;
 	gap: 18px;
-	/* padding-left: 4rem;
-  padding-right: 4rem; */
 }
 
 .top-subtotal {
@@ -118,10 +104,11 @@ padding-right: 15rem; */
 }
 
 .cartscreen__info {
-	position: static;
+	height: fit-content;
+	/* position: static; */
 	border: 1px var(--border-color) solid;
-	padding: 0rem 1rem;
-	margin-bottom: 6rem;
+	/* padding: 0rem 1rem;
+	margin-bottom: 6rem; */
 	/* width:initial;  */
 }
 
@@ -219,17 +206,6 @@ padding-right: 15rem; */
 	display: none;
 }
 
-/* @media (max-width:130px) {
-    
-      .cartscreen {
-        padding-left: 20rem;
-        padding-right: 20rem;
-      }
-      .cartscreen__info_saved{
-        width: 20rem;
-      }
-    } */
-
 @media (max-width: 1350px) {
 	.cartscreen {
 		--margin: 14%;
@@ -263,6 +239,10 @@ padding-right: 15rem; */
 
 	.cartscreen {
 		--margin: 0rem;
+		margin: 4rem 0rem 0rem 0rem;
+		padding-left: 0rem;
+		padding-right: 0rem;
+		padding-bottom: 288px;
 	}
 
 	.centered_saved {
@@ -277,45 +257,15 @@ padding-right: 15rem; */
 		margin-bottom: 0rem;
 	}
 
-	.cartscreen__info,
-	.cartscreen__info_saved {
-		margin-left: 0rem;
-		margin-right: 0rem;
-		padding-left: 0rem;
-		padding-right: 0rem;
-		border: none;
-	}
-
-	.shaded_subsection {
-		display: flex !important;
-		justify-content: space-between !important;
-	}
-
-	.collapsible_header {
-		font-size: 14px;
-		font-weight: bold;
-		align-items: center;
-		display: flex;
-		justify-content: space-between;
-		background-color: var(--light-color);
-		cursor: pointer;
-		padding: 18px;
-		margin-top: 5.5rem;
+	.cartscreen__info_not_collapsed {
+		margin-bottom: 288px;
 	}
 
 	.collapsible_items {
-		display: block;
+		display: grid;
 	}
 	.non_collapsible_items {
 		display: none;
-	}
-
-	.collapsible_content,
-	.cartscreen__info_save {
-		/* background-color: var(--secondary-color); */
-		background-color: var(--light-color);
-		margin-top: 0px;
-		padding-top: 0px;
 	}
 
 	.top-subtotal {
@@ -353,12 +303,6 @@ padding-right: 15rem; */
 		align-self: center;
 	}
 
-	.cartscreen {
-		margin: 4rem 0rem 0rem 0rem;
-		padding-left: 0rem;
-		padding-right: 0rem;
-		padding-bottom: 8rem;
-	}
 	.nav-bottom {
 		height: 8rem;
 		padding: 20px 18px 28px 18px;
@@ -372,16 +316,66 @@ padding-right: 15rem; */
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		/* border-top: 1px solid var(--darker-primary-color); */
+	}
+
+	.collapsible_header {
+		font-size: 14px;
+		font-weight: bold;
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		background-color: var(--light-color);
+		cursor: pointer;
+		padding: 18px;
+	}
+
+	.not-collapsed-content {
+		margin-bottom: 288px !important;
+		padding-bottom: 288px !important;
+	}
+
+	.cartscreen__info_saved {
+		background-color: var(--light-color);
+		margin-top: 0px;
+		padding-top: 0px;
+		margin-bottom: 228px;
+		width: 100%;
+	}
+
+	.cartscreen__info,
+	.cartscreen__info_saved {
+		margin-left: 0rem;
+		margin-right: 0rem;
+		padding-left: 0rem;
+		padding-right: 0rem;
+		border: none;
+		/* margin-bottom: 288px; */
+	}
+
+	.not-collapsed-header {
+		width: 100%;
+		margin-bottom: 228px !important;
+		position: fixed !important;
+		bottom: 0 !important;
 	}
 
 	.shaded_section {
 		font-size: 13px;
+		height: 100px;
 		display: block;
 		background-color: var(--light-color);
 		border-top: 0.5px solid var(--border-color);
 		padding: 18px;
 		width: 100%;
+
+		margin-bottom: 128px;
+		position: fixed;
+		bottom: 0;
+	}
+
+	.shaded_subsection {
+		display: flex !important;
+		justify-content: space-between !important;
 	}
 
 	.nav-bottom .subtotal {
