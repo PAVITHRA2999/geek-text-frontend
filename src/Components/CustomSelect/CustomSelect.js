@@ -14,13 +14,18 @@ const CustomSelect = ({ inputLabel, inputLabelId, labelId, id, value, handleChan
 
         formControl: {
             margin: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(0),
+            marginTop: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(1),
+            marginBottom: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(1),
             marginRight: (inputLabelId === "qty-select-label") ? 0 : theme.spacing(5),
             minWidth: (inputLabelId === "qty-select-label") ? 30 : 120,
 
             ['@media (max-width:900px)']: { // eslint-disable-line no-useless-computed-key
                 minWidth: (inputLabelId === "collapsed-browser-select-label") && "100%",
             },
-
+            ['@media (max-width:445px)']: { // eslint-disable-line no-useless-computed-key
+                minWidth: (inputLabelId === "qty-select-label") && '2.7rem',
+                width: (inputLabelId === "qty-select-label") && '5.1rem',
+            },
             borderRadius: 0,
             position: 'relative',
             zIndex: 0,

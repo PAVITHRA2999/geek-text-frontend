@@ -11,7 +11,7 @@ import Notification from "../../Components/Cart/UI/Notification";
 import ConfirmDialog from "../../Components/Cart/UI/ConfirmDialog";
 import SignInFirstDialog from "../../Components/Cart/UI/SignInFirstDialog";
 import SavedItem from "../../Components/Cart/SavedItem/SavedItem";
-import Carousel from "../../Components/Cart/Carousel/Carousel";
+import Carousel from "../../Components/Carousel/Carousel";
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -262,27 +262,26 @@ const CartScreen = (props) => {
                   handleUpdateIndexCallback={handleUpdateIndexCallback}
                   totalLength={savedForLater.length}
                 >
-
                   {savedForLater.map((item) => (
-                    <div key={item.book}
-
-                      className="carousel-item">
-                      <>
-                        <SavedItem
-                          key={item._id}
-                          title={item.title}
-                          price={item.price}
-                          rating={item.rating}
-                          cover={item.cover}
-                          book={item.book}
-                          qty={item.qty}
-                          authorId={item.author._id}
-                          authorName={item.authorName}
-                          addToWishlistHandler={addToWishlistHandler}
-                          removeFromWishlistHandler={removeFromWishlistHandler}
-                          addBackToCartHandler={addBackToCartHandler}
-                          removeHandler={removeFromCartHandler}
-                        /></>
+                    <div
+                      key={item.book}
+                      className="carousel-item"
+                    >
+                      <SavedItem
+                        key={item._id}
+                        title={item.title}
+                        price={item.price}
+                        rating={item.rating}
+                        cover={item.cover}
+                        book={item.book}
+                        qty={item.qty}
+                        authorId={item.author._id}
+                        authorName={item.authorName}
+                        addToWishlistHandler={addToWishlistHandler}
+                        removeFromWishlistHandler={removeFromWishlistHandler}
+                        addBackToCartHandler={addBackToCartHandler}
+                        removeHandler={removeFromCartHandler}
+                      />
                     </div>
                   ))}
                 </Carousel>

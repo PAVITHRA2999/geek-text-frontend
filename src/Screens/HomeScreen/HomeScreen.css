@@ -1,0 +1,155 @@
+#home {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+	margin-top: 42px;
+}
+
+#fixed-height-1 {
+	height: 96px;
+	margin-bottom: 4px;
+	background-color: var(--new-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#fixed-height-2 {
+	height: 46px;
+	margin-bottom: 4px;
+	background-color: var(--dark-color);
+	color: var(--light-color);
+	font-weight: 600;
+	font-size: 14px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	text-align: center;
+}
+
+#remaining-height {
+	height: calc(100% - (185px + 50px + 100px + 42px));
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	justify-self: center;
+	background-color: var(--secondary-color);
+}
+
+#bottom-height {
+	background-color: var(--background-color);
+	position: absolute;
+	height: 185px;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
+
+#fixed-height-1 a {
+	color: var(--background-color) !important;
+	font-weight: 600;
+	text-align: center;
+	padding: 0rem 1rem;
+	font-size: 14px;
+}
+
+#fixed-height-2 p,
+#remaining-height h3 {
+	padding: 0rem 1rem;
+}
+
+.banner-icon {
+	font-size: 80px;
+}
+
+.banner-icon p {
+	font-size: 14px !important;
+	padding-bottom: 20px;
+	text-transform: uppercase;
+}
+
+.banner-text-header {
+	color: var(--tertiary-color);
+	text-transform: uppercase;
+	letter-spacing: 5px;
+	animation: slideInLeft 2s;
+}
+
+.banner-items {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--tertiary-color);
+}
+
+.banner-item {
+	display: block;
+	margin: 0rem 4rem 0rem 4rem;
+	justify-content: center;
+	align-items: center;
+	color: var(--tertiary-color);
+}
+
+.banner-item:hover {
+	text-decoration: underline;
+}
+
+.banner-item a {
+	color: var(--tertiary-color);
+}
+
+.banner-button {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.btn:active {
+	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
+	transform: translateY(-1px);
+}
+/*Animation for the text in the middle of the page*/
+@keyframes slideInLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(-100px);
+	}
+	80% {
+		opacity: 0.5;
+		transform: translateX(20px);
+	}
+	100% {
+		opacity: 1;
+		transform: translate(0);
+	}
+}
+
+@media (max-width: 780px) {
+	.banner-item {
+		margin: 0rem 1rem;
+	}
+
+	.banner-icon {
+		font-size: 50px;
+	}
+	.banner-icon p {
+		font-size: 10px !important;
+	}
+
+	#remaining-height {
+		height: calc(-webkit-fill-available - (110px + 50px + 100px + 42px));
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		justify-self: center;
+		background-color: var(--secondary-color);
+	}
+
+	#bottom-height {
+		height: 110px;
+	}
+}

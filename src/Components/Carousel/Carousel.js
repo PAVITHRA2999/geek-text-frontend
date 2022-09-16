@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Carousel.css";
+import { useSwipeable } from "react-swipeable";
+
 
 export const CarouselItem = ({ children, width }) => {
     return (
@@ -8,9 +10,31 @@ export const CarouselItem = ({ children, width }) => {
         </div>
     );
 };
-const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) => {
+const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength, auto }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const items = React.Children;
+    const [paused, setPaused] = useState(false);
+
+    const handlers = useSwipeable({
+        onSwipedLeft: () => nextIndex(),
+        onSwipedRight: () => prevIndex()
+    });
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (!paused && auto) {
+                nextIndex();
+            }
+        }, 1500);
+
+        return () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+        };
+    });
+
     const nextIndex = () => {
         let newIndex;
         if (activeIndex === totalLength - offset) {
@@ -42,8 +66,12 @@ const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) 
                 (totalLength > offset || activeIndex !== 0) &&
                 <i className="fa-solid fa fa-chevron-left fa-lg indicator" disabled={activeIndex === 0} onClick={prevIndex}></i>
             }
-            <div className="carousel" >
-                <div className="inner" style={{ transform: `translateX(-${(activeIndex) * 25}%)` }}>
+            <div  {...handlers}
+                className="carousel"
+                onMouseEnter={() => setPaused(true)}
+                onMouseLeave={() => setPaused(false)}
+            >
+                <div className="inner" style={{ transform: `translateX(-${(activeIndex) * 100 / offset}%)` }}>
                     {items.map(children, (child) => {
                         return React.cloneElement(child, {
                             width: "100%"
@@ -52,9 +80,11 @@ const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength }) 
                 </div>
 
             </div>
-            {((totalLength > offset) || (activeIndex < totalLength - offset)) && <i className="fa-solid fa fa-chevron-right fa-lg indicator"
-                disabled={activeIndex >= totalLength - offset}
-                onClick={nextIndex}></i>}
+            {
+                ((totalLength > offset) || (activeIndex < totalLength - offset)) &&
+                <i className="fa-solid fa fa-chevron-right fa-lg indicator"
+                    disabled={activeIndex >= totalLength - offset}
+                    onClick={nextIndex}></i>}
         </div>
     );
 };

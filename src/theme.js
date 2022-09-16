@@ -15,11 +15,12 @@ const theme = createMuiTheme(
                 root: {
                     fontSize: "14px",
                 },
-                select: {
-                    ['@media (max-width:445px)']: { // eslint-disable-line no-useless-computed-key
-                        width: '2.7rem',
-                    }
-                },
+                // select: {
+                //     ['@media (max-width:445px)']: { // eslint-disable-line no-useless-computed-key
+                //         width: '2.7rem',
+                //     }
+                // },
+
                 icon: {
                     color: "#333e48",
                 },

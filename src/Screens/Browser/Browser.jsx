@@ -24,11 +24,13 @@ export default class Browser extends React.Component {
 			page: Number(1),
 			lastPage: Number(10),
 			perPage: Number(10),
-			filter: {},
-			currFilter: 'All',
+			filter: this.props.match
+				? {genre: this.genres[this.props.match.params.id]}
+				: {},
+			currFilter: this.props.match.params.id || 'All',
 			currSort: 'Top Sellers',
-			genreDD: 'All', // genre select Value for filter
-			ratingDD: 1, // Rating select Value for filter
+			genreDD: this.props.match.params.id || 'All',
+			ratingDD: 1,
 			sortType: 'getByTS',
 			closeAccordion: false,
 		};
@@ -235,7 +237,7 @@ export default class Browser extends React.Component {
 
 		return (
 			<div className='screen'>
-				<h2 className='centered_header'>Our Top Picks</h2>
+				<h2 className='centered_header'>Top Picks</h2>
 
 				<div className='nav browser-nav'>
 					<div className='nav-left'>
@@ -340,9 +342,7 @@ export default class Browser extends React.Component {
 					</div>
 					<div className='centered-footer'>
 						<div>
-							<h2>
-								{this.state.page} of {this.state.lastPage}
-							</h2>
+							{this.state.page} of {this.state.lastPage}
 						</div>
 					</div>
 					<div className='nav-right'>
