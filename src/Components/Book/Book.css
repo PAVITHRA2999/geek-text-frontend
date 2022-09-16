@@ -31,6 +31,7 @@
 
 .book__rating__stars {
 	display: inline-block;
+	z-index: 0;
 }
 
 .book__rating {

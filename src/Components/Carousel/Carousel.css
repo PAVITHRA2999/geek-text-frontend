@@ -43,7 +43,7 @@
 	pointer-events: none;
 }
 
-.indicatorsi[disabled] {
+.indicator i[disabled] {
 	pointer-events: none;
 	color: var(--disabled-color);
 }

@@ -11,7 +11,7 @@ import Notification from "../../Components/Cart/UI/Notification";
 import ConfirmDialog from "../../Components/Cart/UI/ConfirmDialog";
 import SignInFirstDialog from "../../Components/Cart/UI/SignInFirstDialog";
 import SavedItem from "../../Components/Cart/SavedItem/SavedItem";
-import Carousel from "../../Components/Cart/Carousel/Carousel";
+import Carousel from "../../Components/Carousel/Carousel";
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -61,6 +61,7 @@ const CartScreen = (props) => {
 
   // Add item from 'saved for later' to shopping cart
   const addBackToCartHandler = (id, qty) => {
+    if ((savedForLater.length - qty) <= 0) { setCollapse(false); }
     dispatch(addToCart(id, qty, false));
   };
 
@@ -225,7 +226,7 @@ const CartScreen = (props) => {
               </div>
             </>)
             :
-            (<div className="cartscreen__info">
+            (<div className={`cartscreen__info ${!colapse && "not-collapsed-content"}`}>
               {inCart.map((item, i) => (
 
                 <div key={item.book}>
@@ -262,27 +263,26 @@ const CartScreen = (props) => {
                   handleUpdateIndexCallback={handleUpdateIndexCallback}
                   totalLength={savedForLater.length}
                 >
-
                   {savedForLater.map((item) => (
-                    <div key={item.book}
-
-                      className="carousel-item">
-                      <>
-                        <SavedItem
-                          key={item._id}
-                          title={item.title}
-                          price={item.price}
-                          rating={item.rating}
-                          cover={item.cover}
-                          book={item.book}
-                          qty={item.qty}
-                          authorId={item.author._id}
-                          authorName={item.authorName}
-                          addToWishlistHandler={addToWishlistHandler}
-                          removeFromWishlistHandler={removeFromWishlistHandler}
-                          addBackToCartHandler={addBackToCartHandler}
-                          removeHandler={removeFromCartHandler}
-                        /></>
+                    <div
+                      key={item.book}
+                      className="carousel-item"
+                    >
+                      <SavedItem
+                        key={item._id}
+                        title={item.title}
+                        price={item.price}
+                        rating={item.rating}
+                        cover={item.cover}
+                        book={item.book}
+                        qty={item.qty}
+                        authorId={item.author._id}
+                        authorName={item.authorName}
+                        addToWishlistHandler={addToWishlistHandler}
+                        removeFromWishlistHandler={removeFromWishlistHandler}
+                        addBackToCartHandler={addBackToCartHandler}
+                        removeHandler={removeFromCartHandler}
+                      />
                     </div>
                   ))}
                 </Carousel>
@@ -340,10 +340,13 @@ const CartScreen = (props) => {
               </button>
             </Link>
           </div>}
+        {/* <div className="filler-space"></div> */}
         {savedForLater.length !== 0 &&
           <>
             <div className="collapsible_items">
-              <div className="centered_saved collapsible_header" onClick={() => toggleCollapse()}>
+              <div className={`centered_saved collapsible_header ${!colapse && "not-collapsed-header"}`}
+                onClick={() => toggleCollapse()}
+              >
                 Saved for Later ({savedForLater.length})
                 {colapse ?
                   <RemoveIcon />
@@ -373,10 +376,13 @@ const CartScreen = (props) => {
                   )}
                 </div>
               }
+
             </div>
           </>
         }
-        <div className="shaded_section">
+
+
+        <div className={`shaded_section ${!colapse && "not-collapsed-shaded_section"}`}>
           <div className="shaded_subsection">
             <div >
               Subtotal ({getCartCount()} {getCartCount() === 1 ? <>item</> : <>items</>})

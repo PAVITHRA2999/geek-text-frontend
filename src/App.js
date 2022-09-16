@@ -3,9 +3,8 @@ import Auth from './Components/Auth/Auth';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Navigation } from './Components/Home/Navigation/Navigation';
 
-import { Home } from './Components/Home/Home';
 
-
+import HomeScreen from "./Screens/HomeScreen/HomeScreen";
 import CartScreen from "./Screens/CartScreen/CartScreen";
 import BookScreen from "./Screens/BookScreen/BookScreen";
 import WishlistScreen from "./Screens/WishlistScreen/WishlistScreen";
@@ -26,6 +25,7 @@ import { UpdateShippingAddress } from './Components/Dashboard/ShippingAddressMan
 
 function App() {
   return (
+
     <Router >
       <Navigation />
       <Switch>
@@ -114,22 +114,20 @@ function App() {
         </Route>
 
         <Route path='/' exact={true}>
-          <Home />
-        </Route>
-
-        <Route path='/browse' exact={true}>
-          <Browser />
+          <HomeScreen />
         </Route>
 
         <Route path='/cart/:id?'>
           <CartScreen />
         </Route>
 
+        <Route exact path='/browse/:id?' component={Browser} />
         <Route exact path='/book/:id' component={BookScreen} />
         <Route exact path='/wishlist/:id?' component={WishlistScreen} />
         <Route exact path='/authorbooks/:id' component={AuthorBooksScreen} />
         <Route exact path='/book/:id/reviews' component={ReviewScreen} />
       </Switch>
+
     </Router>
   );
 }

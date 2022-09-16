@@ -58,6 +58,7 @@ margin-bottom: 1rem;
 	overflow: hidden !important;
 	white-space: nowrap !important;
 	padding-right: 0.5em !important;
+	z-index: 0;
 }
 
 .book__rating {
@@ -151,8 +152,8 @@ img.small {
 	height: fit-content;
 	grid-template-columns: 1fr 6fr 1fr 1fr;
 	gap: 18px;
-	/* padding-left: 4rem;
-  padding-right: 4rem; */
+	padding-left: 1rem;
+	padding-right: 1rem;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 }
@@ -237,10 +238,7 @@ img.small {
 	}
 
 	.grid_Cart {
-		/* gap: 5px; */
-		/* padding-left: 2rem;
-    padding-right: 2rem; */
-		/* grid-template-columns: 1fr 3fr 1fr 1fr; */
+		padding: 0rem;
 	}
 }
 
