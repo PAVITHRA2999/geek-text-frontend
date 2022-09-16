@@ -255,13 +255,12 @@ input[type='number'] {
 
 html,
 body {
-	/* height: 100% !important; */
+	height: 100% !important;
 	margin: 0 !important;
 
 	min-height: 100vh;
-	min-height: -webkit-fill-available;
 }
 
 html {
-	height: -webkit-fill-available;
+	height: 100vh;
 }

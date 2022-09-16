@@ -37,7 +37,7 @@ const Carousel = ({ children, handleUpdateIndexCallback, offset, totalLength, au
 
     const nextIndex = () => {
         let newIndex;
-        if (activeIndex === totalLength - offset) {
+        if (activeIndex >= totalLength - offset) {
             newIndex = 0;
         }
         else {
