@@ -7,7 +7,7 @@ import RatingHeader from "./RatingHeader";
 const ReviewSection = ({ aBook, commentsLength, createReviewHandler }) => {
     return (<div className="section">
         {
-            <div>
+            <div className="reviews_section">
                 <div className="inline-header">
                     <div className="author__center book_details_heading">
                         Reviews

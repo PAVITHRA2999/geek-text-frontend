@@ -6,8 +6,12 @@
 .nav h2 {
 	font-weight: lighter;
 }
+.browser-screen {
+	margin-top: 5rem;
+	padding-bottom: 5rem;
+}
 .browser-buttons,
-.accordion_section {
+.accordion_section_browser {
 	display: none;
 }
 .separated-inputs {
@@ -32,11 +36,6 @@
 	text-align: left;
 	margin-top: 1rem;
 	margin-left: 5rem;
-}
-
-.circular_progress {
-	margin-left: 20rem;
-	color: var(--primary-color);
 }
 
 .homescreen__products {
@@ -77,8 +76,8 @@
 		display: flex;
 		column-gap: 7px;
 	}
-	.accordion_section {
-		display: block;
+	.accordion_section_browser {
+		display: block !important;
 	}
 	.separated-inputs {
 		display: none;

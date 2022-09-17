@@ -1,6 +1,6 @@
-/* .accordion_section {
+.accordion_section {
 	display: block !important;
-} */
+}
 
 .accordion_container_browser {
 	display: flex;
@@ -84,7 +84,7 @@
 }
 
 @media (max-width: 420px) {
-	.accordion_section {
+	.accordion_section_browser {
 		display: flex;
 	}
 }

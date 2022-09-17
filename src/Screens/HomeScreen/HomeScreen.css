@@ -1,8 +1,9 @@
 #home {
 	display: flex;
 	flex-flow: column;
-	height: 100%;
+	/* height: 100%; */
 	margin-top: 42px;
+	/* padding-top: 42px; */
 }
 
 #fixed-height-1 {
@@ -29,7 +30,11 @@
 }
 
 #remaining-height {
-	height: calc(100% - (185px + 50px + 100px + 42px));
+	--this-vh2: calc(var(--my-vh, 1vh) * 100);
+	height: calc(
+		100vh - (185px + 50px + 100px + 42px)
+	); /* Fallback for browsers that do not support Custom Properties */
+	height: calc(var(--this-vh2) - (185px + 50px + 100px + 42px));
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -43,7 +48,7 @@
 
 #bottom-height {
 	background-color: var(--background-color);
-	position: absolute;
+	position: fixed;
 	height: 185px;
 	bottom: 0;
 	width: 100%;
@@ -61,6 +66,10 @@
 #fixed-height-2 p,
 #remaining-height h3 {
 	padding: 0rem 1rem;
+}
+
+.home-screen {
+	/* margin-top: 42px */
 }
 
 .banner-icon {
@@ -141,22 +150,19 @@
 	}
 
 	#remaining-height {
-		--my-vh: calc(var(--vh, 1vh) * 100);
+		--this-vh: calc(var(--my-vh, 1vh) * 100);
 		height: calc(
-			100vh - (110px + 50px + 100px + 42px)
+			100vh - (140px + 50px + 100px + 42px)
 		); /* Fallback for browsers that do not support Custom Properties */
-		height: calc(var(--my-vh) - (110px + 50px + 100px + 42px));
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		justify-self: center;
-		background-color: var(--secondary-color);
+		height: calc(var(--this-vh) - (140px + 50px + 100px + 42px));
 	}
 
 	#bottom-height {
-		height: 110px;
+		height: 140px;
+	}
+	#bottom-height .carousel-item {
+		padding-bottom: 3rem;
+		padding-top: 0.5rem;
 	}
 }
 
@@ -171,11 +177,11 @@
 		font-size: 10px !important;
 	}
 	#remaining-height {
-		--my-vh: calc(var(--vh, 1vh) * 100);
+		--this-vh: calc(var(--my-vh, 1vh) * 100);
 		height: calc(
 			100vh - (110px + 50px + 100px + 42px)
 		); /* Fallback for browsers that do not support Custom Properties */
-		height: calc(var(--my-vh) - (100px + 50px + 100px + 42px));
+		height: calc(var(--this-vh) - (100px + 50px + 100px + 42px));
 	}
 
 	#bottom-height {

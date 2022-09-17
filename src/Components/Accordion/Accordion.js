@@ -18,7 +18,7 @@ const Accordion = ({ data, screen, closeAccordion, handleOpenAccordionCallback }
 
     };
 
-    return (<div className='accordion_section'>
+    return (<div className={`${screen === "browser" ? "accordion_section_browser" : "accordion_section"}`}>
         <div className={`${screen === "browser" && "accordion_container_browser"}`}>
             {data.map((item, index) => {
                 return (

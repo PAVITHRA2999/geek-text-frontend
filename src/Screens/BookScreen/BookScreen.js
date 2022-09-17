@@ -1,5 +1,5 @@
 import "./BookScreen.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -17,23 +17,28 @@ import Heart from "../../Components/BookDetails/Heart";
 import TopSection from "../../Components/BookDetails/TopSection";
 import ProductDetails from "../../Components/BookDetails/ProductDetails";
 import ReviewSection from "../../Components/BookDetails/ReviewSection";
-
-import { CircularProgress } from '@material-ui/core';
+import Loading from "../../Components/Loading/Loading";
 
 
 const BookScreen = ({ match, history }) => {
 
   const { id } = useParams();
-  const [show, setShow] = useState(false);
   const [qty, setQty] = useState(1);
 
+  // Notifications
+  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '', viewButton: 'View Cart' });
+  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
+  const [show, setShow] = useState(false);
+
+  // Load book details
   const dispatch = useDispatch();
   const bookDetails = useSelector((state) => state.getBookDetails);
   const { loading, error, book } = bookDetails;
 
-  const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '', viewButton: 'View Cart' });
-  // Notification
-  const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
+  const reviews_section = useRef(null);
+
+  const onClickReviews = () => reviews_section.current.scrollIntoView();
+
 
   useEffect(() => {
     if (book && (match.params.id) !== book._id) {
@@ -196,9 +201,7 @@ const BookScreen = ({ match, history }) => {
   ];
 
   if (loading) {
-    return (<div className="circular_progress">
-      <CircularProgress className="circular_progress" color="inherit" />
-    </div>);
+    return <Loading />;
   }
   else {
     return (
@@ -211,7 +214,7 @@ const BookScreen = ({ match, history }) => {
         ) :
           (
             <>
-              <div className="screen">
+              <div className="screen screen-h-padding">
                 <Notification
                   notify={notify}
                   setNotify={setNotify}
@@ -220,6 +223,7 @@ const BookScreen = ({ match, history }) => {
                   messageDialog={messageDialog}
                   setMessageDialog={setMessageDialog}
                 />
+
                 <div className="book-screen-container">
                   <div className="container__main">
                     <TopSection
@@ -230,6 +234,7 @@ const BookScreen = ({ match, history }) => {
                       removeFromWishlistHandler={removeFromWishlistHandler}
                       authorID={authorID}
                       commentsLength={commentsLength}
+                      onClickReviews={onClickReviews}
                     />
                     <div className="container__left">
                       <input type="image" src={aBook.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShow(true)} />
@@ -259,6 +264,7 @@ const BookScreen = ({ match, history }) => {
                         removeFromWishlistHandler={removeFromWishlistHandler}
                         authorID={authorID}
                         commentsLength={commentsLength}
+                        onClickReviews={onClickReviews}
                       />
                       <hr className="hide-to-compact section_divider add-to-cart-non-nav" />
                       <div className="add-to-cart-non-nav">
@@ -301,7 +307,7 @@ const BookScreen = ({ match, history }) => {
                       </div>
                     </div>
                   </div>
-                  <div className="large-padding">
+                  <div className="large-padding" ref={reviews_section}>
                     <hr />
                     <ReviewSection
                       aBook={aBook}

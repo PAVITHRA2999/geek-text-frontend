@@ -118,6 +118,8 @@ const Auth = () => {
 									id='email_signin'
 									type='text'
 									required
+									initial-scale='1'
+									maximum-scale='1'
 								/>
 							</div>
 							<div className='form-control'>
@@ -171,8 +173,8 @@ const Auth = () => {
 				</div>
 				<div className='col-1-2 form-divider'>
 					<form className='account__form'>
-						<h3 className='account__form-header'>Create New Account</h3>
-						<p>Create your own Account</p>
+						<h3 className='account__form-header'>Sign Up</h3>
+						<p>Create a New Account</p>
 						<div className='form-control'>
 							<label htmlFor='name'>First Name</label>
 							<input
@@ -214,7 +216,7 @@ const Auth = () => {
 							type='submit'
 							className='btn btn-primary auth'
 						>
-							Register
+							Sign Up
 						</button>
 					</form>
 					<link

@@ -1,76 +1,12 @@
-import React, {useEffect, useState, useLayoutEffect, useRef} from 'react';
+import React from 'react';
 
 import './HomeScreen.css';
 import {Link} from 'react-router-dom';
-
-import HistoryEduOutlinedIcon from '@mui/icons-material/HistoryEduOutlined';
-import TheaterComedyOutlinedIcon from '@mui/icons-material/TheaterComedyOutlined';
-import SentimentVerySatisfiedOutlinedIcon from '@mui/icons-material/SentimentVerySatisfiedOutlined';
-import PortraitOutlinedIcon from '@mui/icons-material/PortraitOutlined';
-import BiotechOutlinedIcon from '@mui/icons-material/BiotechOutlined';
-import FortOutlinedIcon from '@mui/icons-material/FortOutlined';
-import Carousel from '../../Components/Carousel/Carousel';
+import GenreCategories from '../../Components/GenreCategories/GenreCategories';
 
 const HomeScreen = () => {
-	const [, setActiveIndex] = useState(0);
-
-	const handleUpdateIndexCallback = (newIdx) => {
-		const newIndex = newIdx;
-		setActiveIndex(newIndex);
-	};
-	// We listen to the resize event
-	window.addEventListener('resize', () => {
-		let vh = window.innerHeight * 0.01;
-		document.documentElement.style.setProperty('--vh', `${vh}px`);
-	});
-
-	const autobiography = useRef(null);
-	const fantasy = useRef(null);
-	const nonFict = useRef(null);
-	const humour = useRef(null);
-	const poetry = useRef(null);
-
-	const [autobiographyWidth, setAutobiographyWidth] = useState(0);
-	const [fantasyWidth, setFantasyWidth] = useState(0);
-	const [nonFictWidth, setNonFictWidth] = useState(0);
-	const [humourWidth, setHumourWidth] = useState(0);
-	const [poetryWidth, setPoetryWidth] = useState(0);
-
-	const [autobiographyOffsetLeft, setAutobiographyOffsetLeft] = useState(0);
-	const [fantasyOffsetLeft, setFantasyOffsetLeft] = useState(0);
-	const [nonFictOffsetLeft, setNonFictOffsetLeft] = useState(0);
-	const [humourOffsetLeft, setHumourOffsetLeft] = useState(0);
-	const [poetryOffsetLeft, setPoetryOffsetLeft] = useState(0);
-
-	useLayoutEffect(() => {
-		setAutobiographyWidth(autobiography.current.clientWidth);
-		setFantasyWidth(fantasy.current.clientWidth);
-		setNonFictWidth(nonFict.current.clientWidth);
-		setHumourWidth(humour.current.clientWidth);
-		setPoetryWidth(poetry.current.clientWidth);
-
-		setAutobiographyOffsetLeft(autobiography.current.offsetLeft);
-		setFantasyOffsetLeft(fantasy.current.offsetLeft);
-		setNonFictOffsetLeft(nonFict.current.offsetLeft);
-		setHumourOffsetLeft(humour.current.offsetLeft);
-		setPoetryOffsetLeft(poetry.current.offsetLeft);
-	}, []);
-
-	const findOffset = () => {
-		if (isOverflown(autobiographyOffsetLeft, autobiographyWidth)) return 1;
-		else if (isOverflown(fantasyOffsetLeft, fantasyWidth)) return 2;
-		else if (isOverflown(nonFictOffsetLeft, nonFictWidth)) return 3;
-		else if (isOverflown(humourOffsetLeft, humourWidth)) return 4;
-		else if (isOverflown(poetryOffsetLeft, poetryWidth)) return 5;
-		else return 6;
-	};
-
-	function isOverflown(leftWidth, selfWidth) {
-		return window.innerWidth < leftWidth + selfWidth;
-	}
-
 	return (
-		<div id='home'>
+		<div id='home' className='home-screen'>
 			<Link to='/auth'>
 				<div id='fixed-height-1'>
 					<p>
@@ -93,76 +29,7 @@ const HomeScreen = () => {
 					</div>
 				</Link>
 			</div>
-
-			<div id='bottom-height'>
-				<Carousel
-					offset={findOffset()}
-					handleUpdateIndexCallback={handleUpdateIndexCallback}
-					totalLength={6}
-					auto
-				>
-					<div className='carousel-item'>
-						<div className='banner-item'>
-							<Link to={`/browse/Novel`}>
-								<div className='banner-icon'>
-									<TheaterComedyOutlinedIcon fontSize='inherit' />
-									<p>Novel</p>
-								</div>
-							</Link>
-						</div>
-					</div>
-					<div className='carousel-item'>
-						<div className='banner-item'>
-							<Link to={`/browse/Autobiography`}>
-								<div className='banner-icon' ref={autobiography}>
-									<PortraitOutlinedIcon fontSize='inherit' />
-									<p>Autobiography</p>
-								</div>
-							</Link>
-						</div>
-					</div>
-					<div className='carousel-item'>
-						<div className='banner-item'>
-							<Link to={`/browse/Fantasy`}>
-								<div className='banner-icon' ref={fantasy}>
-									<FortOutlinedIcon fontSize='inherit' />
-									<p>Fantasy</p>
-								</div>
-							</Link>
-						</div>
-					</div>
-					<div className='carousel-item'>
-						<div className='banner-item'>
-							<Link to={`/browse/Non-Fiction`}>
-								<div className='banner-icon' ref={nonFict}>
-									<BiotechOutlinedIcon fontSize='inherit' />
-									<p>Non-Fiction</p>
-								</div>
-							</Link>
-						</div>
-					</div>
-					<div className='carousel-item'>
-						<div className='banner-item'>
-							<Link to={`/browse/Humour`}>
-								<div className='banner-icon' ref={humour}>
-									<SentimentVerySatisfiedOutlinedIcon fontSize='inherit' />
-									<p>Humour</p>
-								</div>
-							</Link>
-						</div>
-					</div>
-					<div className='carousel-item'>
-						<div className='banner-item'>
-							<Link to={`/browse/Poetry`}>
-								<div className='banner-icon' ref={poetry}>
-									<HistoryEduOutlinedIcon fontSize='inherit' />
-									<p>Poetry</p>
-								</div>
-							</Link>
-						</div>
-					</div>
-				</Carousel>
-			</div>
+			<GenreCategories />
 		</div>
 	);
 };

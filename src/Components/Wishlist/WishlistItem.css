@@ -1,7 +1,9 @@
 .wishlistscreen {
 	max-width: 50%;
 	margin: 2rem auto;
-	padding-top: 1em;
+	padding-top: 2rem;
+	margin-top: 42px;
+	padding-bottom: 5rem;
 }
 
 .rating_wishlist {
@@ -85,7 +87,7 @@ img.medium {
 	.wishlistscreen {
 		max-width: 100%;
 		margin: 1rem;
-		padding-top: 2rem;
+		padding-top: 3rem;
 	}
 }
 
