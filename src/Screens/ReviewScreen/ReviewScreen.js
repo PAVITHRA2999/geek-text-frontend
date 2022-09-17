@@ -45,7 +45,7 @@ function ReviewScreen({ match, history }) {
         console.log(JSON.stringify(copy));
     };
     return (
-        <div className="ReviewScreen">
+        <div className="ReviewScreen screen">
             <button onClick={backToBook}>Back to Book</button>
             <h1>Add a Review</h1>
             <ReviewForm addReview={addReview} />

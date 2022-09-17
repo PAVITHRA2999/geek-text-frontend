@@ -22,19 +22,19 @@ export const getBooksReducer = (state = { books: [] }, action) => {
   }
 };
 
-export const getSortedBooksReducer = (state = { sortedBooks: [] }, action) => {
+export const getSortedBooksReducer = (state = { sortedBooks: {} }, action) => {
   switch (action.type) {
-    case actionTypes.GET_BOOKS_REQUEST:
+    case actionTypes.GET_SORTED_BOOKS_REQUEST:
       return {
         loading: true,
-        sortedBooks: [],
+        sortedBooks: {},
       };
-    case actionTypes.GET_BOOKS_SUCCESS:
+    case actionTypes.GET_SORTED_BOOKS_SUCCESS:
       return {
         sortedBooks: action.payload,
         loading: false,
       };
-    case actionTypes.GET_BOOKS_FAIL:
+    case actionTypes.GET_SORTED_BOOKS_FAIL:
       return {
         loading: false,
         error: action.payload,

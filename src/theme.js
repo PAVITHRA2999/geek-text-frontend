@@ -1,3 +1,4 @@
+import { red } from "@material-ui/core/colors";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 const globalTheme = createMuiTheme({
@@ -11,6 +12,32 @@ const globalTheme = createMuiTheme({
 const theme = createMuiTheme(
     {
         overrides: {
+            MuiCircularProgress: {
+                root: {
+                    color: "#333e48",
+                    "& .MuiCircularProgress-colorPrimary": {
+
+                        color: "#333e48",
+                        fontSize: "10rem"
+                    },
+                    "$colorPrimary": {
+                        color: "#333e48",
+
+                    },
+                    "& .MuiCircularProgress-svg.MuiCircularProgress-circle": {
+                        color: "#333e48",
+                    },
+                    "& .MuiCircularProgress-indeterminate": {
+                        color: "#333e48",
+                    },
+                    "& .MuiCircularProgress-root": {
+                        left: "43%",
+                        position: "absolute",
+                        top: "44vh",
+                    },
+                }
+            },
+
             MuiSelect: {
                 root: {
                     fontSize: "14px",

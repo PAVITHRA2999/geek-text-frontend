@@ -92,7 +92,7 @@ const WishlistScreen = ({ history }) => {
       {
         wishlistItems.length === 0 ?
           (
-            <div className="cartscreen__center">
+            <div className="cartscreen__center screen">
               <div className="cart_message">
                 <div className="cart_upper_message">
                   <p>Your wishlist is empty.</p>
@@ -114,10 +114,11 @@ const WishlistScreen = ({ history }) => {
               <div className="centered_header">
                 Your Wishlist
               </div>
-              <hr />
+
               <div className="number_of_items_in_wishlist">
-                1 - {wishlistItems.length} of {wishlistItems.length} items
+                1 - {wishlistItems.length} of {wishlistItems.length} {wishlistItems.length > 1 ? "items" : "item"}
               </div>
+              <hr />
               {
                 wishlistItems.map((item, i) => (<div key={item.book} >
                   <div className="wishlistscreen__item" key={item.book}>

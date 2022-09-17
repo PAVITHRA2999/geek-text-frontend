@@ -22,7 +22,7 @@ export const getBooks = () => async (dispatch) => {
 };
 
 // Get all books from database sorted
-export const getSortedBooks = (sort, filter) => async (dispatch) => {
+export const getSortedBooks = (sort, filter, page, perPage) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_SORTED_BOOKS_REQUEST });
     const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${sort}`, {
@@ -30,9 +30,18 @@ export const getSortedBooks = (sort, filter) => async (dispatch) => {
         filter: filter
       }
     });
+
     dispatch({
       type: actionTypes.GET_SORTED_BOOKS_SUCCESS,
-      payload: data,
+      payload: {
+        data: data,
+        currBooks: data.slice(
+          0 + (page - 1) * perPage,
+          perPage + (page - 1) * perPage
+        ),
+        lastPage: (Math.ceil(
+          data.length / perPage)),
+      },
     });
   } catch (error) {
     dispatch({
@@ -45,11 +54,6 @@ export const getSortedBooks = (sort, filter) => async (dispatch) => {
   }
 };
 
-// Axios.get(BOOKS + `${aSortType}`, {
-//     params: {
-//         filter: filter
-//     }
-// })
 
 // Get a specific book from database
 export const getBookDetails = (id) => async (dispatch) => {

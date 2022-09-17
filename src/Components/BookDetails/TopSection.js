@@ -1,11 +1,9 @@
-
-
 import React from "react";
 import Heart from "./Heart";
 import Rating from '@material-ui/lab/Rating';
 import { Link } from "react-router-dom";
 
-const TopSection = ({ className, book, favorited, addToWishlistNew, removeFromWishlistHandler, authorID, commentsLength }) => {
+const TopSection = ({ className, book, favorited, addToWishlistNew, removeFromWishlistHandler, authorID, commentsLength, onClickReviews }) => {
     return (<div className={className}>
         <div className="title__heading">
             <div>{book.title}</div>
@@ -19,7 +17,7 @@ const TopSection = ({ className, book, favorited, addToWishlistNew, removeFromWi
         <div className="author__heading">
             by <Link to={`/authorbooks/${authorID}`}>{book.authorName}</Link>
         </div>
-        <div className="rating__heading">
+        <div className="rating__heading link-stars" onClick={onClickReviews}>
             <Rating
                 name="half-rating-read"
                 size="small"

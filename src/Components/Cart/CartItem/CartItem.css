@@ -270,6 +270,9 @@ img.small {
 		align-self: center;
 		font-weight: bold;
 	}
+	.saveforlater_button {
+		font-size: 11px;
+	}
 	.price_Column {
 		display: none;
 	}
