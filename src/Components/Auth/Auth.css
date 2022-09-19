@@ -54,8 +54,22 @@
 	font-weight: 700;
 }
 
+.date-input {
+	display: flex !important;
+	column-gap: 1rem;
+}
+
+.date-input-sub {
+	display: flex !important;
+}
+
+.date-input input {
+	/* width: 5rem !important; */
+	display: flex !important;
+}
+
 .form-control input {
-	padding: 13px 30px;
+	padding: 13px 13px;
 	width: 100%;
 	display: block;
 	border: 1px solid #ddd;

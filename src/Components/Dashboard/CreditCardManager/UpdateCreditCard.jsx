@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
+import Notification from '../../Cart/UI/Notification';
 import '../PersonalInfoManager/PersonalInfoManager.css';
 import axios from 'axios';
 
@@ -10,9 +12,26 @@ export const UpdateCreditCard = () => {
 	const [cardCVC, setcardCVC] = useState('');
 	const [id, setId] = useState(null);
 
+	const history = useHistory();
+	// Notification
+	const [notify, setNotify] = useState({
+		isOpen: false,
+		message: '',
+		type: '',
+		typeStyle: '',
+	});
+
+	const errorHandler = (message) => {
+		setNotify({
+			isOpen: true,
+			message: message || 'Sorry, there was an error. Plase try again later.',
+			type: 'error',
+			typeStyle: '',
+		});
+	};
+
 	useEffect(() => {
 		const data = JSON.parse(localStorage.getItem('data'));
-		console.log(data);
 		setcardHolder(data.data.cardHolder);
 		setcardNumber(data.data.cardNumber);
 		setcardExpMonth(data.data.cardExpMonth);
@@ -56,16 +75,12 @@ export const UpdateCreditCard = () => {
 
 	const testingVars = () => {
 		try {
-			console.log(cardHolder);
-			console.log(cardNumber);
-			console.log(cardExpMonth);
-			console.log(cardExpYear);
-			console.log(cardCVC);
 			BlankValidation();
 			checkCreditCardValidation();
 		} catch (e) {
-			alert(e);
-			window.location.reload();
+			errorHandler(
+				e ? e : 'Something unexpected happened. Please try again later'
+			);
 			return;
 		}
 	};
@@ -96,9 +111,6 @@ export const UpdateCreditCard = () => {
 		/* Getting Full Year. */
 		let yyyy = today.getFullYear();
 
-		console.log('Year by user:' + ExpYearTmp);
-		console.log('Year by PC:' + yyyy);
-
 		/* Checking the year. */
 		if (ExpYearTmp < yyyy) {
 			throw 'Credit Card has expired check your year.';
@@ -111,102 +123,130 @@ export const UpdateCreditCard = () => {
 	};
 
 	const cancelFunc = () => {
-		window.location.replace('http://localhost:3000/dashboard');
+		history.push('/dashboard');
 	};
 
 	const UpdateInfo = (e) => {
 		e.preventDefault();
+		try {
+			testingVars();
+			const baseURL = {
+				dev: 'https://lea-geek-text.herokuapp.com/api/updating-credit-card',
+				prod: '',
+			};
+			const url =
+				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+			const form_data = new FormData();
 
-		testingVars();
-		const baseURL = {
-			dev: 'https://lea-geek-text.herokuapp.com/api/updating-credit-card',
-			prod: '',
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-		const form_data = new FormData();
-
-		// cardHolder, cardNumber, expirationMonth, expirationYear, securityNumber
-		form_data.append('cardHolder', cardHolder);
-		form_data.append('cardNumber', cardNumber);
-		form_data.append('cardExpMonth', cardExpMonth);
-		form_data.append('cardExpYear', cardExpYear);
-		form_data.append('cardCVC', cardCVC);
-		form_data.append('id', id);
-		console.log('id', id);
-		const token = localStorage.getItem('token');
-		axios
-			.post(url, form_data, {
-				headers: {
-					'x-auth-token': token,
-				},
-			})
-			.then((res) => {
-				console.log(res);
-				alert('Information successfully updated');
-			})
-			.catch((err) => {
-				console.log(err.response.data.msg);
-			});
+			// cardHolder, cardNumber, expirationMonth, expirationYear, securityNumber
+			form_data.append('cardHolder', cardHolder);
+			form_data.append('cardNumber', cardNumber);
+			form_data.append('cardExpMonth', cardExpMonth);
+			form_data.append('cardExpYear', cardExpYear);
+			form_data.append('cardCVC', cardCVC);
+			form_data.append('id', id);
+			const token = localStorage.getItem('token');
+			axios
+				.post(url, form_data, {
+					headers: {
+						'x-auth-token': token,
+					},
+				})
+				.then((res) => {
+					history.push('/dashboard');
+				})
+				.catch((err) => {
+					errorHandler(
+						err && err.response && err.response.data && err.response.data.msg
+							? err.response.data.msg
+							: 'Something unexpected happened. Please try again later'
+					);
+				});
+		} catch (e) {
+			errorHandler(
+				e ? e : 'Something unexpected happened. Please try again later'
+			);
+			return;
+		}
 	};
 
 	return (
-		<div>
-			<form className='personal-info-update-form'>
-				<h2>Update credit card</h2>
-				<label>Card Holder</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='cardHolder'
-					value={cardHolder}
-					placeholder='Enter card holder'
-				/>
-				<label>Card Number</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='cardNumber'
-					value={cardNumber}
-					placeholder='Enter Card Number'
-				/>
-				<label>Expiration date</label>
-				<span>
-					<input
-						onChange={handleChangeLoginManager}
-						type='text'
-						id='cardExpMonth'
-						value={cardExpMonth}
-						placeholder='Enter exp month'
-					/>
-					<input
-						onChange={handleChangeLoginManager}
-						type='text'
-						id='cardExpYear'
-						value={cardExpYear}
-						placeholder='Enter exp year'
-					/>
-				</span>
-				<label style={{marginTop: '1rem'}}>CVC</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='cardCVC'
-					value={cardCVC}
-					placeholder='Enter security number'
-				/>
+		<div className='profile-form'>
+			<div className='col-1-2'>
+				<form className='account__form'>
+					<h3 className='account__form-header'>Update Credit Card</h3>
 
-				<p className='btn-wrapper'>
-					<span onClick={UpdateInfo} className='btn-update-info'>
-						{/*Inline element*/}
-						Update
-					</span>
-					<span onClick={cancelFunc} className='btn-cancel'>
-						{/*Inline element*/}
-						Cancel
-					</span>
-				</p>
-			</form>
+					<div className='form-control'>
+						<label htmlFor='name'>Name on Card</label>
+						<input
+							id='cardHolder'
+							type='text'
+							value={cardHolder}
+							onChange={handleChangeLoginManager}
+						/>
+					</div>
+					<div className='form-control'>
+						<label for='ccn'>Card Number</label>
+						<input
+							id='cardNumber'
+							type='tel'
+							inputmode='numeric'
+							pattern='[0-9\s]{13,19}'
+							autocomplete='cc-number'
+							maxlength='19'
+							value={cardNumber}
+							onChange={handleChangeLoginManager}
+						/>
+					</div>
+					<div className='form-control'>
+						<label htmlFor='date'>Expiration Date</label>
+						<div className='date-input'>
+							<input
+								id='cardExpMonth'
+								type='text'
+								name='month'
+								value={cardExpMonth}
+								maxlength='2'
+								size='2'
+								onChange={handleChangeLoginManager}
+							/>
+							<input
+								type='text'
+								name='year'
+								value={cardExpYear}
+								maxlength='4'
+								size='4'
+								id='cardExpYear'
+								onChange={handleChangeLoginManager}
+							/>
+						</div>
+					</div>
+					<div className='form-control'>
+						<label for='cvc'>CVC</label>
+						<div className='date-input'>
+							<input
+								id='cardCVC'
+								type='text'
+								value={cardCVC}
+								onChange={handleChangeLoginManager}
+							/>
+						</div>
+					</div>
+					<div className='account__forgotpassword-buttons'>
+						<button
+							type='submit'
+							onClick={UpdateInfo}
+							className='btn btn-primary auth'
+						>
+							Submit
+						</button>
+						<button onClick={cancelFunc} className='btn btn-light auth'>
+							Cancel
+						</button>
+					</div>
+				</form>
+			</div>
+			<Notification notify={notify} setNotify={setNotify} />
 		</div>
 	);
 };

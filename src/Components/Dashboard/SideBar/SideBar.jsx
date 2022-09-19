@@ -1,63 +1,126 @@
-import React, {
-	useState,
-} from 'react'; /*useState is a react hook for state management */
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
-import CreditCardIcon from '@material-ui/icons/CreditCard';
-import LocalShippingIcon from '@material-ui/icons/LocalShipping';
+import React, {useState} from 'react';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
+import AddCardOutlinedIcon from '@mui/icons-material/AddCardOutlined';
+import CreditCardOutlinedIcon from '@mui/icons-material/CreditCardOutlined';
+import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
+import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
+import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
 import {SideBarLayOut} from './SideBarLayOut';
 import './SideBar.css';
 import {Link} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 
 export const SideBar = () => {
-	/*[actual state, the function to set the state] = useState(initialValue)*/
-	const [isCreditCardMenuOpened, setIsCreditCardMenuOpened] = useState(false);
-	const [isShippingMenuOpened, setIsShippingMenuOpened] = useState(false);
+	const location = useLocation();
+	const path = location.pathname;
+
+	const [isCreditCardMenuOpened, setIsCreditCardMenuOpened] = useState(
+		path === '/dashboard/add-new-credit-card' ||
+			path === '/dashboard/manage-credit-card'
+	);
+	const [isShippingMenuOpened, setIsShippingMenuOpened] = useState(
+		path === '/dashboard/add-new-shipping-address' ||
+			path === '/dashboard/manage-shipping-address'
+	);
+
+	const [isPersonalInfoMenuOpened, setIsPersonalInfoMenuOpened] = useState(
+		path === '/dashboard/update-info'
+	);
+	const [isLogginMenuOpened, setIsLoggingMenuOpened] = useState(
+		path === '/dashboard/update-login-details'
+	);
+
 	const OpenCreditCardMenu = () => {
 		setIsCreditCardMenuOpened(!isCreditCardMenuOpened);
 		setIsShippingMenuOpened(false);
+		setIsPersonalInfoMenuOpened(false);
+		setIsLoggingMenuOpened(false);
 	};
-	const OpenshippingMenu = () => {
+	const OpenShippingMenu = () => {
 		setIsShippingMenuOpened(!isShippingMenuOpened);
 		setIsCreditCardMenuOpened(false);
+		setIsPersonalInfoMenuOpened(false);
+		setIsLoggingMenuOpened(false);
+	};
+	const OpenLoggingMenu = () => {
+		setIsLoggingMenuOpened(!isLogginMenuOpened);
+		setIsCreditCardMenuOpened(false);
+		setIsPersonalInfoMenuOpened(false);
+		setIsShippingMenuOpened(false);
+	};
+	const OpenPersonalInfoMenu = () => {
+		setIsPersonalInfoMenuOpened(!isPersonalInfoMenuOpened);
+		setIsCreditCardMenuOpened(false);
+		setIsShippingMenuOpened(false);
+		setIsLoggingMenuOpened(false);
 	};
 	return (
 		<div className='sidebar'>
-			<Link to='/dashboard/update-info' className='Router__link'>
-				<SideBarLayOut
-					Icon={PersonPinIcon}
-					text={`Manage Personal Information`}
-				/>
-				{/* We give the key(Icon) and the value(PersonPin..) + text with the text that will be showed  */}{' '}
-			</Link>
-			<Link to='/dashboard/update-login-details' className='Router__link'>
-				<SideBarLayOut Icon={VpnKeyIcon} text={`Manage Logging Details`} />
-			</Link>
+			<div
+				className={`${isPersonalInfoMenuOpened && 'selected-menu'}`}
+				onClick={OpenPersonalInfoMenu}
+			>
+				<Link to='/dashboard/update-info' className='Router__link'>
+					<SideBarLayOut
+						Icon={BadgeOutlinedIcon}
+						text={`Manage Personal Information`}
+					/>
+					{/* We give the key(Icon) and the value(PersonPin..) + text with the text that will be showed  */}{' '}
+				</Link>
+			</div>
+			<div
+				className={`${isLogginMenuOpened && 'selected-menu'}`}
+				onClick={OpenLoggingMenu}
+			>
+				<Link to='/dashboard/update-login-details' className='Router__link'>
+					<SideBarLayOut
+						Icon={VpnKeyOutlinedIcon}
+						text={`Manage Logging Details`}
+					/>
+				</Link>
+			</div>
 
-			<div className='credit-menu-option'>
+			<div
+				className={`credit-menu-option ${
+					isCreditCardMenuOpened && 'selected-menu'
+				}`}
+			>
 				<div onClick={OpenCreditCardMenu}>
 					<SideBarLayOut
-						Icon={CreditCardIcon}
+						Icon={CreditCardOutlinedIcon}
 						text={`Manage Credit Card Information`}
 					/>
 				</div>
-				{!isCreditCardMenuOpened ? null : (
+				{isCreditCardMenuOpened && (
 					<div className='credit-card-menu'>
 						<Link to='/dashboard/add-new-credit-card' className='Router__link'>
-							<h4 className='credit-card-menu-options'>
-								- Add new Credit card
-							</h4>
+							<div className='account-menu-option'>
+								{' '}
+								<AddCardOutlinedIcon fontSize='small' />
+								<h4>Add New Credit Card</h4>
+							</div>
 						</Link>
 						<Link to='/dashboard/manage-credit-card' className='Router__link'>
-							<h4 className='credit-card-menu-options'>- Manage Credit card</h4>
+							<div className='account-menu-option'>
+								{' '}
+								<CreditScoreOutlinedIcon fontSize='small' />
+								<h4>Manage Credit Cards</h4>
+							</div>
 						</Link>
 					</div>
 				)}{' '}
 			</div>
-			<div className='shipping-menu-option'>
-				<div onClick={OpenshippingMenu}>
+			<div
+				className={`shipping-menu-option ${
+					isShippingMenuOpened && 'selected-menu'
+				}`}
+			>
+				<div onClick={OpenShippingMenu}>
 					<SideBarLayOut
-						Icon={LocalShippingIcon}
+						Icon={LocalShippingOutlinedIcon}
 						text={`Manage Shipping Addresses`}
 					/>
 				</div>
@@ -67,17 +130,21 @@ export const SideBar = () => {
 							to='/dashboard/add-new-shipping-address'
 							className='Router__link'
 						>
-							<h4 className='shipping-menu-options'>
-								- Add new Shipping Address
-							</h4>
+							<div className='account-menu-option'>
+								{' '}
+								<AddOutlinedIcon fontSize='small' />
+								<h4>Add New Shipping Address</h4>
+							</div>
 						</Link>
 						<Link
 							to='/dashboard/manage-shipping-address'
 							className='Router__link'
 						>
-							<h4 className='shipping-menu-options'>
-								- Manage Shipping Address
-							</h4>
+							<div className='account-menu-option'>
+								{' '}
+								<CheckOutlinedIcon fontSize='small' />
+								<h4>Manage Shipping Address</h4>
+							</div>
 						</Link>
 					</div>
 				)}{' '}

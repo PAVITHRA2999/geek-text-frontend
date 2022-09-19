@@ -1,12 +1,21 @@
 .sidebar {
-	padding: 1.3rem;
-	flex: 0.4;
-	border-right: 1px solid black;
-	height: 100vh;
+	padding: 5rem;
+	flex: none;
+	border-right: 1px solid var(--tertiary-color);
+	min-height: 10rem;
 }
 .credit-menu-option,
 .shipping-menu-option {
 	cursor: pointer;
+}
+
+.selected-menu .sidebar-text {
+	text-decoration: underline;
+}
+
+.account-menu-option:hover,
+.sidebar-text:hover {
+	text-decoration: underline;
 }
 
 .credit-card-menu,
@@ -19,4 +28,11 @@
 .credit-card-menu > h4,
 .shipping-menu > h4 {
 	margin-bottom: 1rem;
+}
+
+.account-menu-option {
+	padding-bottom: 1rem;
+	display: flex;
+	column-gap: 1rem;
+	font-size: 12px;
 }
