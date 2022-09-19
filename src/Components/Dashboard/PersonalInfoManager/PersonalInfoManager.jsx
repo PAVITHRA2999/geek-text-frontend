@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import './PersonalInfoManager.css';
 import axios from 'axios';
@@ -9,6 +9,7 @@ export const PersonalInfoManager = () => {
 	const [email, setEmail] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [homeAddress, setHomeAddress] = useState('');
+	const [personalInfo, setPersonalInfo] = useState({});
 
 	// Notification
 	const [notify, setNotify] = useState({
@@ -17,6 +18,10 @@ export const PersonalInfoManager = () => {
 		type: '',
 		typeStyle: '',
 	});
+
+	useEffect(() => {
+		getDataPay();
+	}, []);
 
 	const errorHandler = (message) => {
 		setNotify({
@@ -58,6 +63,36 @@ export const PersonalInfoManager = () => {
 		history.push('/dashboard');
 	};
 
+	const getDataPay = async () => {
+		const form_data = new FormData();
+		const token = localStorage.getItem('token');
+		console.log(form_data);
+		console.log(token);
+		const url =
+			'https://lea-geek-text.herokuapp.com/api/managing-personal-info';
+		axios
+			.post(url, form_data, {
+				headers: {
+					'x-auth-token': token,
+				},
+			})
+			.then((res) => {
+				setPersonalInfo({
+					nickname: res.data.nickname,
+					email: res.data.email,
+					name: res.data.name,
+					homeAddress: res.data.homeAddress,
+				});
+			})
+			.catch((err) => {
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
+			});
+	};
+
 	const UpdateInfo = (e) => {
 		e.preventDefault();
 
@@ -86,7 +121,7 @@ export const PersonalInfoManager = () => {
 					},
 				})
 				.then((res) => {
-					window.location = '/dashboard/manage-shipping-address';
+					window.location = '/dashboard';
 				})
 				.catch((err) => {
 					errorHandler(
@@ -117,7 +152,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='name'
 								type='text'
-								placeholder='Full Name'
+								value={personalInfo.name}
 							/>
 						</div>
 						<div className='form-control'>
@@ -126,7 +161,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='email'
 								type='email'
-								placeholder='Email'
+								value={personalInfo.email}
 							/>
 						</div>
 						<div className='form-control'>
@@ -135,7 +170,8 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='nickname'
 								type='text'
-								placeholder='Nickname'
+								value={personalInfo.nickname}
+								// placeholder='Nickname'
 							/>
 						</div>
 						<div className='form-control'>
@@ -144,7 +180,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='homeAddress'
 								type='text'
-								placeholder='Home Address'
+								value={personalInfo.homeAddress}
 							/>
 						</div>
 
