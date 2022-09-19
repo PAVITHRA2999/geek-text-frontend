@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import Notification from '../Cart/UI/Notification';
 import './Auth.css';
 import axios from 'axios';
 
@@ -20,6 +21,32 @@ const Auth = () => {
 	const [firstname_signup, setFirstNameSignup] = useState('');
 
 	const history = useHistory();
+
+	// Notification
+	const [notify, setNotify] = useState({
+		isOpen: false,
+		message: '',
+		type: '',
+		typeStyle: '',
+	});
+
+	const errorHandler = (message) => {
+		setNotify({
+			isOpen: true,
+			message: message || 'Sorry, there was an error. Plase try again later.',
+			type: 'error',
+			typeStyle: '',
+		});
+	};
+
+	const successHandler = (message) => {
+		setNotify({
+			isOpen: true,
+			message: message,
+			type: 'success',
+			typeStyle: '',
+		});
+	};
 
 	const handleLoginChange = (e) => {
 		switch (e.target.id) {
@@ -73,7 +100,11 @@ const Auth = () => {
 				window.location.reload(false);
 			})
 			.catch((err) => {
-				alert(err.response.data.msg);
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
 			});
 	};
 
@@ -96,10 +127,14 @@ const Auth = () => {
 		axios
 			.post(url, form_data)
 			.then((res) => {
-				alert(res.data.msg);
+				successHandler(res.data.msg);
 			})
 			.catch((err) => {
-				alert(err.response.data.msg);
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
 			});
 	};
 
@@ -118,8 +153,6 @@ const Auth = () => {
 									id='email_signin'
 									type='text'
 									required
-									initial-scale='1'
-									maximum-scale='1'
 								/>
 							</div>
 							<div className='form-control'>
@@ -241,6 +274,7 @@ const Auth = () => {
 					</div>
 				</div>
 			</div>
+			<Notification notify={notify} setNotify={setNotify} />
 		</div>
 	);
 };

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import '../PersonalInfoManager/PersonalInfoManager.css';
+import Notification from '../../Cart/UI/Notification';
 import axios from 'axios';
 
 export const NewShippingAddress = () => {
@@ -8,6 +10,25 @@ export const NewShippingAddress = () => {
 	const [state, setState] = useState('');
 	const [postalCode, setPostalCode] = useState('');
 	const [country, setCountry] = useState('');
+
+	const history = useHistory();
+
+	// Notification
+	const [notify, setNotify] = useState({
+		isOpen: false,
+		message: '',
+		type: '',
+		typeStyle: '',
+	});
+
+	const errorHandler = (message) => {
+		setNotify({
+			isOpen: true,
+			message: message || 'Sorry, there was an error. Plase try again later.',
+			type: 'error',
+			typeStyle: '',
+		});
+	};
 
 	const handleChangeLoginManager = (e) => {
 		switch (e.target.id) {
@@ -33,98 +54,125 @@ export const NewShippingAddress = () => {
 
 	const BlankValidation = () => {
 		if (!street && !city && !state && !postalCode && !country) {
-			alert('At least 1 field is required');
+			throw 'At least 1 field is required';
 		}
 	};
 
 	const cancelFunc = () => {
-		window.location.replace('http://localhost:3000/dashboard');
+		history.push('/dashboard');
 	};
 
 	const UpdateInfo = (e) => {
 		e.preventDefault();
-		BlankValidation();
 
-		const baseURL = {
-			dev: 'https://lea-geek-text.herokuapp.com/api/insert-shipping-address',
-			prod: '',
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-		const form_data = new FormData();
+		try {
+			BlankValidation();
+			const baseURL = {
+				dev: 'https://lea-geek-text.herokuapp.com/api/insert-shipping-address',
+				prod: '',
+			};
+			const url =
+				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+			const form_data = new FormData();
 
-		// street, cardNumber, expirationMonth, expirationYear, securityNumber
-		form_data.append('street', street);
-		form_data.append('city', city);
-		form_data.append('state', state);
-		form_data.append('postalCode', postalCode);
-		form_data.append('country', country);
-		const token = localStorage.getItem('token');
-		axios
-			.post(url, form_data, {
-				headers: {
-					'x-auth-token': token,
-				},
-			})
-			.then((res) => {
-				console.log(res);
-				alert('Information successfully updated');
-			})
-			.catch((err) => {
-				console.log(err.response.data.msg);
-			});
+			// street, cardNumber, expirationMonth, expirationYear, securityNumber
+			form_data.append('street', street);
+			form_data.append('city', city);
+			form_data.append('state', state);
+			form_data.append('postalCode', postalCode);
+			form_data.append('country', country);
+			const token = localStorage.getItem('token');
+			axios
+				.post(url, form_data, {
+					headers: {
+						'x-auth-token': token,
+					},
+				})
+				.then((res) => {
+					history.push('/dashboard/manage-shipping-address');
+				})
+				.catch((err) => {
+					errorHandler(
+						err && err.response && err.response.data && err.response.data.msg
+							? err.response.data.msg
+							: 'Something unexpected happened. Please try again later'
+					);
+				});
+		} catch (e) {
+			errorHandler(
+				e ? e : 'Something unexpected happened. Please try again later'
+			);
+			return;
+		}
 	};
 
 	return (
 		<div>
-			<form className='personal-info-update-form'>
-				<h2>Add new Shipping Address</h2>
-				<label>Street</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='street'
-					placeholder='4 Yawkey Way'
-				/>
-				<label>City</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='city'
-					placeholder='Boston'
-				/>
-				<label>State</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='state'
-					placeholder='MA'
-				/>
-				<label>Postal Code</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='postalCode'
-					placeholder='02225'
-				/>
-				<label style={{marginTop: '1rem'}}>Country</label>
-				<input
-					onChange={handleChangeLoginManager}
-					type='text'
-					id='country'
-					placeholder='USA'
-				/>
-				<p className='btn-wrapper'>
-					<span onClick={UpdateInfo} className='btn-update-info'>
-						{/*Inline element*/}
-						Add New Address
-					</span>
-					<span onClick={cancelFunc} className='btn-cancel'>
-						{/*Inline element*/}
-						Cancel
-					</span>
-				</p>
-			</form>
+			<div className='profile-form'>
+				<div className='col-1-2'>
+					<form className='account__form'>
+						<h3 className='account__form-header'>Add New Shipping Address</h3>
+						<div className='form-control'>
+							<label htmlFor='name'>Street</label>
+							<input
+								id='street'
+								type='text'
+								placeholder='4 Yawkey Way'
+								onChange={handleChangeLoginManager}
+							/>
+						</div>
+						<div className='form-control'>
+							<label>City</label>
+							<input
+								onChange={handleChangeLoginManager}
+								type='text'
+								id='city'
+								placeholder='Boston'
+							/>
+						</div>
+						<div className='form-control'>
+							<label>State</label>
+							<input
+								onChange={handleChangeLoginManager}
+								type='text'
+								id='state'
+								placeholder='MA'
+							/>
+						</div>
+						<div className='form-control'>
+							<label>Postal Code</label>
+							<input
+								onChange={handleChangeLoginManager}
+								type='text'
+								id='postalCode'
+								placeholder='XXXXX'
+							/>
+						</div>
+						<div className='form-control'>
+							<label style={{marginTop: '1rem'}}>Country</label>
+							<input
+								onChange={handleChangeLoginManager}
+								type='text'
+								id='country'
+								placeholder='USA'
+							/>
+						</div>
+						<div className='account__forgotpassword-buttons'>
+							<button
+								type='submit'
+								onClick={UpdateInfo}
+								className='btn btn-primary auth'
+							>
+								Submit
+							</button>
+							<button onClick={cancelFunc} className='btn btn-light auth'>
+								Cancel
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<Notification notify={notify} setNotify={setNotify} />
 		</div>
 	);
 };

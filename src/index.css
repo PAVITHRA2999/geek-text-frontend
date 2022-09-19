@@ -20,6 +20,7 @@
 	--border-color: #ddd;
 	--disabled-color: #aaa9a9;
 	--new-color: #6d888eb0;
+	--router-link-color: #4a4a4d;
 }
 #root {
 	height: 100vh;
@@ -44,13 +45,13 @@ body {
 }
 
 a {
-	color: var(--primary-color);
+	color: var(--tertiary-color);
 	text-decoration: none;
 }
 
 .Router_Link {
 	text-decoration: none;
-	color: #4a4a4d;
+	color: var(--router-link-color);
 	align-items: center;
 	display: flex;
 	column-gap: 3px;
@@ -205,6 +206,7 @@ input[type='number'] {
 /*Place the text Welcome User on the right side*/
 .dashboard-divider {
 	display: flex;
+	margin-top: 3rem;
 }
 
 @media (max-width: 1250px) {

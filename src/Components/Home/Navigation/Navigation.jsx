@@ -3,7 +3,7 @@ import Logo from '../../../Assets/geek-text-logo.png';
 import './Navigation.css';
 import {Link} from 'react-router-dom';
 import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+// import 'reactjs-popup/dist/index.css';
 import {DropDownMenu} from '../UserDropDownMenu/DropDownMenu';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
@@ -44,7 +44,9 @@ export const Navigation = () => {
 									<h4 className='links inlineheader'>My Account</h4>
 								</div>
 							}
-							position='bottom right'
+							position='bottom center'
+							on='hover'
+							arrow={false}
 						>
 							<DropDownMenu />
 						</Popup>

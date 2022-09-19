@@ -1,5 +1,14 @@
 .personal-info-update-form {
-	text-align: center;
+	text-align: left;
+}
+
+.profile-form {
+	min-width: 50rem;
+	margin-left: 2rem;
+}
+
+.profile-form input {
+	width: 100%;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
@@ -10,7 +19,7 @@
 
 #employee {
 	border-collapse: collapse;
-	border: 3px solid #ddd;
+	border: 1px solid #ddd;
 	text-align: center;
 }
 
@@ -21,7 +30,7 @@
 }
 
 #employee tr:hover {
-	background-color: #ddd;
+	background-color: rgb(243, 242, 242);
 }
 
 #employee th {
@@ -31,47 +40,16 @@
 	color: white;
 }
 
-.opration {
-	text-align: left;
-}
-
-/* .button {
-    border: none;
-    outline: none;
-    font-size: 11px;
-    font-family: "Quicksand", sans-serif;
-    color: #f44336;
-    padding: 3px 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: 1px solid #f44336;
-    background-color: transparent;
-    margin-left: 1.5rem;
-    margin-top: 0.5rem;
-    margin-right: 1.5rem;
-  } */
-/*   
-  .button:active {
-    border: 1px solid blue;
-  } */
-
 .container {
 	display: flex;
 	justify-content: center;
 	flex-flow: column;
-	border-radius: 100px;
 }
 
-.buttonUpdate {
-	border: none;
-	outline: none;
-	font-size: 11px;
-	font-family: 'Quicksand', sans-serif;
-	color: darkgreen;
-	padding: 3px 10px;
-	border-radius: 8px;
+.container .operation {
 	cursor: pointer;
-	border: 1px solid darkgreen;
-	background-color: transparent;
-	margin-top: 0.5rem;
+}
+
+.container .operation:hover {
+	color: var(--primary-color);
 }

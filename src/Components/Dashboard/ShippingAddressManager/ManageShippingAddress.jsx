@@ -1,10 +1,36 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../PersonalInfoManager/PersonalInfoManager.css';
 import axios from 'axios';
 import '../CreditCardManager/ManageCreditCard.css';
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+
+import Notification from '../../Cart/UI/Notification';
 
 export const ManageShippingAddress = () => {
 	const [employees, setEmployees] = useState([]);
+	const [deletedEmployee, setDeletedEmployee] = useState([]);
+
+	useEffect(() => {
+		getDataPay();
+	}, [deletedEmployee]);
+
+	// Notification
+	const [notify, setNotify] = useState({
+		isOpen: false,
+		message: '',
+		type: '',
+		typeStyle: '',
+	});
+
+	const errorHandler = (message) => {
+		setNotify({
+			isOpen: true,
+			message: message || 'Sorry, there was an error. Plase try again later.',
+			type: 'error',
+			typeStyle: '',
+		});
+	};
 
 	const getDataPay = async () => {
 		const form_data = new FormData();
@@ -18,35 +44,35 @@ export const ManageShippingAddress = () => {
 				},
 			})
 			.then((res) => {
-				console.log(res);
-				console.log(res.data.shippingAddress);
 				setEmployees(res.data.shippingAddress);
 			})
 			.catch((err) => {
-				console.log(err.response.data.msg);
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
 			});
 	};
 
 	const renderHeader = () => {
 		let headerElement = [
-			'street     ',
-			'city       ',
-			'state      ',
-			'postalCode ',
-			'country    ',
-			'Update     ',
-			'Delete     ',
+			'Street',
+			'City',
+			'State',
+			'Postal Code',
+			'Country',
+			'Edit',
+			'Delete',
 		];
 
 		return headerElement.map((key, index) => {
-			return <th key={index}>{key.toUpperCase()}</th>;
+			return <th key={index}>{key}</th>;
 		});
 	};
 
 	// Remove Credit card info.
 	const removeData = async (cardNumber) => {
-		console.log('id', cardNumber);
-
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
 		form_data.append('id', cardNumber);
@@ -59,19 +85,21 @@ export const ManageShippingAddress = () => {
 				},
 			})
 			.then((res) => {
-				console.log(res);
-				console.log(res.data.creditCards);
+				const del = employees.filter(
+					(employee) => cardNumber !== employee.cardNumber
+				);
+				setDeletedEmployee(del);
+				setEmployees(del);
 			})
 			.catch((err) => {
-				console.log(err.response.data.msg);
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
 			});
-		const del = employees.filter(
-			(employee) => cardNumber !== employee.cardNumber
-		);
-		setEmployees(del);
 	};
 	const updateData = (street, city, state, postalCode, country, _id) => {
-		console.log(postalCode);
 		const data = {
 			street,
 			city,
@@ -95,24 +123,14 @@ export const ManageShippingAddress = () => {
 						<td>{postalCode}</td>
 						<td>{country}</td>
 						<td className='operation'>
-							<button
-								type='button'
-								className='buttonUpdate'
+							<EditOutlinedIcon
 								onClick={() =>
 									updateData(street, city, state, postalCode, country, _id)
 								}
-							>
-								Update
-							</button>
+							/>
 						</td>
 						<td className='operation'>
-							<button
-								type='button'
-								className='button'
-								onClick={() => removeData(_id)}
-							>
-								Delete
-							</button>
+							<ClearOutlinedIcon onClick={() => removeData(_id)} />
 						</td>
 					</tr>
 				);
@@ -121,26 +139,23 @@ export const ManageShippingAddress = () => {
 	};
 
 	return (
-		<div>
-			<form className='personal-info-update-form'>
-				<h2>Update shipping address(es)</h2>
-
-				<div className='container'>
-					<table id='employee'>
-						<thead>
-							<tr>{renderHeader()}</tr>
-						</thead>
-						<tbody>{renderBody()}</tbody>
-					</table>
-				</div>
-
-				<p className='btn-wrapper'>
-					<span className='btn-cancel' onClick={getDataPay}>
-						{/*Inline element*/}
-						Show
-					</span>
-				</p>
-			</form>
+		<div className='profile-form'>
+			<div className='col-1-2'>
+				<form className='account__form'>
+					<h3 className='account__form-header'>Manage Shipping Address</h3>
+					<div className='form-control'>
+						<div className='container'>
+							<table id='employee'>
+								<thead>
+									<tr>{renderHeader()}</tr>
+								</thead>
+								<tbody>{renderBody()}</tbody>
+							</table>
+						</div>
+					</div>
+				</form>
+			</div>
+			<Notification notify={notify} setNotify={setNotify} />
 		</div>
 	);
 };
