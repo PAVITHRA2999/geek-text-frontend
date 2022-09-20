@@ -1,7 +1,6 @@
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
 import './DropDownMenu.css';
-import {Link} from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
 
 export const DropDownMenu = () => {

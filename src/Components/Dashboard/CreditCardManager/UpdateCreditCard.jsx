@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Notification from '../../Cart/UI/Notification';
-import '../PersonalInfoManager/PersonalInfoManager.css';
+import '../PersonalInfoManager/ManagePersonalInfo.css';
 import axios from 'axios';
 
 export const UpdateCreditCard = () => {
@@ -123,7 +123,7 @@ export const UpdateCreditCard = () => {
 	};
 
 	const cancelFunc = () => {
-		history.push('/dashboard');
+		history.push('/dashboard/manage-credit-card');
 	};
 
 	const UpdateInfo = (e) => {
@@ -187,14 +187,14 @@ export const UpdateCreditCard = () => {
 						/>
 					</div>
 					<div className='form-control'>
-						<label for='ccn'>Card Number</label>
+						<label htmlFor='ccn'>Card Number</label>
 						<input
 							id='cardNumber'
 							type='tel'
-							inputmode='numeric'
+							inputMode='numeric'
 							pattern='[0-9\s]{13,19}'
-							autocomplete='cc-number'
-							maxlength='19'
+							autoComplete='cc-number'
+							maxLength='19'
 							value={cardNumber}
 							onChange={handleChangeLoginManager}
 						/>
@@ -207,7 +207,7 @@ export const UpdateCreditCard = () => {
 								type='text'
 								name='month'
 								value={cardExpMonth}
-								maxlength='2'
+								maxLength='2'
 								size='2'
 								onChange={handleChangeLoginManager}
 							/>
@@ -215,7 +215,7 @@ export const UpdateCreditCard = () => {
 								type='text'
 								name='year'
 								value={cardExpYear}
-								maxlength='4'
+								maxLength='4'
 								size='4'
 								id='cardExpYear'
 								onChange={handleChangeLoginManager}
@@ -223,7 +223,7 @@ export const UpdateCreditCard = () => {
 						</div>
 					</div>
 					<div className='form-control'>
-						<label for='cvc'>CVC</label>
+						<label htmlFor='cvc'>CVC</label>
 						<div className='date-input'>
 							<input
 								id='cardCVC'

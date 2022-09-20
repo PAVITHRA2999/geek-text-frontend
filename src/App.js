@@ -15,8 +15,8 @@ import Browser from './Screens/Browser/Browser';
 
 import { SideBar } from './Components/Dashboard/SideBar/SideBar';
 import { DashboardHome } from './Components/Dashboard/DashboardHome/DashboardHome';
-import { PersonalInfoManager } from './Components/Dashboard/PersonalInfoManager/PersonalInfoManager';
-import { LoginManager } from './Components/Dashboard/LoginManager/LoginManager';
+import { ManagePersonalInfo } from './Components/Dashboard/PersonalInfoManager/ManagePersonalInfo';
+import { UpdatePersonalInfo } from './Components/Dashboard/PersonalInfoManager/UpdatePersonalInfo';
 import { NewCreditCard } from './Components/Dashboard/CreditCardManager/NewCreditCard';
 import { NewShippingAddress } from './Components/Dashboard/ShippingAddressManager/NewShippingAddress';
 import { ManageCreditCard } from './Components/Dashboard/CreditCardManager/ManageCreditCard';
@@ -25,7 +25,6 @@ import { UpdateCreditCard } from './Components/Dashboard/CreditCardManager/Updat
 import { UpdateShippingAddress } from './Components/Dashboard/ShippingAddressManager/UpdateShippingAddress';
 
 function App() {
-
   return (
 
     <Router >
@@ -35,10 +34,9 @@ function App() {
 
           <Route path='/dashboard'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the user dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
-              <DashboardHome />
+              <SideBar />
+              <ManagePersonalInfo />
             </div>
           </Route>
 
@@ -46,16 +44,15 @@ function App() {
             exact={true}>
             {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the user dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
+              <SideBar />
               <UpdateShippingAddress />
             </div>
           </Route>
 
           <Route path='/dashboard/updating-credit-card'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the user dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
+              <SideBar />
               <UpdateCreditCard />
             </div>
           </Route>
@@ -63,51 +60,38 @@ function App() {
 
           <Route path='/dashboard/manage-shipping-address'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the user dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
+              <SideBar />
               <ManageShippingAddress />
             </div>
           </Route>
 
           <Route path='/dashboard/manage-credit-card'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the user dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
+              <SideBar />
               <ManageCreditCard />
             </div>
           </Route>
           <Route path='/dashboard/add-new-shipping-address'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the suer dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
+              <SideBar />
               <NewShippingAddress />
             </div>
           </Route>
           <Route path='/dashboard/add-new-credit-card'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the suer dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
+              <SideBar />
               <NewCreditCard />
-            </div>
-          </Route>
-          <Route path='/dashboard/update-login-details'
-            exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
-            <div className="dashboard-divider">
-              <SideBar />{/*Displays to the suer dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
-              <LoginManager />
             </div>
           </Route>
           <Route path='/dashboard/update-info'
             exact={true}>
-            {/* After the user clicks the dashboard link, it opens the dashboard page */}
             <div className="dashboard-divider">
-              <SideBar />{/*Displays to the suer dthe sideBar containg Manage Personal Information, Login Details, Credit Card Information, Shipping Address */}
-              <PersonalInfoManager />
+              <SideBar />
+              <UpdatePersonalInfo />
             </div>
           </Route>
 

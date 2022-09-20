@@ -196,12 +196,16 @@ const CartScreen = (props) => {
               CONTINUE SHOPPING
             </div>
           </Link>
-          <div></div>
-          <Link to="/auth">
-            <div className="btn btn-light btn-checkout">
-              SIGN IN
-            </div>
-          </Link>
+          {
+            !token &&
+            <>
+              <div></div>
+              <Link to="/auth">
+                <div className="btn btn-light btn-checkout">
+                  SIGN IN
+                </div>
+              </Link>
+            </>}
         </div>
       </div>
       <div className="cartscreen">

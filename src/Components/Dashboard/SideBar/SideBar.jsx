@@ -27,26 +27,20 @@ export const SideBar = () => {
 	);
 
 	const [isPersonalInfoMenuOpened, setIsPersonalInfoMenuOpened] = useState(
-		path === '/dashboard/update-info'
-	);
-	const [isLogginMenuOpened, setIsLoggingMenuOpened] = useState(
-		path === '/dashboard/update-login-details'
+		path === '/dashboard/update-info' || '/dashboard'
 	);
 
 	const OpenCreditCardMenu = () => {
 		setIsCreditCardMenuOpened(!isCreditCardMenuOpened);
 		setIsShippingMenuOpened(false);
 		setIsPersonalInfoMenuOpened(false);
-		setIsLoggingMenuOpened(false);
 	};
 	const OpenShippingMenu = () => {
 		setIsShippingMenuOpened(!isShippingMenuOpened);
 		setIsCreditCardMenuOpened(false);
 		setIsPersonalInfoMenuOpened(false);
-		setIsLoggingMenuOpened(false);
 	};
 	const OpenLoggingMenu = () => {
-		setIsLoggingMenuOpened(!isLogginMenuOpened);
 		setIsCreditCardMenuOpened(false);
 		setIsPersonalInfoMenuOpened(false);
 		setIsShippingMenuOpened(false);
@@ -55,7 +49,6 @@ export const SideBar = () => {
 		setIsPersonalInfoMenuOpened(!isPersonalInfoMenuOpened);
 		setIsCreditCardMenuOpened(false);
 		setIsShippingMenuOpened(false);
-		setIsLoggingMenuOpened(false);
 	};
 	return (
 		<div className='sidebar'>
@@ -63,7 +56,7 @@ export const SideBar = () => {
 				className={`${isPersonalInfoMenuOpened && 'selected-menu'}`}
 				onClick={OpenPersonalInfoMenu}
 			>
-				<Link to='/dashboard/update-info' className='sidebar-icon'>
+				<Link to='/dashboard' className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={BadgeOutlinedIcon}
 						text={`Manage Personal Information`}
@@ -71,43 +64,26 @@ export const SideBar = () => {
 					{/* We give the key(Icon) and the value(PersonPin..) + text with the text that will be showed  */}{' '}
 				</Link>
 			</div>
-			<div
-				className={`${isLogginMenuOpened && 'selected-menu'}`}
-				onClick={OpenLoggingMenu}
-			>
-				<Link to='/dashboard/update-login-details' className='sidebar-icon'>
-					<SideBarLayOut
-						Icon={VpnKeyOutlinedIcon}
-						text={`Manage Logging Details`}
-					/>
-				</Link>
-			</div>
 
 			<div
 				className={`credit-menu-option ${
 					isCreditCardMenuOpened && 'selected-menu'
 				}`}
+				onClick={OpenCreditCardMenu}
 			>
-				<div onClick={OpenCreditCardMenu} className='sidebar-icon'>
+				<Link to='/dashboard/manage-credit-card' className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={CreditCardOutlinedIcon}
 						text={`Manage Credit Card Information`}
 					/>
-				</div>
+				</Link>
 				{isCreditCardMenuOpened && (
 					<div className='credit-card-menu'>
 						<Link to='/dashboard/add-new-credit-card'>
 							<div className='account-menu-option sidebar-icon'>
 								{' '}
-								<AddCardOutlinedIcon fontSize='inherit' />
+								<AddOutlinedIcon fontSize='inherit' />
 								<h4>Add New Credit Card</h4>
-							</div>
-						</Link>
-						<Link to='/dashboard/manage-credit-card'>
-							<div className='account-menu-option sidebar-icon'>
-								{' '}
-								<CreditScoreOutlinedIcon fontSize='inherit' />
-								<h4>Manage Credit Cards</h4>
 							</div>
 						</Link>
 					</div>
@@ -117,13 +93,14 @@ export const SideBar = () => {
 				className={`shipping-menu-option ${
 					isShippingMenuOpened && 'selected-menu'
 				}`}
+				onClick={OpenShippingMenu}
 			>
-				<div onClick={OpenShippingMenu} className='sidebar-icon'>
+				<Link to='/dashboard/manage-shipping-address' className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={LocalShippingOutlinedIcon}
 						text={`Manage Shipping Addresses`}
 					/>
-				</div>
+				</Link>
 				{!isShippingMenuOpened ? null : (
 					<div className='shipping-menu'>
 						<Link
@@ -134,16 +111,6 @@ export const SideBar = () => {
 								{' '}
 								<AddOutlinedIcon fontSize='inherit' />
 								<h4>Add New Shipping Address</h4>
-							</div>
-						</Link>
-						<Link
-							to='/dashboard/manage-shipping-address'
-							className='Router__link'
-						>
-							<div className='account-menu-option sidebar-icon'>
-								{' '}
-								<CheckOutlinedIcon fontSize='inherit' />
-								<h4>Manage Shipping Address</h4>
 							</div>
 						</Link>
 					</div>

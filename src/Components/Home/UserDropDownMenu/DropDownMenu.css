@@ -26,7 +26,7 @@
 	margin-top: 10px;
 	border: 1px solid var(--router-link-color);
 	width: fit-content;
-	z-index: 999;
+	z-index: 1004 !important;
 	padding: 0rem 1rem;
 	background-color: var(--background-color);
 }

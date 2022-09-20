@@ -19,6 +19,7 @@ const Auth = () => {
 	const [email_signup, setEmailSignup] = useState('');
 	const [password_signup, setPasswordSignup] = useState('');
 	const [firstname_signup, setFirstNameSignup] = useState('');
+	const [address_signup, setAddressSignup] = useState('');
 
 	const history = useHistory();
 

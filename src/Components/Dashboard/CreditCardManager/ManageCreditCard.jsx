@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import '../PersonalInfoManager/PersonalInfoManager.css';
+import '../PersonalInfoManager/ManagePersonalInfo.css';
 import '../CreditCardManager/ManageCreditCard.css';
 import axios from 'axios';
 import Notification from '../../Cart/UI/Notification';
@@ -48,9 +48,6 @@ export const ManageCreditCard = (props) => {
 				},
 			})
 			.then((res) => {
-				console.log(res);
-				console.log(res.data.creditCards);
-				console.log(res.data);
 				setEmployees(res.data.creditCards);
 			})
 			.catch((err) => {
@@ -74,7 +71,7 @@ export const ManageCreditCard = (props) => {
 		];
 
 		return headerElement.map((key, index) => {
-			return <th key={index}>{key}</th>;
+			return <div key={index}>{key}</div>;
 		});
 	};
 	// updating data
@@ -134,53 +131,16 @@ export const ManageCreditCard = (props) => {
 		);
 	};
 
-	const renderBody = () => {
-		return (
-			employees &&
-			employees.map(
-				({cardHolder, cardNumber, cardExpMonth, cardExpYear, cardCVC, _id}) => {
-					return (
-						<tr key={cardNumber}>
-							<td>{cardHolder}</td>
-							<td>{cardNumber}</td>
-							<td>{cardExpMonth}</td>
-							<td>{cardExpYear}</td>
-							<td>{cardCVC}</td>
-							<td className='operation'>
-								<EditOutlinedIcon
-									fontSize='small'
-									onClick={() =>
-										updateData(
-											cardHolder,
-											cardNumber,
-											cardExpMonth,
-											cardExpYear,
-											cardCVC,
-											_id
-										)
-									}
-								/>
-							</td>
-							<td className='operation'>
-								<ClearOutlinedIcon
-									fontSize='small'
-									onClick={() => removeData(_id)}
-								/>
-							</td>
-						</tr>
-					);
-				}
-			)
-		);
-	};
-
 	const CompactCreditCard = () => {
 		return (
 			employees &&
 			employees.map(
-				({cardHolder, cardNumber, cardExpMonth, cardExpYear, cardCVC, _id}) => {
+				(
+					{cardHolder, cardNumber, cardExpMonth, cardExpYear, cardCVC, _id},
+					i
+				) => {
 					return (
-						<div>
+						<div key={_id}>
 							<div key={cardNumber} className='credit-card-compressed'>
 								<div>
 									<div className='inLine'>
@@ -207,9 +167,9 @@ export const ManageCreditCard = (props) => {
 								</div>
 								<div className='inline-buttons'>
 									<div>
-										<td className='operation'>
+										<div className='operation'>
 											<EditOutlinedIcon
-												fontSize='small'
+												fontSize='inherit'
 												onClick={() =>
 													updateData(
 														cardHolder,
@@ -221,19 +181,19 @@ export const ManageCreditCard = (props) => {
 													)
 												}
 											/>
-										</td>
+										</div>
 									</div>
 									<div>
-										<td className='operation'>
+										<div className='operation'>
 											<ClearOutlinedIcon
-												fontSize='small'
+												fontSize='inherit'
 												onClick={() => removeData(_id)}
 											/>
-										</td>
+										</div>
 									</div>
 								</div>
 							</div>
-							<hr></hr>
+							{i < employees.length - 1 && <hr></hr>}
 						</div>
 					);
 				}
@@ -246,24 +206,18 @@ export const ManageCreditCard = (props) => {
 			<div className='col-1-2'>
 				<form className='account__form'>
 					<h3 className='account__form-header'>Manage Credit Cards</h3>
-					{employees.length > 0 ? (
-						<div className='form-control'>
-							<CompactCreditCard />
-							<div className='container profile-table'>
-								<table id='employee'>
-									<thead>
-										<tr>{renderHeader()}</tr>
-									</thead>
-									<tbody>{renderBody()}</tbody>
-								</table>
+					<div className='divTable'>
+						{(employees || []).length > 0 ? (
+							<div className='form-control'>
+								<CompactCreditCard />
 							</div>
-						</div>
-					) : (
-						<p>
-							You haven't added any credit cards. If you add a new credit card
-							it will appear here.
-						</p>
-					)}
+						) : (
+							<p>
+								You haven't added any credit cards. If you add a new credit card
+								it will appear here.
+							</p>
+						)}
+					</div>
 				</form>
 			</div>
 			<Notification notify={notify} setNotify={setNotify} />
