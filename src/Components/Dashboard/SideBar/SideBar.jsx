@@ -63,7 +63,7 @@ export const SideBar = () => {
 				className={`${isPersonalInfoMenuOpened && 'selected-menu'}`}
 				onClick={OpenPersonalInfoMenu}
 			>
-				<Link to='/dashboard/update-info' className='Router__link'>
+				<Link to='/dashboard/update-info' className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={BadgeOutlinedIcon}
 						text={`Manage Personal Information`}
@@ -75,7 +75,7 @@ export const SideBar = () => {
 				className={`${isLogginMenuOpened && 'selected-menu'}`}
 				onClick={OpenLoggingMenu}
 			>
-				<Link to='/dashboard/update-login-details' className='Router__link'>
+				<Link to='/dashboard/update-login-details' className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={VpnKeyOutlinedIcon}
 						text={`Manage Logging Details`}
@@ -88,7 +88,7 @@ export const SideBar = () => {
 					isCreditCardMenuOpened && 'selected-menu'
 				}`}
 			>
-				<div onClick={OpenCreditCardMenu}>
+				<div onClick={OpenCreditCardMenu} className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={CreditCardOutlinedIcon}
 						text={`Manage Credit Card Information`}
@@ -96,17 +96,17 @@ export const SideBar = () => {
 				</div>
 				{isCreditCardMenuOpened && (
 					<div className='credit-card-menu'>
-						<Link to='/dashboard/add-new-credit-card' className='Router__link'>
-							<div className='account-menu-option'>
+						<Link to='/dashboard/add-new-credit-card'>
+							<div className='account-menu-option sidebar-icon'>
 								{' '}
-								<AddCardOutlinedIcon fontSize='small' />
+								<AddCardOutlinedIcon fontSize='inherit' />
 								<h4>Add New Credit Card</h4>
 							</div>
 						</Link>
-						<Link to='/dashboard/manage-credit-card' className='Router__link'>
-							<div className='account-menu-option'>
+						<Link to='/dashboard/manage-credit-card'>
+							<div className='account-menu-option sidebar-icon'>
 								{' '}
-								<CreditScoreOutlinedIcon fontSize='small' />
+								<CreditScoreOutlinedIcon fontSize='inherit' />
 								<h4>Manage Credit Cards</h4>
 							</div>
 						</Link>
@@ -118,7 +118,7 @@ export const SideBar = () => {
 					isShippingMenuOpened && 'selected-menu'
 				}`}
 			>
-				<div onClick={OpenShippingMenu}>
+				<div onClick={OpenShippingMenu} className='sidebar-icon'>
 					<SideBarLayOut
 						Icon={LocalShippingOutlinedIcon}
 						text={`Manage Shipping Addresses`}
@@ -130,9 +130,9 @@ export const SideBar = () => {
 							to='/dashboard/add-new-shipping-address'
 							className='Router__link'
 						>
-							<div className='account-menu-option'>
+							<div className='account-menu-option sidebar-icon'>
 								{' '}
-								<AddOutlinedIcon fontSize='small' />
+								<AddOutlinedIcon fontSize='inherit' />
 								<h4>Add New Shipping Address</h4>
 							</div>
 						</Link>
@@ -140,9 +140,9 @@ export const SideBar = () => {
 							to='/dashboard/manage-shipping-address'
 							className='Router__link'
 						>
-							<div className='account-menu-option'>
+							<div className='account-menu-option sidebar-icon'>
 								{' '}
-								<CheckOutlinedIcon fontSize='small' />
+								<CheckOutlinedIcon fontSize='inherit' />
 								<h4>Manage Shipping Address</h4>
 							</div>
 						</Link>

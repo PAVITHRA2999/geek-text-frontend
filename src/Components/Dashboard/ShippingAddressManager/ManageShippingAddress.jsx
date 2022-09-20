@@ -124,15 +124,84 @@ export const ManageShippingAddress = () => {
 						<td>{country}</td>
 						<td className='operation'>
 							<EditOutlinedIcon
+								fontSize='small'
 								onClick={() =>
 									updateData(street, city, state, postalCode, country, _id)
 								}
 							/>
 						</td>
 						<td className='operation'>
-							<ClearOutlinedIcon onClick={() => removeData(_id)} />
+							<ClearOutlinedIcon
+								fontSize='small'
+								onClick={() => removeData(_id)}
+							/>
 						</td>
 					</tr>
+				);
+			})
+		);
+	};
+
+	const CompactShipping = () => {
+		return (
+			employees &&
+			employees.map(({street, city, state, postalCode, country, _id}) => {
+				return (
+					<div>
+						<div key={street} className='credit-card-compressed'>
+							<div>
+								<div className='inLine'>
+									<b>Street: </b>
+									<p>{street}</p>
+								</div>
+								<div className='inLine'>
+									<b>City: </b>
+									<p>{city}</p>
+								</div>
+								<div className='inLine'>
+									<b>State: </b>
+									<p>{state}</p>
+								</div>
+								<div className='inLine'>
+									<b>Postal Code: </b>
+									<p>{postalCode}</p>
+								</div>
+
+								<div className='inLine'>
+									<b>Country: </b>
+									<p>{country}</p>
+								</div>
+							</div>
+							<div className='inline-buttons'>
+								<div>
+									<td className='operation'>
+										<EditOutlinedIcon
+											fontSize='small'
+											onClick={() =>
+												updateData(
+													street,
+													city,
+													state,
+													postalCode,
+													country,
+													_id
+												)
+											}
+										/>
+									</td>
+								</div>
+								<div>
+									<td className='operation'>
+										<ClearOutlinedIcon
+											fontSize='small'
+											onClick={() => removeData(_id)}
+										/>
+									</td>
+								</div>
+							</div>
+						</div>
+						<hr></hr>
+					</div>
 				);
 			})
 		);
@@ -143,16 +212,24 @@ export const ManageShippingAddress = () => {
 			<div className='col-1-2'>
 				<form className='account__form'>
 					<h3 className='account__form-header'>Manage Shipping Address</h3>
-					<div className='form-control'>
-						<div className='container'>
-							<table id='employee'>
-								<thead>
-									<tr>{renderHeader()}</tr>
-								</thead>
-								<tbody>{renderBody()}</tbody>
-							</table>
+					{employees.length > 0 ? (
+						<div className='form-control'>
+							<CompactShipping />
+							<div className='container profile-table'>
+								<table id='employee'>
+									<thead>
+										<tr>{renderHeader()}</tr>
+									</thead>
+									<tbody>{renderBody()}</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
+					) : (
+						<p>
+							You haven't added any shipping address. If you add a new shipping
+							address it will appear here.
+						</p>
+					)}
 				</form>
 			</div>
 			<Notification notify={notify} setNotify={setNotify} />

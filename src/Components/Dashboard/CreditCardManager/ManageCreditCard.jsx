@@ -41,6 +41,9 @@ export const ManageCreditCard = (props) => {
 				},
 			})
 			.then((res) => {
+				console.log(res);
+				console.log(res.data.creditCards);
+				console.log(res.data);
 				setEmployees(res.data.creditCards);
 			})
 			.catch((err) => {
@@ -132,6 +135,7 @@ export const ManageCreditCard = (props) => {
 							<td>{cardCVC}</td>
 							<td className='operation'>
 								<EditOutlinedIcon
+									fontSize='small'
 									onClick={() =>
 										updateData(
 											cardHolder,
@@ -145,9 +149,79 @@ export const ManageCreditCard = (props) => {
 								/>
 							</td>
 							<td className='operation'>
-								<ClearOutlinedIcon onClick={() => removeData(_id)} />
+								<ClearOutlinedIcon
+									fontSize='small'
+									onClick={() => removeData(_id)}
+								/>
 							</td>
 						</tr>
+					);
+				}
+			)
+		);
+	};
+
+	const CompactCreditCard = () => {
+		return (
+			employees &&
+			employees.map(
+				({cardHolder, cardNumber, cardExpMonth, cardExpYear, cardCVC, _id}) => {
+					return (
+						<div>
+							<div key={cardNumber} className='credit-card-compressed'>
+								<div>
+									<div className='inLine'>
+										<b>Card Number: </b>
+										<p>{cardNumber}</p>
+									</div>
+									<div className='inLine'>
+										<b>Card Holder: </b>
+										<p>{cardHolder}</p>
+									</div>
+									<div className='inLine'>
+										<b>Expiration Month: </b>
+										<p>{cardExpMonth}</p>
+									</div>
+									<div className='inLine'>
+										<b>Expiration Year: </b>
+										<p>{cardExpYear}</p>
+									</div>
+
+									<div className='inLine'>
+										<b>CVC: </b>
+										<p>{cardCVC}</p>
+									</div>
+								</div>
+								<div className='inline-buttons'>
+									<div>
+										<td className='operation'>
+											<EditOutlinedIcon
+												fontSize='small'
+												onClick={() =>
+													updateData(
+														cardHolder,
+														cardNumber,
+														cardExpMonth,
+														cardExpYear,
+														cardCVC,
+														_id
+													)
+												}
+											/>
+										</td>
+									</div>
+									<div>
+										<td className='operation'>
+											<ClearOutlinedIcon
+												fontSize='small'
+												onClick={() => removeData(_id)}
+											/>
+										</td>
+									</div>
+								</div>
+							</div>
+							<hr></hr>
+						</div>
 					);
 				}
 			)
@@ -159,16 +233,24 @@ export const ManageCreditCard = (props) => {
 			<div className='col-1-2'>
 				<form className='account__form'>
 					<h3 className='account__form-header'>Manage Credit Cards</h3>
-					<div className='form-control'>
-						<div className='container'>
-							<table id='employee'>
-								<thead>
-									<tr>{renderHeader()}</tr>
-								</thead>
-								<tbody>{renderBody()}</tbody>
-							</table>
+					{employees.length > 0 ? (
+						<div className='form-control'>
+							<CompactCreditCard />
+							<div className='container profile-table'>
+								<table id='employee'>
+									<thead>
+										<tr>{renderHeader()}</tr>
+									</thead>
+									<tbody>{renderBody()}</tbody>
+								</table>
+							</div>
 						</div>
-					</div>
+					) : (
+						<p>
+							You haven't added any credit cards. If you add a new credit card
+							it will appear here.
+						</p>
+					)}
 				</form>
 			</div>
 			<Notification notify={notify} setNotify={setNotify} />

@@ -153,7 +153,7 @@ export const UpdateCreditCard = () => {
 					},
 				})
 				.then((res) => {
-					history.push('/dashboard');
+					history.push('/dashboard/manage-credit-card');
 				})
 				.catch((err) => {
 					errorHandler(
