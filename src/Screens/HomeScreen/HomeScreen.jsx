@@ -10,11 +10,10 @@ const HomeScreen = () => {
 			<Link to='/auth'>
 				<div id='fixed-height-1'>
 					<p>
-						Not registered? Sign in now for a faster checkout and more perks!
+						Not registered? Sign up now for a faster checkout and more perks!
 					</p>
 				</div>
 			</Link>
-
 			<div id='fixed-height-2'>
 				<p>Free Shipping on Orders of $40 or More</p>
 			</div>

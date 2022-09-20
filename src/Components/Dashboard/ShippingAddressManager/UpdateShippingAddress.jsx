@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Notification from '../../Cart/UI/Notification';
 import {useHistory} from 'react-router-dom';
-import '../PersonalInfoManager/PersonalInfoManager.css';
+import '../PersonalInfoManager/ManagePersonalInfo.css';
 import axios from 'axios';
 
 export const UpdateShippingAddress = () => {
@@ -68,7 +68,7 @@ export const UpdateShippingAddress = () => {
 	};
 
 	const cancelFunc = () => {
-		history.push('/dashboard');
+		history.push('/dashboard/manage-shipping-address');
 	};
 
 	const UpdateInfo = (e) => {
@@ -101,7 +101,7 @@ export const UpdateShippingAddress = () => {
 					},
 				})
 				.then((res) => {
-					history.push('/dashboard');
+					history.push('/dashboard/manage-shipping-address');
 				})
 				.catch((err) => {
 					errorHandler(

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import '../PersonalInfoManager/PersonalInfoManager.css';
+import '../PersonalInfoManager/ManagePersonalInfo.css';
 import Notification from '../../Cart/UI/Notification';
 import axios from 'axios';
 
@@ -59,7 +59,7 @@ export const NewShippingAddress = () => {
 	};
 
 	const cancelFunc = () => {
-		history.push('/dashboard');
+		history.push('/dashboard/manage-shipping-address');
 	};
 
 	const UpdateInfo = (e) => {
@@ -77,6 +77,7 @@ export const NewShippingAddress = () => {
 			const form_data = new FormData();
 
 			// street, cardNumber, expirationMonth, expirationYear, securityNumber
+
 			form_data.append('street', street);
 			form_data.append('city', city);
 			form_data.append('state', state);

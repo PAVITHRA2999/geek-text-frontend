@@ -1,10 +1,10 @@
 import React from 'react';
 import './DashboardHome.css';
-
+import {ManagePersonalInfo} from '../PersonalInfoManager/ManagePersonalInfo';
 export const DashboardHome = () => {
 	return (
 		<div className='dashboard-home'>
-			<h1>Profile Management</h1>
+			<ManagePersonalInfo />
 		</div>
 	);
 };

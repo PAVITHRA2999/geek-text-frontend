@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import '../PersonalInfoManager/PersonalInfoManager.css';
+import '../PersonalInfoManager/ManagePersonalInfo.css';
 import axios from 'axios';
 import '../CreditCardManager/ManageCreditCard.css';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
@@ -124,44 +124,14 @@ export const ManageShippingAddress = () => {
 		localStorage.setItem('shippingAdress', JSON.stringify({data}));
 		window.location = '/dashboard/updating-shipping-adress';
 	};
-	const renderBody = () => {
-		return (
-			employees &&
-			employees.map(({street, city, state, postalCode, country, _id}) => {
-				return (
-					<tr key={street}>
-						<td>{street}</td>
-						<td>{city}</td>
-						<td>{state}</td>
-						<td>{postalCode}</td>
-						<td>{country}</td>
-						<td className='operation'>
-							<EditOutlinedIcon
-								fontSize='small'
-								onClick={() =>
-									updateData(street, city, state, postalCode, country, _id)
-								}
-							/>
-						</td>
-						<td className='operation'>
-							<ClearOutlinedIcon
-								fontSize='small'
-								onClick={() => removeData(_id)}
-							/>
-						</td>
-					</tr>
-				);
-			})
-		);
-	};
 
 	const CompactShipping = () => {
 		return (
 			employees &&
-			employees.map(({street, city, state, postalCode, country, _id}) => {
+			employees.map(({street, city, state, postalCode, country, _id}, i) => {
 				return (
-					<div>
-						<div key={street} className='credit-card-compressed'>
+					<div key={_id}>
+						<div className='credit-card-compressed'>
 							<div>
 								<div className='inLine'>
 									<b>Street: </b>
@@ -187,9 +157,9 @@ export const ManageShippingAddress = () => {
 							</div>
 							<div className='inline-buttons'>
 								<div>
-									<td className='operation'>
+									<div className='operation'>
 										<EditOutlinedIcon
-											fontSize='small'
+											fontSize='inherit'
 											onClick={() =>
 												updateData(
 													street,
@@ -201,19 +171,19 @@ export const ManageShippingAddress = () => {
 												)
 											}
 										/>
-									</td>
+									</div>
 								</div>
 								<div>
-									<td className='operation'>
+									<div className='operation'>
 										<ClearOutlinedIcon
-											fontSize='small'
+											fontSize='inherit'
 											onClick={() => removeData(_id)}
 										/>
-									</td>
+									</div>
 								</div>
 							</div>
 						</div>
-						<hr></hr>
+						{i < employees.length - 1 && <hr></hr>}
 					</div>
 				);
 			})
@@ -225,17 +195,9 @@ export const ManageShippingAddress = () => {
 			<div className='col-1-2'>
 				<form className='account__form'>
 					<h3 className='account__form-header'>Manage Shipping Address</h3>
-					{employees.length > 0 ? (
+					{(employees || []).length > 0 ? (
 						<div className='form-control'>
 							<CompactShipping />
-							<div className='container profile-table'>
-								<table id='employee'>
-									<thead>
-										<tr>{renderHeader()}</tr>
-									</thead>
-									<tbody>{renderBody()}</tbody>
-								</table>
-							</div>
 						</div>
 					) : (
 						<p>

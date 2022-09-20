@@ -18,3 +18,10 @@ the bellow changes*/
 .btn-wrapper {
 	margin-top: 1.5rem;
 }
+
+.inline-info-header {
+	display: flex;
+	column-gap: 15px;
+	width: 100%;
+	align-items: center;
+}

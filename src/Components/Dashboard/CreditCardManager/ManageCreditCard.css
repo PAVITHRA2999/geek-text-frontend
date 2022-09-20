@@ -7,8 +7,16 @@
 	margin-left: 2rem;
 }
 
+.sidebar {
+	padding-top: 0.5rem;
+}
+
 .profile-form input {
 	width: 100%;
+}
+
+.profile-form .col-1-2 {
+	padding: 3.2rem 1rem !important;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
@@ -41,10 +49,33 @@
 	color: white;
 }
 
+.divTable {
+	display: table;
+	width: 100%;
+}
+
+.divRow {
+	display: table-row;
+	width: auto;
+	padding: 0.5rem 0rem;
+}
+
+.divCell {
+	float: left; /*fix for  buggy browsers*/
+	display: table-column;
+	width: 100px;
+	width: inherit;
+	padding: 10px;
+}
+
 .container {
 	display: flex;
 	justify-content: center;
 	flex-flow: column;
+}
+
+.table-content {
+	display: flex;
 }
 
 .inLine {
@@ -54,14 +85,24 @@
 }
 
 .credit-card-compressed {
-	display: none;
+	/* display: flex;
+	column-gap: 10rem; */
+	align-items: center;
+
+	padding: 0.5rem 0rem;
+
+	display: grid;
+	width: 100%;
+	height: fit-content;
+	grid-template-columns: 6fr 1fr;
+	gap: 4rem;
 }
 
 .inLine b {
-	font-size: 10px;
+	font-size: 14px;
 }
 .inLine p {
-	font-size: 10px;
+	font-size: 14px;
 	margin-bottom: 0rem;
 }
 
@@ -76,9 +117,18 @@
 .inline-buttons {
 	display: flex;
 	column-gap: 2rem;
+	text-align: right;
+	/* font-size: 16px !important; */
+	font-size: 27px;
 }
 
 @media (max-width: 1170px) {
+	.inLine b {
+		font-size: 12px;
+	}
+	.inLine p {
+		font-size: 12px;
+	}
 	.profile-form {
 		min-width: 30rem;
 		margin-left: 2rem;
@@ -107,27 +157,6 @@
 
 	#employee {
 		font-size: 12px;
-	}
-}
-
-@media (max-width: 1030px) {
-	#employee td,
-	#employee th {
-		padding: 2px;
-	}
-
-	#employee th {
-		padding: 5px;
-		font-size: 10px;
-	}
-	.credit-card-compressed {
-		display: flex;
-		column-gap: 2rem;
-		align-items: center;
-		padding: 0.5rem 0rem;
-	}
-	.profile-table {
-		display: none;
 	}
 }
 
@@ -166,7 +195,7 @@
 	}
 }
 
-@media (max-width: 450px) {
+@media (max-width: 550px) {
 	.profile-form .col-1-2 {
 		margin: 0rem !important;
 	}
@@ -178,7 +207,7 @@
 		padding: 0 1rem;
 	}
 	.profile-form {
-		min-width: 10rem;
+		min-width: 8rem;
 	}
 
 	.credit-card-compressed {

@@ -1,24 +1,14 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
-import './PersonalInfoManager.css';
+import './ManagePersonalInfo.css';
 import axios from 'axios';
 import Notification from '../../Cart/UI/Notification';
 
-export const PersonalInfoManager = () => {
+export const UpdatePersonalInfo = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [homeAddress, setHomeAddress] = useState('');
-
-	const [personalInfo, setPersonalInfo] = useState({
-		name: '',
-		email: '',
-		homeAddress: '',
-		nickname: '',
-	});
-	const [emailx, setEmailx] = useState('');
-	const [nicknamex, setNicknamex] = useState('');
-	const [homeAddressx, setHomeAddressx] = useState('');
 
 	// Notification
 	const [notify, setNotify] = useState({
@@ -31,8 +21,6 @@ export const PersonalInfoManager = () => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
-		console.log(token);
-
 		const baseURL = {
 			dev: 'http://localhost:5000/api/managing-personal-info',
 			prod: 'http://lea-geek-text.herokuapp.com/api/managing-personal-info',
@@ -48,13 +36,10 @@ export const PersonalInfoManager = () => {
 				},
 			})
 			.then((res) => {
-				console.log(res);
-				setPersonalInfo({
-					name: res.data.name,
-					email: res.data.email,
-					homeAddress: res.data.homeAddress,
-					nickname: res.data.nickname,
-				});
+				setName(res.data.name);
+				setEmail(res.data.email);
+				setHomeAddress(res.data.homeAddress);
+				setNickname(res.data.nickname);
 			})
 			.catch((err) => {
 				console.log(err);
@@ -170,7 +155,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='name'
 								type='text'
-								value={personalInfo.name}
+								value={name}
 							/>
 						</div>
 						<div className='form-control'>
@@ -179,7 +164,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='email'
 								type='email'
-								value={personalInfo.email}
+								value={email}
 							/>
 						</div>
 						<div className='form-control'>
@@ -188,7 +173,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='nickname'
 								type='text'
-								value={personalInfo.nickname}
+								value={nickname}
 								// placeholder='Nickname'
 							/>
 						</div>
@@ -198,7 +183,7 @@ export const PersonalInfoManager = () => {
 								onChange={handleChange}
 								id='homeAddress'
 								type='text'
-								value={personalInfo.homeAddress}
+								value={homeAddress}
 							/>
 						</div>
 
