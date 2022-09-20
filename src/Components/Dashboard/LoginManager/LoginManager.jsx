@@ -54,8 +54,8 @@ export const LoginManager = () => {
 		try {
 			BlankValidation();
 			const baseURL = {
-				dev: 'http://localhost:3000/api/update-login',
-				prod: '',
+				dev: 'http://localhost:5000/api/update-login',
+				prod: 'http://lea-geek-text.herokuapp.com/api/update-login',
 			};
 
 			const url =

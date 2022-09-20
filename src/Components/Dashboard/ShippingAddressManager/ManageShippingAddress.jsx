@@ -35,8 +35,14 @@ export const ManageShippingAddress = () => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
+		const baseURL = {
+			dev: 'http://localhost:5000/api/managing-shipping-adress',
+			prod: 'http://lea-geek-text.herokuapp.com/api/managing-shipping-adress',
+		};
+
 		const url =
-			'https://lea-geek-text.herokuapp.com/api/managing-shipping-adress';
+			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
 		axios
 			.post(url, form_data, {
 				headers: {
@@ -76,8 +82,15 @@ export const ManageShippingAddress = () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
 		form_data.append('id', cardNumber);
+
+		const baseURL = {
+			dev: 'http://localhost:5000/api/deleting-shipping-adress',
+			prod: 'http://lea-geek-text.herokuapp.com/api/deleting-shipping-adress',
+		};
+
 		const url =
-			'https://lea-geek-text.herokuapp.com/api/deleting-shipping-adress';
+			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
 		axios
 			.post(url, form_data, {
 				headers: {

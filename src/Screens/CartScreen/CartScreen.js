@@ -122,7 +122,14 @@ const CartScreen = (props) => {
   // Update sold count of book and stop displaying it in cart
   const checkout = (id, qty) => {
     // TODO: Database update: add books to user's purchased books
-    axios.patch(`https://lea-geek-text.herokuapp.com/books/purchase/${id}`, {
+    const baseURL = {
+      dev: 'http://localhost:5000/books/purchase/',
+      prod: 'http://lea-geek-text.herokuapp.com/books/purchase/',
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+    axios.patch(`${url}${id}`, {
       sold: qty,
     });
     dispatch(removeFromCart(id));

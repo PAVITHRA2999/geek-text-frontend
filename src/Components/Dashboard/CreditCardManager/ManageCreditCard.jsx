@@ -33,7 +33,14 @@ export const ManageCreditCard = (props) => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
-		const url = 'https://lea-geek-text.herokuapp.com/api/managing-credit-cardd';
+
+		const baseURL = {
+			dev: 'http://localhost:5000/api/managing-credit-cardd',
+			prod: 'http://lea-geek-text.herokuapp.com/api/managing-credit-cardd',
+		};
+		const url =
+			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
 		axios
 			.post(url, form_data, {
 				headers: {
@@ -97,7 +104,13 @@ export const ManageCreditCard = (props) => {
 		form_data.append('id', cardNumber);
 
 		const token = localStorage.getItem('token');
-		const url = 'https://lea-geek-text.herokuapp.com/api/testing-deleteCC';
+
+		const baseURL = {
+			dev: 'http://localhost:5000/api/testing-deleteCC',
+			prod: 'http://lea-geek-text.herokuapp.com/api/testing-deleteCC',
+		};
+		const url =
+			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 		axios
 			.post(url, form_data, {
 				headers: {

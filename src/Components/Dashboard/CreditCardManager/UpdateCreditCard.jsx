@@ -131,9 +131,10 @@ export const UpdateCreditCard = () => {
 		try {
 			testingVars();
 			const baseURL = {
-				dev: 'https://lea-geek-text.herokuapp.com/api/updating-credit-card',
-				prod: '',
+				dev: 'http://localhost:5000/api/updating-credit-card',
+				prod: 'http://lea-geek-text.herokuapp.com/api/updating-credit-card',
 			};
+
 			const url =
 				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 			const form_data = new FormData();

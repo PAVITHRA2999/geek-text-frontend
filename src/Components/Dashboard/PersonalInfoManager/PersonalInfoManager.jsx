@@ -32,8 +32,15 @@ export const PersonalInfoManager = () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
 		console.log(token);
+
+		const baseURL = {
+			dev: 'http://localhost:5000/api/managing-personal-info',
+			prod: 'http://lea-geek-text.herokuapp.com/api/managing-personal-info',
+		};
+
 		const url =
-			'https://lea-geek-text.herokuapp.com/api/managing-personal-info';
+			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
 		axios
 			.post(url, form_data, {
 				headers: {
@@ -110,8 +117,8 @@ export const PersonalInfoManager = () => {
 			BlankValidation();
 
 			const baseURL = {
-				dev: 'http://localhost:3000/api/personal-info',
-				prod: '',
+				dev: 'http://localhost:5000/api/personal-info',
+				prod: 'http://lea-geek-text.herokuapp.com/api/personal-info',
 			};
 
 			const url =
