@@ -82,8 +82,8 @@ const Auth = () => {
 
 	const LoginUser = (e) => {
 		const baseURL = {
-			dev: 'http://localhost:3000/api/signin',
-			prod: '',
+			dev: 'http://localhost:5000/api/signin',
+			prod: 'http://lea-geek-text.herokuapp.com/api/signin',
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -111,8 +111,8 @@ const Auth = () => {
 	const SignupUser = (e) => {
 		e.preventDefault();
 		const baseURL = {
-			dev: 'http://localhost:3000/api/signup',
-			prod: '',
+			dev: 'http://localhost:5000/api/signup',
+			prod: 'http://lea-geek-text.herokuapp.com/api/signup',
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

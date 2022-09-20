@@ -5,7 +5,14 @@ import axios from "axios";
 export const getBooks = () => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOKS_REQUEST });
-    const { data } = await axios.get("https://lea-geek-text.herokuapp.com/books");
+    const baseURL = {
+      dev: 'http://localhost:5000/books',
+      prod: 'http://lea-geek-text.herokuapp.com/books',
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+    const { data } = await axios.get(url);
     dispatch({
       type: actionTypes.GET_BOOKS_SUCCESS,
       payload: data,
@@ -25,7 +32,14 @@ export const getBooks = () => async (dispatch) => {
 export const getSortedBooks = (sort, filter, page, perPage) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_SORTED_BOOKS_REQUEST });
-    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${sort}`, {
+    const baseURL = {
+      dev: 'http://localhost:5000/books',
+      prod: 'http://lea-geek-text.herokuapp.com/books',
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+    const { data } = await axios.get(`${url}/${sort}`, {
       params: {
         filter: filter
       }
@@ -59,7 +73,14 @@ export const getSortedBooks = (sort, filter, page, perPage) => async (dispatch) 
 export const getBookDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOK_DETAILS_REQUEST });
-    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${id}`);
+    const baseURL = {
+      dev: 'http://localhost:5000/books',
+      prod: 'http://lea-geek-text.herokuapp.com/books',
+    };
+    const url =
+      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+    const { data } = await axios.get(`${url}/${id}`);
     dispatch({
       type: actionTypes.GET_BOOK_DETAILS_SUCCESS,
       payload: data,

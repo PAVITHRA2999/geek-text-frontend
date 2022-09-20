@@ -18,28 +18,3 @@ the bellow changes*/
 .btn-wrapper {
 	margin-top: 1.5rem;
 }
-/*Initial load*/
-.btn-update-info {
-	border-radius: 100px; /*Circular shape of the button*/
-	padding: 0.4rem 0.2rem; /*LEft and Right*/
-	transition: ease-in-out 0.4s; /*Adds the effect when youi hover on it*/
-	background-color: white;
-	border: 1px solid black;
-	cursor: pointer;
-}
-
-/*When you hover, chang the background color*/
-.btn-update-info:hover {
-	background-color: black;
-	color: white;
-}
-
-.btn-cancel {
-	margin-left: 1.5rem;
-	background-color: red;
-	border-radius: 100px; /*Circular shape of the button*/
-	padding: 0.4rem 0.2rem; /*LEft and Right*/
-	transition: ease-in-out 0.4s; /*Adds the effect when youi hover on it*/
-	color: white;
-	cursor: pointer;
-}

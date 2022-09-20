@@ -3,7 +3,14 @@ import axios from "axios";
 
 // Add a book to cart
 export const addToCart = (id, qty, saved) => async (dispatch, getState) => {
-    const { data } = await axios.get(`https://lea-geek-text.herokuapp.com/books/${id}`);
+    const baseURL = {
+        dev: 'http://localhost:5000/books',
+        prod: 'http://lea-geek-text.herokuapp.com/books',
+    };
+    const url =
+        process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+    const { data } = await axios.get(`${url}/${id}`);
 
     dispatch({
         type: actionTypes.ADD_TO_CART,

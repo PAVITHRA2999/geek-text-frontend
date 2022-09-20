@@ -3,7 +3,7 @@
 }
 
 .profile-form {
-	min-width: 50rem;
+	min-width: 40rem;
 	margin-left: 2rem;
 }
 
@@ -21,6 +21,7 @@
 	border-collapse: collapse;
 	border: 1px solid #ddd;
 	text-align: center;
+	justify-content: center;
 }
 
 #employee td,
@@ -46,10 +47,148 @@
 	flex-flow: column;
 }
 
-.container .operation {
+.inLine {
+	display: flex;
+	column-gap: 8px;
+	align-items: center;
+}
+
+.credit-card-compressed {
+	display: none;
+}
+
+.inLine b {
+	font-size: 10px;
+}
+.inLine p {
+	font-size: 10px;
+	margin-bottom: 0rem;
+}
+
+.operation {
 	cursor: pointer;
 }
 
-.container .operation:hover {
+.operation:hover {
 	color: var(--primary-color);
+}
+
+.inline-buttons {
+	display: flex;
+	column-gap: 2rem;
+}
+
+@media (max-width: 1170px) {
+	.profile-form {
+		min-width: 30rem;
+		margin-left: 2rem;
+	}
+	.sidebar-text {
+		font-size: 12px;
+	}
+	.account-menu-option {
+		font-size: 14px;
+	}
+	.account-menu-option h4 {
+		font-size: 10px !important;
+	}
+
+	.profile-form .column-1-2 {
+		margin: 0rem !important;
+		padding: 0rem !important;
+	}
+	.profile-form .col-1-2 {
+		padding: 3.2rem 1rem !important;
+	}
+
+	#title {
+		font-size: 14px;
+	}
+
+	#employee {
+		font-size: 12px;
+	}
+}
+
+@media (max-width: 1030px) {
+	#employee td,
+	#employee th {
+		padding: 2px;
+	}
+
+	#employee th {
+		padding: 5px;
+		font-size: 10px;
+	}
+	.credit-card-compressed {
+		display: flex;
+		column-gap: 2rem;
+		align-items: center;
+		padding: 0.5rem 0rem;
+	}
+	.profile-table {
+		display: none;
+	}
+}
+
+@media (max-width: 870px) {
+	.profile-form {
+		min-width: 20rem;
+		margin-left: 0rem;
+	}
+	.sidebar-text {
+		display: none;
+	}
+	.account-menu-option h4 {
+		display: none;
+	}
+
+	#title {
+		font-size: 12px;
+	}
+
+	#employee {
+		font-size: 10px;
+	}
+}
+
+@media (max-width: 645px) {
+	.profile-form {
+		min-width: 20rem;
+		margin-left: 0rem;
+	}
+	.profile-form .col-1-2 {
+		padding: 3.2rem 0rem !important;
+	}
+
+	.sidebar {
+		padding: 0.5rem 3rem;
+	}
+}
+
+@media (max-width: 450px) {
+	.profile-form .col-1-2 {
+		margin: 0rem !important;
+	}
+	.sidebar {
+		padding: 0.5rem 1rem;
+	}
+
+	.profile-form .account__form {
+		padding: 0 1rem;
+	}
+	.profile-form {
+		min-width: 10rem;
+	}
+
+	.credit-card-compressed {
+		display: block;
+		/* column-gap: 2rem;
+		align-items: center;
+		padding: 0.5rem 0rem; */
+	}
+	.inline-buttons {
+		flex-direction: row;
+		column-gap: 8px;
+	}
 }

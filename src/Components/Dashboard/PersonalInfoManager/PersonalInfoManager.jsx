@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useHistory} from 'react-router-dom';
 import './PersonalInfoManager.css';
 import axios from 'axios';
@@ -9,7 +9,16 @@ export const PersonalInfoManager = () => {
 	const [email, setEmail] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [homeAddress, setHomeAddress] = useState('');
-	const [personalInfo, setPersonalInfo] = useState({});
+
+	const [personalInfo, setPersonalInfo] = useState({
+		name: '',
+		email: '',
+		homeAddress: '',
+		nickname: '',
+	});
+	const [emailx, setEmailx] = useState('');
+	const [nicknamex, setNicknamex] = useState('');
+	const [homeAddressx, setHomeAddressx] = useState('');
 
 	// Notification
 	const [notify, setNotify] = useState({
@@ -18,6 +27,44 @@ export const PersonalInfoManager = () => {
 		type: '',
 		typeStyle: '',
 	});
+
+	const getDataPay = async () => {
+		const form_data = new FormData();
+		const token = localStorage.getItem('token');
+		console.log(token);
+
+		const baseURL = {
+			dev: 'http://localhost:5000/api/managing-personal-info',
+			prod: 'http://lea-geek-text.herokuapp.com/api/managing-personal-info',
+		};
+
+		const url =
+			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+
+		axios
+			.post(url, form_data, {
+				headers: {
+					'x-auth-token': token,
+				},
+			})
+			.then((res) => {
+				console.log(res);
+				setPersonalInfo({
+					name: res.data.name,
+					email: res.data.email,
+					homeAddress: res.data.homeAddress,
+					nickname: res.data.nickname,
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
+			});
+	};
 
 	useEffect(() => {
 		getDataPay();
@@ -63,36 +110,6 @@ export const PersonalInfoManager = () => {
 		history.push('/dashboard');
 	};
 
-	const getDataPay = async () => {
-		const form_data = new FormData();
-		const token = localStorage.getItem('token');
-		console.log(form_data);
-		console.log(token);
-		const url =
-			'https://lea-geek-text.herokuapp.com/api/managing-personal-info';
-		axios
-			.post(url, form_data, {
-				headers: {
-					'x-auth-token': token,
-				},
-			})
-			.then((res) => {
-				setPersonalInfo({
-					nickname: res.data.nickname,
-					email: res.data.email,
-					name: res.data.name,
-					homeAddress: res.data.homeAddress,
-				});
-			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
-			});
-	};
-
 	const UpdateInfo = (e) => {
 		e.preventDefault();
 
@@ -100,8 +117,8 @@ export const PersonalInfoManager = () => {
 			BlankValidation();
 
 			const baseURL = {
-				dev: 'http://localhost:3000/api/personal-info',
-				prod: '',
+				dev: 'http://localhost:5000/api/personal-info',
+				prod: 'http://lea-geek-text.herokuapp.com/api/personal-info',
 			};
 
 			const url =
@@ -124,6 +141,7 @@ export const PersonalInfoManager = () => {
 					window.location = '/dashboard';
 				})
 				.catch((err) => {
+					console.log(err);
 					errorHandler(
 						err && err.response && err.response.data && err.response.data.msg
 							? err.response.data.msg

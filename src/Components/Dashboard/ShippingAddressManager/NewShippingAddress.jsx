@@ -68,9 +68,10 @@ export const NewShippingAddress = () => {
 		try {
 			BlankValidation();
 			const baseURL = {
-				dev: 'https://lea-geek-text.herokuapp.com/api/insert-shipping-address',
-				prod: '',
+				dev: 'http://localhost:5000/api/insert-shipping-address',
+				prod: 'http://lea-geek-text.herokuapp.com/api/insert-shipping-address',
 			};
+
 			const url =
 				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 			const form_data = new FormData();
