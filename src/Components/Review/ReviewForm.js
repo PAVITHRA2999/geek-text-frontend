@@ -58,11 +58,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
   };
 
 
-  const submitReview = () => {
-    closeModal();
-    window.location.reload();
-  };
-
   // Update sold count of book and stop displaying it in cart
   const UpdateInfo = (e) => {
     e.preventDefault();
@@ -74,7 +69,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
       };
       const url =
         process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
       const newAverage = ((numComments * oldRating) + ratingInput) / (numComments + 1);
       const token = localStorage.getItem('token');
       axios.put(`${url}${id}`, {
@@ -89,7 +83,7 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
         rating: ratingInput,
         average: newAverage,
       });
-      submitReview();
+      closeModal();
     }
     catch (e) {
       errorHandler(
@@ -98,7 +92,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
       return;
     }
   };
-
 
 
   return (
