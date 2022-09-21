@@ -82,13 +82,14 @@ const Auth = () => {
 	};
 
 	const LoginUser = (e) => {
+		e.preventDefault();
 		const baseURL = {
 			dev: 'http://localhost:5000/api/signin',
 			prod: 'http://lea-geek-text.herokuapp.com/api/signin',
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-		e.preventDefault();
+
 		const form_data = new FormData();
 		form_data.append('email', email_signin);
 		form_data.append('password', password_login);
@@ -144,7 +145,7 @@ const Auth = () => {
 			<div className='customer_container row'>
 				<div className='col-1-2'>
 					{!showforgotPassword ? (
-						<form className='account__form'>
+						<form onSubmit={LoginUser} className='account__form'>
 							<h3 className='account__form-header'>Login</h3>
 							<p>Sign in to your existing account</p>
 							<div className='form-control'>
@@ -175,11 +176,7 @@ const Auth = () => {
 									Forgotten Password?
 								</button>
 							</div>
-							<button
-								onClick={LoginUser}
-								type='submit'
-								className='btn btn-primary auth'
-							>
+							<button type='submit' className='btn btn-primary auth'>
 								Login
 							</button>
 						</form>
@@ -206,7 +203,7 @@ const Auth = () => {
 					)}
 				</div>
 				<div className='col-1-2 form-divider'>
-					<form className='account__form'>
+					<form className='account__form' onSubmit={SignupUser}>
 						<h3 className='account__form-header'>Sign Up</h3>
 						<p>Create a New Account</p>
 						<div className='form-control'>
@@ -245,11 +242,7 @@ const Auth = () => {
 								onChange={handleSignupChange}
 							/>
 						</div>
-						<button
-							onClick={SignupUser}
-							type='submit'
-							className='btn btn-primary auth'
-						>
+						<button type='submit' className='btn btn-primary auth'>
 							Sign Up
 						</button>
 					</form>
