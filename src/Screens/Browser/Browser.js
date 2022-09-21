@@ -67,11 +67,16 @@ const Browser = ({ match }) => {
 
     const sortTypes = {
         'Top Sellers': 'getByTS',
-        'Newest to Oldest': 'getByRD',
-        'Price - High to Low': 'getByPrice',
-        'Title - A to Z': 'getByTitle',
-        'Rating - High to Low': 'getByRating',
-        'Author - A to Z': 'getByAuthor',
+        'Newest to Oldest': 'getByRDNO',
+        'Oldest to Newest': 'getByRDON',
+        'Price - High to Low': 'getByPriceHL',
+        'Price - Low to High': 'getByPriceLH',
+        'Title - A to Z': 'getByTitleAZ',
+        'Title - Z to A': 'getByTitleZA',
+        'Rating - High to Low': 'getByRatingHL',
+        'Rating - Low to High': 'getByRatingLH',
+        'Author - A to Z': 'getByAuthorAZ',
+        'Autho - Z to A': 'getByAuthorZA',
     };
 
     const getKeyByValue = (object, value) => {
