@@ -31,7 +31,7 @@ const BookScreen = ({ match, history }) => {
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
   const [showBookCoverModal, setShowBookCoverModal] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
-
+  const [reviewed, setReviewed] = useState(false);
   // Load book details
   const dispatch = useDispatch();
   const bookDetails = useSelector((state) => state.getBookDetails);
@@ -43,10 +43,11 @@ const BookScreen = ({ match, history }) => {
 
 
   useEffect(() => {
-    if (book && (match.params.id) !== book._id) {
+    if ((book && (match.params.id) !== book._id) || (book && reviewed)) {
       dispatch(getBookDetails(match.params.id));
+      setReviewed(false);
     }
-  }, [dispatch, book, match]);
+  }, [dispatch, book, match, reviewed]);
 
   // Determine whether item is already in wishlist and handle favorite state accordingly
   const wishlist = useSelector((state) => state.wishlist);
@@ -58,14 +59,6 @@ const BookScreen = ({ match, history }) => {
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
-  const errorHandler = (message) => {
-    setNotify({
-      isOpen: true,
-      message: message || 'Sorry, there was an error. Plase try again later.',
-      type: 'error',
-      typeStyle: '',
-    });
-  };
 
   const addToCartHandler = () => {
     (cartItems.some(item => item.book === book._id)) ?
@@ -154,6 +147,7 @@ const BookScreen = ({ match, history }) => {
   //handles going to the review page
   const closeReviewModalHandler = () => {
     setShowReviewModal(false);
+    setReviewed(true);
   };
 
   const aBook = (book || {});
