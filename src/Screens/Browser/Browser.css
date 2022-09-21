@@ -89,7 +89,7 @@
 	}
 
 	.book__rating {
-		display: none;
+		font-size: 10px !important;
 	}
 }
 
@@ -124,7 +124,7 @@
 		padding: 0%;
 	}
 	.homescreen__products .book__rating {
-		display: none;
+		font-size: 8px;
 	}
 }
 
