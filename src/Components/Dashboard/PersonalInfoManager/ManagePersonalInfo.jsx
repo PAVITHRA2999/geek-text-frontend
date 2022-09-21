@@ -25,7 +25,7 @@ export const ManagePersonalInfo = () => {
 		const token = localStorage.getItem('token');
 		const baseURL = {
 			dev: 'http://localhost:5000/api/managing-personal-info',
-			prod: 'http://lea-geek-text.herokuapp.com/api/managing-personal-info',
+			prod: 'https://lea-geek-text.herokuapp.com/api/managing-personal-info',
 		};
 
 		const url =

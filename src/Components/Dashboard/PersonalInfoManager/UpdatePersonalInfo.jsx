@@ -23,7 +23,7 @@ export const UpdatePersonalInfo = () => {
 		const token = localStorage.getItem('token');
 		const baseURL = {
 			dev: 'http://localhost:5000/api/managing-personal-info',
-			prod: 'http://lea-geek-text.herokuapp.com/api/managing-personal-info',
+			prod: 'https://lea-geek-text.herokuapp.com/api/managing-personal-info',
 		};
 
 		const url =
@@ -103,7 +103,7 @@ export const UpdatePersonalInfo = () => {
 
 			const baseURL = {
 				dev: 'http://localhost:5000/api/personal-info',
-				prod: 'http://lea-geek-text.herokuapp.com/api/personal-info',
+				prod: 'https://lea-geek-text.herokuapp.com/api/personal-info',
 			};
 
 			const url =

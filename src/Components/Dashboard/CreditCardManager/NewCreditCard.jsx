@@ -70,7 +70,7 @@ export const NewCreditCard = () => {
 			checkCreditCardValidation();
 			const baseURL = {
 				dev: 'http://localhost:5000/api/credit-card',
-				prod: 'http://lea-geek-text.herokuapp.com/api/credit-card',
+				prod: 'https://lea-geek-text.herokuapp.com/api/credit-card',
 			};
 
 			const url =
