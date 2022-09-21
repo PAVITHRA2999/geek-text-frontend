@@ -19,6 +19,11 @@ import RemoveIcon from '@mui/icons-material/Remove';
 const CartScreen = (props) => {
 
   useEffect(() => { }, []);
+
+
+
+
+
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;

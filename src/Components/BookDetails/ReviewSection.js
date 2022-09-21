@@ -40,7 +40,7 @@ const ReviewSection = ({ aBook, commentsLength, createReviewHandler }) => {
                             </div>
                             <hr />
                             {
-                                (aBook.comments).map((comment, i) => <div key={comment.commenter}>
+                                (aBook.comments).map((comment, i) => <div key={comment._id}>
                                     <div className="comment_container">
                                         <div className="text_body commenter left_commenter" ><b>{comment.commenter}</b></div>
                                         <div className="comments" key={comment.commenter}>

@@ -33,7 +33,7 @@ export const ManageCreditCard = (props) => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
-
+		console.log(token);
 		const baseURL = {
 			dev: 'http://localhost:5000/api/managing-credit-cardd',
 			prod: 'http://lea-geek-text.herokuapp.com/api/managing-credit-cardd',
