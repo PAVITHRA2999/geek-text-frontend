@@ -10,11 +10,9 @@ import CartScreen from "./Screens/CartScreen/CartScreen";
 import BookScreen from "./Screens/BookScreen/BookScreen";
 import WishlistScreen from "./Screens/WishlistScreen/WishlistScreen";
 import AuthorBooksScreen from './Screens/AuthorBooksScreen/AuthorBooksScreen';
-import ReviewScreen from './Screens/ReviewScreen/ReviewScreen';
 import Browser from './Screens/Browser/Browser';
 
 import { SideBar } from './Components/Dashboard/SideBar/SideBar';
-import { DashboardHome } from './Components/Dashboard/DashboardHome/DashboardHome';
 import { ManagePersonalInfo } from './Components/Dashboard/PersonalInfoManager/ManagePersonalInfo';
 import { UpdatePersonalInfo } from './Components/Dashboard/PersonalInfoManager/UpdatePersonalInfo';
 import { NewCreditCard } from './Components/Dashboard/CreditCardManager/NewCreditCard';
@@ -112,7 +110,6 @@ function App() {
           <Route exact path='/book/:id' component={BookScreen} />
           <Route exact path='/wishlist/:id?' component={WishlistScreen} />
           <Route exact path='/authorbooks/:id' component={AuthorBooksScreen} />
-          <Route exact path='/book/:id/reviews' component={ReviewScreen} />
         </Switch>
       </ScrollToTop>
     </Router>

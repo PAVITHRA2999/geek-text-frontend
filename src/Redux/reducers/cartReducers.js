@@ -33,3 +33,26 @@ export const cartReducer = (state = CART_INITIAL_STATE, action) => {
       return state;
   }
 };
+
+
+export const getCartContentReducer = (state = { cart: [] }, action) => {
+  switch (action.type) {
+    case actionTypes.GET_CART_CONTENT_REQUEST:
+      return {
+        loading: true,
+        cart: [],
+      };
+    case actionTypes.GET_CART_CONTENT_SUCCESS:
+      return {
+        cart: action.payload,
+        loading: false,
+      };
+    case actionTypes.GET_CART_CONTENT_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};

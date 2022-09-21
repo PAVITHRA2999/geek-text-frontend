@@ -1,6 +1,6 @@
 import './BookCoverModal.css';
 
-const Modal = props => {
+const BookCoverModal = props => {
   if (!props.show) {
     return null;
   }
@@ -18,4 +18,4 @@ const Modal = props => {
   );
 };
 
-export default Modal;
+export default BookCoverModal;

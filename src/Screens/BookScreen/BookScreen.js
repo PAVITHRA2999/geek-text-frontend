@@ -8,7 +8,8 @@ import { addToCart } from "../../Redux/actions/cartActions";
 import { addToWishlist, removeFromWishlist } from "../../Redux/actions/wishlistActions";
 
 import MessageDialog from "../../Components/Cart/UI/MessageDialog";
-import BookCoverModal from '../../Components/Modal/BookCoverModal';
+import BookCoverModal from "../../Components/Modals/BookCoverModal/BookCoverModal";
+import ReviewModal from "../../Components/Modals/ReviewModal/ReviewModal";
 import CustomSelect from "../../Components/CustomSelect/CustomSelect";
 import Notification from "../../Components/Cart/UI/Notification";
 import Accordion from "../../Components/Accordion/Accordion";
@@ -18,7 +19,7 @@ import TopSection from "../../Components/BookDetails/TopSection";
 import ProductDetails from "../../Components/BookDetails/ProductDetails";
 import ReviewSection from "../../Components/BookDetails/ReviewSection";
 import Loading from "../../Components/Loading/Loading";
-
+import ReviewForm from "../../Components/Review/ReviewForm";
 
 const BookScreen = ({ match, history }) => {
 
@@ -28,7 +29,8 @@ const BookScreen = ({ match, history }) => {
   // Notifications
   const [messageDialog, setMessageDialog] = useState({ isOpen: false, title: '', subTitle: '', viewButton: 'View Cart' });
   const [notify, setNotify] = useState({ isOpen: false, message: '', type: '', typeStyle: '' });
-  const [show, setShow] = useState(false);
+  const [showBookCoverModal, setShowBookCoverModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
   // Load book details
   const dispatch = useDispatch();
@@ -55,6 +57,15 @@ const BookScreen = ({ match, history }) => {
   // Determine whether item is already in cart and handle add operation accordingly
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+
+  const errorHandler = (message) => {
+    setNotify({
+      isOpen: true,
+      message: message || 'Sorry, there was an error. Plase try again later.',
+      type: 'error',
+      typeStyle: '',
+    });
+  };
 
   const addToCartHandler = () => {
     (cartItems.some(item => item.book === book._id)) ?
@@ -141,8 +152,8 @@ const BookScreen = ({ match, history }) => {
   };
 
   //handles going to the review page
-  const createReviewHandler = () => {
-    history.push(`/book/` + match.params.id + "/reviews");
+  const closeReviewModalHandler = () => {
+    setShowReviewModal(false);
   };
 
   const aBook = (book || {});
@@ -237,8 +248,8 @@ const BookScreen = ({ match, history }) => {
                       onClickReviews={onClickReviews}
                     />
                     <div className="container__left">
-                      <input type="image" src={aBook.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShow(true)} />
-                      <BookCoverModal title="Book Cover" onClose={() => setShow(false)} show={show}>
+                      <input type="image" src={aBook.cover} title="click to enlarge" alt="book cover" className="book-cover" onClick={() => setShowBookCoverModal(true)} />
+                      <BookCoverModal title="Book Cover" onClose={() => setShowBookCoverModal(false)} show={showBookCoverModal}>
                         <img src={aBook.cover} alt="book cover" className="book-cover-large" />
                       </BookCoverModal>
                     </div>
@@ -312,9 +323,12 @@ const BookScreen = ({ match, history }) => {
                     <ReviewSection
                       aBook={aBook}
                       commentsLength={commentsLength}
-                      createReviewHandler={createReviewHandler}
+                      createReviewHandler={() => setShowReviewModal(true)}
                     />
                   </div>
+                  <ReviewModal title="review" onClose={() => setShowReviewModal(false)} show={showReviewModal}>
+                    <ReviewForm numComments={aBook.numComments} oldRating={aBook.rating} bookTitle={aBook.title} closeModal={closeReviewModalHandler} />
+                  </ReviewModal>
                 </div>
               </div >
             </>
