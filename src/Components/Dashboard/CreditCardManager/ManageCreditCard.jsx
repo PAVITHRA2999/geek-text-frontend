@@ -36,7 +36,7 @@ export const ManageCreditCard = (props) => {
 		console.log(token);
 		const baseURL = {
 			dev: 'http://localhost:5000/api/managing-credit-cardd',
-			prod: 'http://lea-geek-text.herokuapp.com/api/managing-credit-cardd',
+			prod: 'https://lea-geek-text.herokuapp.com/api/managing-credit-cardd',
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -104,7 +104,7 @@ export const ManageCreditCard = (props) => {
 
 		const baseURL = {
 			dev: 'http://localhost:5000/api/testing-deleteCC',
-			prod: 'http://lea-geek-text.herokuapp.com/api/testing-deleteCC',
+			prod: 'https://lea-geek-text.herokuapp.com/api/testing-deleteCC',
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

@@ -37,7 +37,7 @@ export const ManageShippingAddress = () => {
 		const token = localStorage.getItem('token');
 		const baseURL = {
 			dev: 'http://localhost:5000/api/managing-shipping-adress',
-			prod: 'http://lea-geek-text.herokuapp.com/api/managing-shipping-adress',
+			prod: 'https://lea-geek-text.herokuapp.com/api/managing-shipping-adress',
 		};
 
 		const url =
@@ -85,7 +85,7 @@ export const ManageShippingAddress = () => {
 
 		const baseURL = {
 			dev: 'http://localhost:5000/api/deleting-shipping-adress',
-			prod: 'http://lea-geek-text.herokuapp.com/api/deleting-shipping-adress',
+			prod: 'https://lea-geek-text.herokuapp.com/api/deleting-shipping-adress',
 		};
 
 		const url =

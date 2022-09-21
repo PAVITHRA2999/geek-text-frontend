@@ -78,7 +78,7 @@ export const UpdateShippingAddress = () => {
 
 			const baseURL = {
 				dev: 'http://localhost:5000/api/updating-shipping-adress',
-				prod: 'http://lea-geek-text.herokuapp.com/api/updating-shipping-adress',
+				prod: 'https://lea-geek-text.herokuapp.com/api/updating-shipping-adress',
 			};
 			const url =
 				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
