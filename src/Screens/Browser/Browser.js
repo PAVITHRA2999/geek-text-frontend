@@ -172,13 +172,13 @@ const Browser = ({ match }) => {
         return <Loading />;
     else {
         return (
-            <>
+            <><div className='screen screen-h-padding browser-screen'>
                 {
                     error ? (
-                        <h2>{error}</h2>
+                        <h2 className='centered_header'>{error}</h2>
                     ) : (
 
-                        <div className='screen screen-h-padding browser-screen'>
+                        <>
                             <h2 className='centered_header'>Top Picks</h2>
 
                             <div className='nav browser-nav'>
@@ -294,9 +294,10 @@ const Browser = ({ match }) => {
                                     ></i>
                                 </div>
                             </div>
-                        </div>
+                        </>
                     )
                 }
+            </div>
             </>
         );
     }

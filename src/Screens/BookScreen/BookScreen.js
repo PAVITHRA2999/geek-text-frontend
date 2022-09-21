@@ -173,7 +173,7 @@ const BookScreen = ({ match, history }) => {
     return (<div className="middle-upper-section">
       <div className="price_qty_container">
         <div className="price">
-          <span>${parseFloat(book.price).toFixed(2)}</span>
+          <span>${parseFloat((book.price) || 0).toFixed(2)}</span>
         </div>
         <CustomSelect
           className="book-details-qty"
@@ -220,12 +220,13 @@ const BookScreen = ({ match, history }) => {
         <div className="nav-bottom add-to-cart-nav">
           <AddToCart book={aBook} />
         </div>
-        {error ? (
-          <h2>{error}</h2>
-        ) :
-          (
-            <>
-              <div className="screen screen-h-padding">
+        <div className="screen screen-h-padding">
+          {error ? (
+            <h2>{error}</h2>
+          ) :
+            (
+              <>
+
                 <Notification
                   notify={notify}
                   setNotify={setNotify}
@@ -330,10 +331,11 @@ const BookScreen = ({ match, history }) => {
                     <ReviewForm numComments={aBook.numComments} oldRating={aBook.rating} bookTitle={aBook.title} closeModal={closeReviewModalHandler} />
                   </ReviewModal>
                 </div>
-              </div >
-            </>
-          )
-        }
+
+              </>
+            )
+          }
+        </div >
       </>
     );
   }
