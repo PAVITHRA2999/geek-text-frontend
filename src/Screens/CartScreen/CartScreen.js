@@ -129,7 +129,7 @@ const CartScreen = (props) => {
     // TODO: Database update: add books to user's purchased books
     const baseURL = {
       dev: 'http://localhost:5000/books/purchase/',
-      prod: 'https://lea-geek-text.herokuapp.com/books/purchase/',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books/purchase/`,
     };
     const url =
       process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

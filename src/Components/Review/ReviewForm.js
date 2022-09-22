@@ -65,7 +65,7 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
       BlankValidation();
       const baseURL = {
         dev: 'http://localhost:5000/books/review/',
-        prod: 'https://lea-geek-text.herokuapp.com/books/review/',
+        prod: `${process.env.REACT_APP_BACKEND_URL}/books/review/`,
       };
       const url =
         process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

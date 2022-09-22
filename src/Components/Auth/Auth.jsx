@@ -85,7 +85,7 @@ const Auth = () => {
 		e.preventDefault();
 		const baseURL = {
 			dev: 'http://localhost:5000/api/signin',
-			prod: 'https://lea-geek-text.herokuapp.com/api/signin',
+			prod: `${process.env.REACT_APP_BACKEND_URL}/api/signin`,
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -114,7 +114,7 @@ const Auth = () => {
 		e.preventDefault();
 		const baseURL = {
 			dev: 'http://localhost:5000/api/signup',
-			prod: 'https://lea-geek-text.herokuapp.com/api/signup',
+			prod: `${process.env.REACT_APP_BACKEND_URL}/api/signup`,
 		};
 		const url =
 			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

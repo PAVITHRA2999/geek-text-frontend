@@ -6,7 +6,7 @@ import axios from "axios";
 export const addToWishlist = (id) => async (dispatch, getState) => {
     const baseURL = {
         dev: 'http://localhost:5000/books',
-        prod: 'https://lea-geek-text.herokuapp.com/books',
+        prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
     };
     const url =
         process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

@@ -7,7 +7,7 @@ export const getBooks = () => async (dispatch) => {
     dispatch({ type: actionTypes.GET_BOOKS_REQUEST });
     const baseURL = {
       dev: 'http://localhost:5000/books',
-      prod: 'https://lea-geek-text.herokuapp.com/books',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
     };
     const url =
       process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -34,7 +34,7 @@ export const getSortedBooks = (sort, filter, page, perPage) => async (dispatch) 
     dispatch({ type: actionTypes.GET_SORTED_BOOKS_REQUEST });
     const baseURL = {
       dev: 'http://localhost:5000/books',
-      prod: 'https://lea-geek-text.herokuapp.com/books',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
     };
     const url =
       process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -75,7 +75,7 @@ export const getBookDetails = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_BOOK_DETAILS_REQUEST });
     const baseURL = {
       dev: 'http://localhost:5000/books',
-      prod: 'https://lea-geek-text.herokuapp.com/books',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
     };
     const url =
       process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
