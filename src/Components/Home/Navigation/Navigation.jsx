@@ -1,5 +1,6 @@
 import React from 'react';
-import Logo from '../../../Assets/geek-text-logo.png';
+import TextLogo from '../../../Assets/text-logo.png';
+import IconLogo from '../../../Assets/icon-logo.png';
 import './Navigation.css';
 import {Link} from 'react-router-dom';
 import Popup from 'reactjs-popup';
@@ -17,8 +18,9 @@ export const Navigation = () => {
 		<div className='nav nav-top'>
 			<div className='nav-left'>
 				<Link to='/' className='Router_Link'>
-					<img className='resize' src={Logo} alt='logo' />
-					<h1 className='inlineheader app-name'>Geek Text</h1>
+					<img className='logo text-logo' src={TextLogo} alt='logo' />
+					<img className='logo icon-logo' src={IconLogo} alt='logo' />
+					{/* <h1 className='inlineheader app-name'>Geek Text</h1> */}
 				</Link>
 			</div>
 

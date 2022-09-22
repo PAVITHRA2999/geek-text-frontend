@@ -27,10 +27,6 @@
 	align-items: center !important;
 }
 
-.logo {
-	font-size: 2.5rem !important;
-}
-
 .header {
 	margin-left: 1rem;
 	color: var(--primary-color);
@@ -68,8 +64,32 @@
 	height: auto;
 }
 
+.logo {
+	/* font-size: 2.5rem !important; */
+	margin-left: 1rem;
+	width: auto;
+}
+
+.text-logo {
+	height: 27px;
+	display: flex;
+	margin-left: 1rem;
+}
+
+.icon-logo {
+	display: none;
+	height: 34px;
+	margin-left: 0.97rem;
+}
+
 @media (max-width: 760px) {
 	.inlineheader {
+		display: none;
+	}
+	.logo {
+		display: flex;
+	}
+	.text-logo {
 		display: none;
 	}
 }
