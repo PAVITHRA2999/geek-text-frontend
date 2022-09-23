@@ -132,7 +132,7 @@ export const UpdateCreditCard = () => {
 			testingVars();
 			const baseURL = {
 				dev: 'http://localhost:5000/api/updating-credit-card',
-				prod: 'https://lea-geek-text.herokuapp.com/api/updating-credit-card',
+				prod: `${process.env.REACT_APP_BACKEND_URL}/api/updating-credit-card`,
 			};
 
 			const url =

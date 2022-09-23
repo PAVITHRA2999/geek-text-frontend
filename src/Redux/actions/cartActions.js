@@ -5,7 +5,7 @@ import axios from "axios";
 export const addToCart = (id, qty, saved) => async (dispatch, getState) => {
     const baseURL = {
         dev: 'http://localhost:5000/books',
-        prod: 'https://lea-geek-text.herokuapp.com/books',
+        prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
     };
     const url =
         process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -40,7 +40,7 @@ export const getCartContent = () => async (dispatch, getState) => {
         const token = localStorage.getItem('token');
         const baseURL = {
             dev: 'http://localhost:5000/api/cart',
-            prod: 'https://lea-geek-text.herokuapp.com/api/cart',
+            prod: `${process.env.REACT_APP_BACKEND_URL}/api/cart`,
         };
 
         const url =

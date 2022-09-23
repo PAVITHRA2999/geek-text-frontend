@@ -64,19 +64,16 @@ export const NewShippingAddress = () => {
 
 	const UpdateInfo = (e) => {
 		e.preventDefault();
-
 		try {
 			BlankValidation();
 			const baseURL = {
 				dev: 'http://localhost:5000/api/insert-shipping-address',
-				prod: 'https://lea-geek-text.herokuapp.com/api/insert-shipping-address',
+				prod: `${process.env.REACT_APP_BACKEND_URL}/api/insert-shipping-address`,
 			};
 
 			const url =
 				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 			const form_data = new FormData();
-
-			// street, cardNumber, expirationMonth, expirationYear, securityNumber
 
 			form_data.append('street', street);
 			form_data.append('city', city);

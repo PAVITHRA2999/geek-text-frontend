@@ -5,7 +5,6 @@ import {useHistory} from 'react-router-dom';
 
 export const DropDownMenu = () => {
 	const SignOut = () => {
-		console.log('signed out');
 		localStorage.removeItem('token');
 		window.location = '/';
 	};

@@ -9,7 +9,7 @@ export const getBooksByAuthor = (id) => async (dispatch) => {
     dispatch({ type: actionTypes.GET_AUTHOR_BOOKS_REQUEST });
     const baseURL = {
       dev: 'http://localhost:5000/authors/getbooksby/',
-      prod: 'https://lea-geek-text.herokuapp.com/authors/getbooksby/',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/authors/getbooksby/`,
     };
     const url =
       process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;

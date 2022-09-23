@@ -31,7 +31,6 @@ export const UpdateShippingAddress = () => {
 
 	useEffect(() => {
 		const data = JSON.parse(localStorage.getItem('shippingAdress'));
-		console.log(data.data);
 		setStreet(data.data.street);
 		setCity(data.data.city);
 		setState(data.data.state);
@@ -78,7 +77,7 @@ export const UpdateShippingAddress = () => {
 
 			const baseURL = {
 				dev: 'http://localhost:5000/api/updating-shipping-adress',
-				prod: 'https://lea-geek-text.herokuapp.com/api/updating-shipping-adress',
+				prod: `${process.env.REACT_APP_BACKEND_URL}/api/updating-shipping-adress`,
 			};
 			const url =
 				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
@@ -92,7 +91,6 @@ export const UpdateShippingAddress = () => {
 			form_data.append('country', country);
 			form_data.append('id', id);
 			const token = localStorage.getItem('token');
-			console.log('we are firing this');
 
 			axios
 				.post(url, form_data, {
