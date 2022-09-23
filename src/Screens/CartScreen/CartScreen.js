@@ -128,13 +128,13 @@ const CartScreen = (props) => {
   const checkout = (id, qty) => {
     // TODO: Database update: add books to user's purchased books
     const baseURL = {
-      dev: 'http://localhost:5000/books/purchase/',
-      prod: `${process.env.REACT_APP_BACKEND_URL}/books/purchase/`,
+      dev: 'http://localhost:5000/books/purchase',
+      prod: `${process.env.REACT_APP_BACKEND_URL}/books/purchase`,
     };
     const url =
       process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 
-    axios.patch(`${url}${id}`, {
+    axios.patch(`${url}/${id}`, {
       sold: qty,
     });
     dispatch(removeFromCart(id));
@@ -350,11 +350,14 @@ const CartScreen = (props) => {
             <button onClick={() => checkoutHandler()} className="btn btn-primary btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
               CHECKOUT
             </button>
-            <Link to="/auth">
-              <button className="btn btn-light btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
-                LOG IN
-              </button>
-            </Link>
+            {
+              !token &&
+              <Link to="/auth">
+                <button className="btn btn-light btn-checkout btn-checkout-top" disabled={getCartCount() === 0}>
+                  LOG IN
+                </button>
+              </Link>
+            }
           </div>}
         {/* <div className="filler-space"></div> */}
         {savedForLater.length !== 0 &&

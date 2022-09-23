@@ -101,7 +101,7 @@ export const UpdatePersonalInfo = () => {
 			BlankValidation();
 
 			const baseURL = {
-				dev: 'http://localhost:5000//api/personal-info',
+				dev: 'http://localhost:5000/api/personal-info',
 				prod: `${process.env.REACT_APP_BACKEND_URL}/api/personal-info`,
 			};
 
