@@ -23,18 +23,8 @@
 .rating-stars {
 	margin-bottom: 1rem;
 }
-.review-textarea {
-}
 .review-textarea:focus-visible {
-	/* border: none;
-	outline: var(--primary-color) solid 1px;
-	outline-offset: none; */
 	border-color: var(--primary-color);
-}
-.review-textarea:focus {
-	/* border: none;
-	outline: var(--primary-color) solid 1px;
-	outline-offset: none; */
 }
 .review-textarea:active,
 .review-textarea:focus {
@@ -65,8 +55,6 @@ textarea:focus {
 	flex-direction: row;
 	padding-bottom: 2rem;
 	padding-top: 2rem;
-	/* padding-left: 10rem;
-	padding-right: 10rem; */
 }
 
 .container__left {
@@ -167,6 +155,9 @@ textarea:focus {
 	font-style: italic;
 	font-size: small;
 	margin-bottom: 8px;
+}
+.author__heading a {
+	color: var(--primary-color);
 }
 .author__heading a:hover {
 	text-decoration: underline;

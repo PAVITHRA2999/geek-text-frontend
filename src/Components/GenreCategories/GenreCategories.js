@@ -26,32 +26,32 @@ const GenreCategories = () => {
     const autobiography = useRef(null);
     const fantasy = useRef(null);
     const nonFict = useRef(null);
-    const humour = useRef(null);
+    const humor = useRef(null);
     const poetry = useRef(null);
 
     const [autobiographyWidth, setAutobiographyWidth] = useState(0);
     const [fantasyWidth, setFantasyWidth] = useState(0);
     const [nonFictWidth, setNonFictWidth] = useState(0);
-    const [humourWidth, setHumourWidth] = useState(0);
+    const [humorWidth, setHumorWidth] = useState(0);
     const [poetryWidth, setPoetryWidth] = useState(0);
 
     const [autobiographyOffsetLeft, setAutobiographyOffsetLeft] = useState(0);
     const [fantasyOffsetLeft, setFantasyOffsetLeft] = useState(0);
     const [nonFictOffsetLeft, setNonFictOffsetLeft] = useState(0);
-    const [humourOffsetLeft, setHumourOffsetLeft] = useState(0);
+    const [humorOffsetLeft, setHumorOffsetLeft] = useState(0);
     const [poetryOffsetLeft, setPoetryOffsetLeft] = useState(0);
 
     useLayoutEffect(() => {
         setAutobiographyWidth(autobiography.current.clientWidth);
         setFantasyWidth(fantasy.current.clientWidth);
         setNonFictWidth(nonFict.current.clientWidth);
-        setHumourWidth(humour.current.clientWidth);
+        setHumorWidth(humor.current.clientWidth);
         setPoetryWidth(poetry.current.clientWidth);
 
         setAutobiographyOffsetLeft(autobiography.current.offsetLeft);
         setFantasyOffsetLeft(fantasy.current.offsetLeft);
         setNonFictOffsetLeft(nonFict.current.offsetLeft);
-        setHumourOffsetLeft(humour.current.offsetLeft);
+        setHumorOffsetLeft(humor.current.offsetLeft);
         setPoetryOffsetLeft(poetry.current.offsetLeft);
     }, []);
 
@@ -59,7 +59,7 @@ const GenreCategories = () => {
         if (isOverflown(autobiographyOffsetLeft, autobiographyWidth)) return 1;
         else if (isOverflown(fantasyOffsetLeft, fantasyWidth)) return 2;
         else if (isOverflown(nonFictOffsetLeft, nonFictWidth)) return 3;
-        else if (isOverflown(humourOffsetLeft, humourWidth)) return 4;
+        else if (isOverflown(humorOffsetLeft, humorWidth)) return 4;
         else if (isOverflown(poetryOffsetLeft, poetryWidth)) return 5;
         else return 6;
     };
@@ -77,7 +77,7 @@ const GenreCategories = () => {
         >
             <div className='carousel-item'>
                 <div className='banner-item'>
-                    <Link to={`/browse/Novel`}>
+                    <Link to={`/browse/Novel/getByTS`}>
                         <div className='banner-icon'>
                             <TheaterComedyOutlinedIcon fontSize='inherit' />
                             <p>Novel</p>
@@ -87,7 +87,7 @@ const GenreCategories = () => {
             </div>
             <div className='carousel-item'>
                 <div className='banner-item'>
-                    <Link to={`/browse/Autobiography`}>
+                    <Link to={`/browse/Autobiography/getByTS`}>
                         <div className='banner-icon' ref={autobiography}>
                             <PortraitOutlinedIcon fontSize='inherit' />
                             <p>Autobiography</p>
@@ -97,7 +97,7 @@ const GenreCategories = () => {
             </div>
             <div className='carousel-item'>
                 <div className='banner-item'>
-                    <Link to={`/browse/Fantasy`}>
+                    <Link to={`/browse/Fantasy/getByTS`}>
                         <div className='banner-icon' ref={fantasy}>
                             <FortOutlinedIcon fontSize='inherit' />
                             <p>Fantasy</p>
@@ -107,7 +107,7 @@ const GenreCategories = () => {
             </div>
             <div className='carousel-item'>
                 <div className='banner-item'>
-                    <Link to={`/browse/Non-Fiction`}>
+                    <Link to={`/browse/Non-Fiction/getByTS`}>
                         <div className='banner-icon' ref={nonFict}>
                             <BiotechOutlinedIcon fontSize='inherit' />
                             <p>Non-Fiction</p>
@@ -117,17 +117,17 @@ const GenreCategories = () => {
             </div>
             <div className='carousel-item'>
                 <div className='banner-item'>
-                    <Link to={`/browse/Humour`}>
-                        <div className='banner-icon' ref={humour}>
+                    <Link to={`/browse/Humor/getByTS`}>
+                        <div className='banner-icon' ref={humor}>
                             <SentimentVerySatisfiedOutlinedIcon fontSize='inherit' />
-                            <p>Humour</p>
+                            <p>Humor</p>
                         </div>
                     </Link>
                 </div>
             </div>
             <div className='carousel-item'>
                 <div className='banner-item'>
-                    <Link to={`/browse/Poetry`}>
+                    <Link to={`/browse/Poetry/getByTS`}>
                         <div className='banner-icon' ref={poetry}>
                             <HistoryEduOutlinedIcon fontSize='inherit' />
                             <p>Poetry</p>

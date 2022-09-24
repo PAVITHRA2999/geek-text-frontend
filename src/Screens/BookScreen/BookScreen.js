@@ -161,6 +161,9 @@ const BookScreen = ({ match, history }) => {
   const commentsLength = ((book || {}).comments || {}).length;
   const arr = Array.from({ length: 100 }, (_, index) => index + 1);
   const items = arr.reduce((a, v) => ({ ...a, [v]: v }), {});
+  const releaseDate = (book || {}).releaseDate;
+  const date = new Date(releaseDate);
+  const publicationDate = date.toDateString().split(' ').slice(1).join(' '); // remove day of the week from date
 
 
   const AddToCart = ({ book }) => {
@@ -191,6 +194,7 @@ const BookScreen = ({ match, history }) => {
       heading: 'Product Details',
       content: <ProductDetails
         publisher={publisher}
+        publicationDate={publicationDate}
         isbn={isbn}
         edition={edition}
         genre={genre} />
@@ -284,6 +288,7 @@ const BookScreen = ({ match, history }) => {
                         </div>
                         <ProductDetails
                           publisher={publisher}
+                          publicationDate={publicationDate}
                           isbn={isbn}
                           edition={edition}
                           genre={genre}

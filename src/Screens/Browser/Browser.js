@@ -13,11 +13,11 @@ import ItemsPerPageCompressed from '../../Components/Browsing/ItemsPerPageCompre
 import ListContent from '../../Components/Browsing/ListContent';
 import Loading from '../../Components/Loading/Loading';
 
-const Browser = ({ match }) => {
+const Browser = ({ match, history }) => {
 
-    const genres = {
+    const GENRES = {
         All: null,
-        Humour: '605679b341e30718cfa06143',
+        Humor: '605679b341e30718cfa06143',
         Novel: '6057548c7cb1dc2899337811',
         Fiction: '60316e2ceda4ea0a72158abf',
         'Non-Fiction': '6047f6de2b677f17622ae060',
@@ -26,33 +26,7 @@ const Browser = ({ match }) => {
         Autobiography: '6056918441e30718cfa06152',
     };
 
-    const [page, setPage] = useState(1);
-    const [perPage, setPerPage] = useState(10);
-    const [filter, setFilter] = useState(match.params
-        ? { genre: genres[match.params.id] }
-        : {});
-    const parameters = match.params;
-    const [currSort, setCurrSort] = useState('Top Sellers');
-    const [currFilter, setCurrFilter] = useState(parameters ? (parameters.id ? parameters.id : 'All') : 'All');
-    const [genreDD, setGenreDD] = useState(parameters ? (parameters.id ? parameters.id : 'All') : 'All');
-    const [ratingDD, setRatingDD] = useState(1);
-    const [sortType, setSortType] = useState('getByTS');
-    const [closeAccordion, setCloseAccordion] = useState(false);
-
-    // load books
-    const dispatch = useDispatch();
-    const sorted = useSelector((state) => state.getSortedBooks);
-    const { loading, error, sortedBooks } = sorted;
-
-    useEffect(() => {
-        dispatch(getSortedBooks(sortType, filter, page, perPage));
-    }, [dispatch, sortType, filter, page, perPage]);
-
-    const mybooks = (sortedBooks || {}).data || [];
-    const currBooks = (sortedBooks || {}).currBooks || [];
-    const lastPage = (sortedBooks || {}).lastPage || 1;
-
-    const ratings = {
+    const RATINGS = {
         '1 & up': 1,
         '2 & up': 2,
         '3 & up': 3,
@@ -60,12 +34,12 @@ const Browser = ({ match }) => {
         '5 ': 5,
     };
 
-    const pages = {
+    const PAGES = {
         10: 10,
         20: 20,
     };
 
-    const sortTypes = {
+    const SORT_TYPES = {
         'Top Sellers': 'getByTS',
         'Newest to Oldest': 'getByRDNO',
         'Oldest to Newest': 'getByRDON',
@@ -76,12 +50,50 @@ const Browser = ({ match }) => {
         'Rating - High to Low': 'getByRatingHL',
         'Rating - Low to High': 'getByRatingLH',
         'Author - A to Z': 'getByAuthorAZ',
-        'Autho - Z to A': 'getByAuthorZA',
+        'Author - Z to A': 'getByAuthorZA',
     };
 
     const getKeyByValue = (object, value) => {
         return Object.keys(object).find((key) => object[key] === value);
     };
+
+    const parameters = match.params;
+    const paramFilter = (parameters || {}).filter;
+    const paramSort = (parameters || {}).sort;
+
+    // pages
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(10);
+
+    // filter
+    const nonNumericFilter = isNaN(paramFilter);
+
+    const [filter, setFilter] = useState(paramFilter ? (nonNumericFilter ? (paramFilter === "All" ? {} : { genre: GENRES[paramFilter] }) : ({ rating: { $gte: parseInt(paramFilter) } })) : {});
+    const [currFilter, setCurrFilter] = useState(paramFilter ? (!nonNumericFilter ? (`Rating - ${Object.keys(RATINGS)[parseInt(paramFilter) - 1]}`) : paramFilter) : 'All');
+    const [filterType, setFilterType] = useState(paramFilter ? (nonNumericFilter ? "byGenre" : "byRating") : "byGenre");
+    const [genreDD, setGenreDD] = useState(paramFilter ? (nonNumericFilter ? paramFilter : 'All') : 'All');
+    const [ratingDD, setRatingDD] = useState(paramFilter ? (!nonNumericFilter ? paramFilter : 1) : 1);
+
+    // sort
+    const [currSort, setCurrSort] = useState(paramSort ? (paramSort ? getKeyByValue(SORT_TYPES, paramSort) : 'Top Sellers') : 'Top Sellers');
+    const [sortType, setSortType] = useState(parameters ? (paramSort ? paramSort : 'getByTS') : 'getByTS');
+
+    // accordion
+    const [closeAccordion, setCloseAccordion] = useState(false);
+
+    // load books
+    const dispatch = useDispatch();
+    const sorted = useSelector((state) => state.getSortedBooks);
+    const { loading, error, sortedBooks } = sorted;
+    useEffect(() => {
+        dispatch(getSortedBooks(sortType, filter, page, perPage));
+    }, [dispatch, sortType, filter, page, perPage, parameters, filterType]);
+
+    const mybooks = (sortedBooks || {}).data || [];
+    const currBooks = (sortedBooks || {}).currBooks || [];
+    const lastPage = (sortedBooks || {}).lastPage || 1;
+
+
 
 
     const goNext = () => {
@@ -109,32 +121,38 @@ const Browser = ({ match }) => {
     const handleRatingChange = (event) => {
         let val = parseInt(event.target.value);
         let f = { rating: { $gte: val } };
-
+        let r = event.target.value;
         setPage(1);
         setGenreDD('All');
-        setRatingDD(event.target.value);
-        setCurrFilter(`Rating - ${Object.keys(ratings)[val - 1]}`);
+        setRatingDD(r);
+        setCurrFilter(`Rating - ${Object.keys(RATINGS)[val - 1]}`);
         handleCloseAccordionCallback();
         setFilter(f);
+        setFilterType("byRating");
+        history.push(`/browse/${r}/${sortType}`);
     };
 
     const handleGenreChange = (event) => {
         let g = event.target.value;
-        let f = genres[g] ? { genre: genres[g] } : {};
+        let f = GENRES[g] ? { genre: GENRES[g] } : {};
         setPage(1);
         setGenreDD(g);
         setRatingDD(1);
         setCurrFilter(g);
         handleCloseAccordionCallback();
         setFilter(f);
+        setFilterType("byGenre");
+        history.push(`/browse/${g}/${sortType}`);
     };
 
     const handleSortTypeChange = (event) => {
         let s = event.target.value;
+        let v = getKeyByValue(SORT_TYPES, s);
         setPage(1);
-        setCurrSort(getKeyByValue(sortTypes, s));
+        setCurrSort(v);
         handleCloseAccordionCallback();
         setSortType(s);
+        history.push(`/browse/${filterType === "byGenre" ? genreDD : ratingDD}/${s}`);
     };
 
     const handleCloseAccordionCallback = () => {
@@ -153,8 +171,8 @@ const Browser = ({ match }) => {
                     currGenre={genreDD}
                     currRating={ratingDD}
                     handleGenreChange={handleGenreChange}
-                    genres={genres}
-                    ratings={ratings}
+                    genres={GENRES}
+                    ratings={RATINGS}
                     handleRatingChange={handleRatingChange}
                 />
             ),
@@ -164,7 +182,7 @@ const Browser = ({ match }) => {
             heading: <SortHeading sort={currSort} />,
             content: (
                 <ListContent
-                    items={sortTypes}
+                    items={SORT_TYPES}
                     onClick={handleSortTypeChange}
                 />
             ),
@@ -196,7 +214,7 @@ const Browser = ({ match }) => {
                                             id='select'
                                             value={perPage}
                                             handleChange={handlePerPageChange}
-                                            items={pages}
+                                            items={PAGES}
                                         />
 
                                         <CustomSelect
@@ -206,7 +224,7 @@ const Browser = ({ match }) => {
                                             id='select-rating'
                                             value={ratingDD}
                                             handleChange={handleRatingChange}
-                                            items={ratings}
+                                            items={RATINGS}
                                         />
 
                                         <CustomSelect
@@ -216,7 +234,7 @@ const Browser = ({ match }) => {
                                             id='select-genre'
                                             value={genreDD}
                                             handleChange={handleGenreChange}
-                                            items={genres}
+                                            items={GENRES}
                                         />
                                         <CustomSelect
                                             inputLabel='Sort by'
@@ -225,7 +243,7 @@ const Browser = ({ match }) => {
                                             id='select-sort'
                                             value={sortType || 'getByTS'}
                                             handleChange={handleSortTypeChange}
-                                            items={sortTypes}
+                                            items={SORT_TYPES}
                                         />
                                     </div>
                                     <div className='browser-buttons'>
