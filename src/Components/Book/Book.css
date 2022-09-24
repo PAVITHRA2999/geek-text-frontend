@@ -19,7 +19,7 @@
 }
 
 .book__author__link {
-	color: rgb(122, 124, 126);
+	color: var(--primary-color);
 	text-decoration: none;
 	display: inline-block;
 }

@@ -22,7 +22,7 @@ margin-bottom: 1rem;
 	font-style: italic;
 }
 .cartItem__author__link {
-	color: var(--gray-color);
+	color: var(--primary-color);
 	text-decoration: none;
 	display: inline-block;
 }

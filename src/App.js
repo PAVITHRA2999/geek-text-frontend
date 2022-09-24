@@ -106,7 +106,7 @@ function App() {
             <CartScreen />
           </Route>
 
-          <Route exact path='/browse/:id?' component={Browser} />
+          <Route exact path='/browse/:filter?/:sort?' component={Browser} />
           <Route exact path='/book/:id' component={BookScreen} />
           <Route exact path='/wishlist/:id?' component={WishlistScreen} />
           <Route exact path='/authorbooks/:id' component={AuthorBooksScreen} />
