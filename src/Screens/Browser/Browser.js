@@ -68,7 +68,7 @@ const Browser = ({ match, history }) => {
     // filter
     const nonNumericFilter = isNaN(paramFilter);
 
-    const [filter, setFilter] = useState(paramFilter ? (nonNumericFilter ? { genre: GENRES[paramFilter] } : { rating: { $gte: parseInt(paramFilter) } }) : {});
+    const [filter, setFilter] = useState(paramFilter ? (nonNumericFilter ? (paramFilter === "All" ? {} : { genre: GENRES[paramFilter] }) : ({ rating: { $gte: parseInt(paramFilter) } })) : {});
     const [currFilter, setCurrFilter] = useState(paramFilter ? (!nonNumericFilter ? (`Rating - ${Object.keys(RATINGS)[parseInt(paramFilter) - 1]}`) : paramFilter) : 'All');
     const [filterType, setFilterType] = useState(paramFilter ? (nonNumericFilter ? "byGenre" : "byRating") : "byGenre");
     const [genreDD, setGenreDD] = useState(paramFilter ? (nonNumericFilter ? paramFilter : 'All') : 'All');
@@ -85,7 +85,6 @@ const Browser = ({ match, history }) => {
     const dispatch = useDispatch();
     const sorted = useSelector((state) => state.getSortedBooks);
     const { loading, error, sortedBooks } = sorted;
-
     useEffect(() => {
         dispatch(getSortedBooks(sortType, filter, page, perPage));
     }, [dispatch, sortType, filter, page, perPage, parameters, filterType]);
