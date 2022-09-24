@@ -179,12 +179,51 @@
 	#remaining-height {
 		--this-vh: calc(var(--my-vh, 1vh) * 100);
 		height: calc(
-			100vh - (110px + 50px + 100px + 42px)
+			100vh - (100px + 50px + 100px + 42px)
 		); /* Fallback for browsers that do not support Custom Properties */
 		height: calc(var(--this-vh) - (100px + 50px + 100px + 42px));
 	}
 
 	#bottom-height {
 		height: 100px;
+	}
+}
+
+@media (max-height: 480px) {
+	#remaining-height {
+		--this-vh: calc(var(--my-vh, 1vh) * 100);
+		height: calc(
+			100vh - (95px + 50px + 100px + 42px)
+		); /* Fallback for browsers that do not support Custom Properties */
+		height: calc(var(--this-vh) - (95px + 50px + 100px + 42px));
+	}
+
+	#bottom-height {
+		height: 95px;
+	}
+}
+
+@media (max-height: 460px) {
+	#fixed-height-1 {
+		height: 36px;
+		margin-bottom: 4px;
+	}
+
+	#fixed-height-2 {
+		height: 36px;
+		margin-bottom: 4px;
+		font-size: 14px;
+	}
+
+	#remaining-height {
+		--this-vh: calc(var(--my-vh, 1vh) * 100);
+		height: calc(
+			100vh - (95px + 40px + 40px + 42px)
+		); /* Fallback for browsers that do not support Custom Properties */
+		height: calc(var(--this-vh) - (95px + 40px + 40px + 42px));
+	}
+
+	#bottom-height {
+		height: 95px;
 	}
 }
