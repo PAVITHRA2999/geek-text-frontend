@@ -1,70 +1,57 @@
-# Getting Started with Create React App
+# Geek Text
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Geek Text, online web application bookstore built using the MERN stack.
 
-## Available Scripts
+This web app was developed as a group project for CEN 4010 Software Engineering.
 
-In the project directory, you can run:
+Visit [geek-text.ga](https://www.geek-text.ga/) to see it live.
 
-### `npm start`
+<!--  
+<img alt="demo" src="demo.gif" width="400" height="auto"/>
+-->
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Features
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+| <div style="width:130px">Feature</div>     | Description | <div style="width:230px">Benefit</div> |
+| ----------- | ----------- | ----------- |
+| Book Browsing and Sorting | Allow user to browse books by genre, top sellers in our book store, and book rating with pagination based on 10 or 20 results. Allow Sort by book title, author, price, book rating, and release date. | Users will have a simple and enjoyable way to discover new books and Authors and sort results. |
+| Profile Management | Users can manage their login credentials (ID, password), personal information (name, email address, home address), nickname for book rating and commenting, credit card information (multiple), and shipping address (multiple). Physical addresses, email addresses, and credit card info should be verified as valid. Passwords must meet our current security standards | Users can create and maintain their profiles rather than enter in their information each time they order|
+| Shopping Cart | Users can easily access their cart from any page, view the same information displayed in the book list, change the quantity, remove it from their cart or save it for later. A subtotal for all items in their shopping cart should be displayed. Items saved for later should appear below the cart items. | Users can manage items in a shopping cart for immediate or future Purchase |
+| Book Details | Display book name, book cover (which can be enlarged when clicked), author and bio, book description, genre, publishing info (publisher, release date, etc.), book rating, and comments. Hyperlink author’s name to a list of other books by the same author. | Users can see informative and enticing details about a book |
+| Book Rating and Commenting | For Rating: Use a five-star rating system. Users can rate any book. For Commenting: A single comment should be limited to the number of characters, which can fit within half the browser window (so that there are at least two comments which can appear at the same time). | Users can rate AND comment on books they’ve purchased to help others in their selection |
+| Wishlist Management | The wishlist section shows the items that have been added to the list by the user and each item can be added to the cart. Items can be added to the list from the item details page, browser, and cart. Items can be removed from the list in this section. | Users can have a wishlist which can have books moved to the shopping cart. |
 
-### `npm test`
+## Running Locally
+First, make sure the backend is already running locally and a server connection has been established successfully. For instructions on how to run the backend locally please go to [geek-text-backend](https://github.com/LeanetAlfonso/geek-text-backend).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Clone the repo
 
-### `npm run build`
+```
+git clone https://github.com/LeanetAlfonso/geek-text-frontend.git
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Change directory
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+cd geek-text-frontend
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Install dependencies
 
-### `npm run eject`
+```
+npm install
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Add environment variable
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+touch .env
+echo REACT_APP_BACKEND_URL={enter_backend_url_here} >> .env
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Run app
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+npm start
+```
