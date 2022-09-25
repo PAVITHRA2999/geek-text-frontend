@@ -94,10 +94,13 @@ export const ManagePersonalInfo = () => {
 								<b>Nickname: </b>
 								<p>{nickname}</p>
 							</div>
-							<div className='inLine'>
-								<b>Home Address: </b>
-								<p>{homeAddress}</p>
-							</div>
+
+							{homeAddress && (
+								<div className='inLine'>
+									<b>Home Address: </b>
+									<p>{homeAddress}</p>
+								</div>
+							)}
 						</div>
 					</div>
 				</form>

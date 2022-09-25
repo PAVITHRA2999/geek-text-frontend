@@ -1,17 +1,10 @@
 import * as actionTypes from "../constants/wishlistConstants";
-import axios from "axios";
 
 
 //add item to wishlist
 export const addToWishlist = (id) => async (dispatch, getState) => {
-    const baseURL = {
-        dev: 'http://localhost:5000/books',
-        prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
-    };
-    const url =
-        process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
-    const { data } = await axios.get(`${url}/${id}`);
+    const url = `/.netlify/functions/get-book-details?id=${id}`;
+    const data = await fetch(url).then((res) => res.json());
 
     dispatch({
         type: actionTypes.ADD_TO_WISHLIST,

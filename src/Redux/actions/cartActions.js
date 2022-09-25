@@ -1,16 +1,10 @@
 import * as actionTypes from "../constants/cartConstants";
-import axios from "axios";
 
 // Add a book to cart
 export const addToCart = (id, qty, saved) => async (dispatch, getState) => {
-    const baseURL = {
-        dev: 'http://localhost:5000/books',
-        prod: `${process.env.REACT_APP_BACKEND_URL}/books`,
-    };
-    const url =
-        process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 
-    const { data } = await axios.get(`${url}/${id}`);
+    const url = `/.netlify/functions/get-book-details?id=${id}`;
+    const data = await fetch(url).then((res) => res.json());
 
     dispatch({
         type: actionTypes.ADD_TO_CART,
@@ -35,25 +29,8 @@ export const addToCart = (id, qty, saved) => async (dispatch, getState) => {
 export const getCartContent = () => async (dispatch, getState) => {
     try {
         dispatch({ type: actionTypes.GET_CART_CONTENT_REQUEST });
-
-        const form_data = new FormData();
-        const token = localStorage.getItem('token');
-        const baseURL = {
-            dev: 'http://localhost:5000/api/cart',
-            prod: `${process.env.REACT_APP_BACKEND_URL}/api/cart`,
-        };
-
-        const url =
-            process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
-
-        const { data } = await axios.post(url, form_data, {
-            headers: {
-                'x-auth-token': token,
-            },
-
-        });
-
+        const url = `/.netlify/functions/get-cart-items`;
+        const data = await fetch(url).then((res) => res.json());
         dispatch({
             type: actionTypes.GET_CART_CONTENT_SUCCESS,
             payload: {

@@ -1,20 +1,14 @@
 import * as actionTypes from "../constants/authorConstants";
-import axios from "axios";
 
-//${process.env.HEROKU_DOMAIN}
 // Get a specific author from database
 export const getBooksByAuthor = (id) => async (dispatch) => {
 
   try {
     dispatch({ type: actionTypes.GET_AUTHOR_BOOKS_REQUEST });
-    const baseURL = {
-      dev: 'http://localhost:5000/authors/getbooksby/',
-      prod: `${process.env.REACT_APP_BACKEND_URL}/authors/getbooksby/`,
-    };
-    const url =
-      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 
-    const { data } = await axios.get(`${url}${id}`);
+    const url = `/.netlify/functions/get-books-by-author?id=${id}`;
+    const data = await fetch(url).then((res) => res.json());
+
     dispatch({
       type: actionTypes.GET_AUTHOR_BOOKS_SUCCESS,
       payload: data,
