@@ -33,47 +33,25 @@ export const ManageCreditCard = (props) => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
-		const baseURL = {
-			dev: 'http://localhost:5000/api/managing-credit-cardd',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/managing-credit-cardd`,
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+		const url = `/.netlify/functions/get-credit-card-info`;
 
-		axios
-			.post(url, form_data, {
-				headers: {
-					'x-auth-token': token,
-				},
-			})
-			.then((res) => {
-				setEmployees(res.data.creditCards);
-			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
-			});
+		try {
+			const data = await fetch(url, {
+				method: 'POST',
+				body: JSON.stringify({
+					formData: form_data,
+					token: token,
+				}),
+			}).then((res) => res.json());
+			setEmployees(data.creditCards);
+		} catch (err) {
+			errorHandler(
+				err && err.response && err.response.data && err.response.data.msg
+					? err.response.data.msg
+					: 'Something unexpected happened. Please try again later'
+			);
+		}
 	};
-
-	const renderHeader = () => {
-		let headerElement = [
-			'Card Holder',
-			'Card Number',
-			'Expiration Month',
-			'Expiration Year',
-			'CVC',
-			'Edit',
-			'Delete',
-		];
-
-		return headerElement.map((key, index) => {
-			return <div key={index}>{key}</div>;
-		});
-	};
-	// updating data
 
 	const updateData = (
 		cardHolder,
@@ -94,11 +72,11 @@ export const ManageCreditCard = (props) => {
 		localStorage.setItem('data', JSON.stringify({data}));
 		window.location = '/dashboard/updating-credit-card';
 	};
+
 	// Remove Credit card info.
-	const removeData = async (cardNumber) => {
+	const removeData2 = async (cardNumber) => {
 		const form_data = new FormData();
 		form_data.append('id', cardNumber);
-
 		const token = localStorage.getItem('token');
 
 		const baseURL = {
@@ -128,6 +106,34 @@ export const ManageCreditCard = (props) => {
 		const del = employees.filter(
 			(employee) => cardNumber !== employee.cardNumber
 		);
+	};
+
+	// Remove Credit card info.
+	const removeData = async (cardNumber) => {
+		const form_data = new FormData();
+		form_data.append('id', cardNumber);
+		const token = localStorage.getItem('token');
+		const url = `/.netlify/functions/delete-credit-card`;
+		const del = employees.filter(
+			(employee) => cardNumber !== employee.cardNumber
+		);
+		try {
+			await fetch(url, {
+				method: 'POST',
+				body: JSON.stringify({
+					formData: form_data,
+					token: token,
+				}),
+			}).then((res) => res.json());
+			setEmployees(del);
+			setDeletedCard(del);
+		} catch (err) {
+			errorHandler(
+				err && err.response && err.response.data && err.response.data.msg
+					? err.response.data.msg
+					: 'Something unexpected happened. Please try again later'
+			);
+		}
 	};
 
 	const CompactCreditCard = () => {
