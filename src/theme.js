@@ -1,7 +1,6 @@
-import { red } from "@material-ui/core/colors";
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from '@material-ui/core/styles';
 
-const globalTheme = createMuiTheme({
+const globalTheme = createTheme({
     palette: {
         primary: {
             main: "#7A9EA7"
@@ -9,7 +8,7 @@ const globalTheme = createMuiTheme({
     }
 });
 
-const theme = createMuiTheme(
+const theme = createTheme(
     {
         overrides: {
             MuiCircularProgress: {
@@ -42,12 +41,6 @@ const theme = createMuiTheme(
                 root: {
                     fontSize: "14px",
                 },
-                // select: {
-                //     ['@media (max-width:445px)']: { // eslint-disable-line no-useless-computed-key
-                //         width: '2.7rem',
-                //     }
-                // },
-
                 icon: {
                     color: "#333e48",
                 },
