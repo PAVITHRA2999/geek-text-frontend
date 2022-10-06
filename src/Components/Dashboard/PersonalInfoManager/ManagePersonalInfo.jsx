@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './ManagePersonalInfo.css';
 import {useHistory} from 'react-router-dom';
-import axios from 'axios';
 import Notification from '../../Cart/UI/Notification';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
@@ -23,33 +22,25 @@ export const ManagePersonalInfo = () => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
-		const baseURL = {
-			dev: 'http://localhost:5000/api/managing-personal-info',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/managing-personal-info`,
-		};
+		const url = '/.netlify/functions/get-personal-info';
 
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
-		axios
-			.post(url, form_data, {
+		try {
+			const data = await fetch(url, {
+				method: 'POST',
 				headers: {
 					'x-auth-token': token,
 				},
-			})
-			.then((res) => {
-				setName(res.data.name);
-				setEmail(res.data.email);
-				setHomeAddress(res.data.homeAddress);
-				setNickname(res.data.nickname);
-			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
-			});
+				body: form_data,
+			}).then((res) => res.json());
+			setName(data.name);
+			setEmail(data.email);
+			setHomeAddress(data.homeAddress);
+			setNickname(data.nickname);
+		} catch (err) {
+			errorHandler(
+				err ? err : 'Something unexpected happened. Please try again later'
+			);
+		}
 	};
 
 	useEffect(() => {
