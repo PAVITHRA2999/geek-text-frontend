@@ -96,46 +96,28 @@ export const UpdatePersonalInfo = () => {
 
 	const UpdateInfo = (e) => {
 		e.preventDefault();
-
 		try {
 			BlankValidation();
-
-			const baseURL = {
-				dev: 'http://localhost:5000/api/personal-info',
-				prod: `${process.env.REACT_APP_BACKEND_URL}/api/personal-info`,
-			};
-
-			const url =
-				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
+			const url = `/.netlify/functions/update-personal-info`;
 			const form_data = new FormData();
+
 			// name,email,nickname,home_address
 			form_data.append('name', name);
 			form_data.append('email', email);
 			form_data.append('nickname', nickname);
 			form_data.append('home_address', homeAddress);
 			const token = localStorage.getItem('token');
-			axios
-				.post(url, form_data, {
-					headers: {
-						'x-auth-token': token,
-					},
-				})
-				.then((res) => {
-					window.location = '/dashboard';
-				})
-				.catch((err) => {
-					errorHandler(
-						err && err.response && err.response.data && err.response.data.msg
-							? err.response.data.msg
-							: 'Something unexpected happened. Please try again later'
-					);
-				});
-		} catch (e) {
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'x-auth-token': token,
+				},
+				body: form_data,
+			}).then((res) => history.push('/dashboard'));
+		} catch (err) {
 			errorHandler(
-				e ? e : 'Something unexpected happened. Please try again later'
+				err ? err : 'Something unexpected happened. Please try again later'
 			);
-			return;
 		}
 	};
 
