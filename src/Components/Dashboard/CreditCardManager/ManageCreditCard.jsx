@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '../PersonalInfoManager/ManagePersonalInfo.css';
 import '../CreditCardManager/ManageCreditCard.css';
-import axios from 'axios';
 import Notification from '../../Cart/UI/Notification';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -11,6 +10,28 @@ export const ManageCreditCard = (props) => {
 	const [deletedCard, setDeletedCard] = useState([]);
 
 	useEffect(() => {
+		const getDataPay = async () => {
+			const form_data = new FormData();
+			const token = localStorage.getItem('token');
+			const url = `/.netlify/functions/get-credit-card-info`;
+
+			try {
+				const data = await fetch(url, {
+					method: 'POST',
+					body: JSON.stringify({
+						formData: form_data,
+						token: token,
+					}),
+				}).then((res) => res.json());
+				setEmployees(data.creditCards);
+			} catch (err) {
+				errorHandler(
+					err && err.response && err.response.data && err.response.data.msg
+						? err.response.data.msg
+						: 'Something unexpected happened. Please try again later'
+				);
+			}
+		};
 		getDataPay();
 	}, [deletedCard]);
 
@@ -28,29 +49,6 @@ export const ManageCreditCard = (props) => {
 			type: 'error',
 			typeStyle: '',
 		});
-	};
-
-	const getDataPay = async () => {
-		const form_data = new FormData();
-		const token = localStorage.getItem('token');
-		const url = `/.netlify/functions/get-credit-card-info`;
-
-		try {
-			const data = await fetch(url, {
-				method: 'POST',
-				body: JSON.stringify({
-					formData: form_data,
-					token: token,
-				}),
-			}).then((res) => res.json());
-			setEmployees(data.creditCards);
-		} catch (err) {
-			errorHandler(
-				err && err.response && err.response.data && err.response.data.msg
-					? err.response.data.msg
-					: 'Something unexpected happened. Please try again later'
-			);
-		}
 	};
 
 	const updateData = (
@@ -74,41 +72,6 @@ export const ManageCreditCard = (props) => {
 	};
 
 	// Remove Credit card info.
-	const removeData2 = async (cardNumber) => {
-		const form_data = new FormData();
-		form_data.append('id', cardNumber);
-		const token = localStorage.getItem('token');
-
-		const baseURL = {
-			dev: 'http://localhost:5000/api/testing-deleteCC',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/testing-deleteCC`,
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-		axios
-			.post(url, form_data, {
-				headers: {
-					'x-auth-token': token,
-				},
-			})
-			.then((res) => {
-				setEmployees(del);
-				setDeletedCard(del);
-			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
-			});
-
-		const del = employees.filter(
-			(employee) => cardNumber !== employee.cardNumber
-		);
-	};
-
-	// Remove Credit card info.
 	const removeData = async (cardNumber) => {
 		const form_data = new FormData();
 		form_data.append('id', cardNumber);
@@ -120,18 +83,19 @@ export const ManageCreditCard = (props) => {
 		try {
 			await fetch(url, {
 				method: 'POST',
-				body: JSON.stringify({
-					formData: form_data,
-					token: token,
-				}),
-			}).then((res) => res.json());
+				headers: {
+					'x-auth-token': token,
+				},
+				body: form_data,
+			}).then((res) => {
+				res.json();
+				console.log(res);
+			});
 			setEmployees(del);
 			setDeletedCard(del);
 		} catch (err) {
 			errorHandler(
-				err && err.response && err.response.data && err.response.data.msg
-					? err.response.data.msg
-					: 'Something unexpected happened. Please try again later'
+				err ? err : 'Something unexpected happened. Please try again later'
 			);
 		}
 	};

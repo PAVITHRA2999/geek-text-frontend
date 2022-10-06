@@ -32,7 +32,7 @@ Below are the developers of this project and their assigned features.
 
 ## Requirements
 
-node v16.3 (some newer versions of node do not work with netlify dev)
+node v16.10 (some later versions of node do not work with netlify dev)
 
 ## Running Locally
 
@@ -63,7 +63,7 @@ touch .env
 echo REACT_APP_BACKEND_URL={enter_backend_url_here} >> .env
 ```
 
-Run app and test serverless functions
+Run app and netlify serverless functions
 
 ```
 netlify dev

@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import '../PersonalInfoManager/ManagePersonalInfo.css';
 import Notification from '../../Cart/UI/Notification';
-import axios from 'axios';
 
 export const NewCreditCard = () => {
 	const [cardHolder, setcardHolder] = useState('');
@@ -68,13 +67,7 @@ export const NewCreditCard = () => {
 		try {
 			BlankValidation();
 			checkCreditCardValidation();
-			const baseURL = {
-				dev: 'http://localhost:5000/api/credit-card',
-				prod: `${process.env.REACT_APP_BACKEND_URL}/api/credit-card`,
-			};
-
-			const url =
-				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+			const url = `/.netlify/functions/add-credit-card`;
 			const form_data = new FormData();
 
 			// cardHolder, cardNumber, expirationMonth, expirationYear, securityNumber
@@ -84,29 +77,21 @@ export const NewCreditCard = () => {
 			form_data.append('cardExpYear', cardExpYear);
 			form_data.append('cardCVC', cardCVC);
 			const token = localStorage.getItem('token');
-			axios
-				.post(url, form_data, {
-					headers: {
-						'x-auth-token': token,
-					},
-				})
-				.then((res) => {
-					history.push('/dashboard/manage-credit-card');
-				})
-				.catch((err) => {
-					errorHandler(
-						err && err.response && err.response.data && err.response.data.msg
-							? err.response.data.msg
-							: 'Something unexpected happened. Please try again later'
-					);
-				});
-		} catch (e) {
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'x-auth-token': token,
+				},
+				body: form_data,
+			}).then((res) => history.push('/dashboard/manage-credit-card'));
+		} catch (err) {
+			console.log(err);
 			errorHandler(
-				e ? e : 'Something unexpected happened. Please try again later'
+				err ? err : 'Something unexpected happened. Please try again later'
 			);
-			return;
 		}
 	};
+
 	// Check CreditCard Arrow Function.
 	const checkCreditCardValidation = () => {
 		/* Initialization.*/
@@ -160,7 +145,7 @@ export const NewCreditCard = () => {
 	return (
 		<div className='profile-form'>
 			<div className='col-1-2'>
-				<form className='account__form'>
+				<form className='account__form' encType='multipart/form-data'>
 					<h3 className='account__form-header'>Add New Credit Card</h3>
 					<div className='form-control'>
 						<label htmlFor='name'>Name on Card</label>

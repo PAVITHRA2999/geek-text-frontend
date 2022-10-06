@@ -5,11 +5,11 @@ exports.handler = async function (event) {
         const form_data = event.body;
         const token = event.headers['x-auth-token'];
         const contentType = event.headers['content-type'];
-        const newForm = Buffer.from(form_data, 'base64').toString('utf8');
 
+        const newForm = Buffer.from(form_data, 'base64').toString('utf8');
         const baseURL = {
-            dev: 'http://localhost:5000/api/testing-deleteCC',
-            prod: `${process.env.REACT_APP_BACKEND_URL}/api/testing-deleteCC`,
+            dev: 'http://localhost:5000/api/updating-credit-card',
+            prod: `${process.env.REACT_APP_BACKEND_URL}/api/updating-credit-card`,
         };
 
         const url =
