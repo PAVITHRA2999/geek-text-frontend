@@ -98,8 +98,6 @@ const Auth = () => {
 			})
 			.then((data) => {
 				setLoading(false);
-				console.log(data);
-				console.log(data.token);
 				localStorage.setItem('token', data.token);
 				history.push('/');
 				window.location.reload(false);
