@@ -1,16 +1,12 @@
 import {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import Notification from '../Cart/UI/Notification';
+import Loading from '../Loading/Loading';
 import './Auth.css';
-import axios from 'axios';
-
-// Components
-
-// Page breadcrumb Using the USeStateHook
-// const pageRoute = [{title: 'Account', link: '/account'}];
 
 const Auth = () => {
 	const [showforgotPassword, setShowForgotPassword] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const [email_signin, setEmailSignin] = useState('');
 	const [password_login, setPasswordLogin] = useState('');
@@ -19,7 +15,6 @@ const Auth = () => {
 	const [email_signup, setEmailSignup] = useState('');
 	const [password_signup, setPasswordSignup] = useState('');
 	const [firstname_signup, setFirstNameSignup] = useState('');
-	const [address_signup, setAddressSignup] = useState('');
 
 	const history = useHistory();
 
@@ -81,67 +76,78 @@ const Auth = () => {
 		}
 	};
 
-	const LoginUser = (e) => {
+	const LoginUser = async (e) => {
 		e.preventDefault();
-		const baseURL = {
-			dev: 'http://localhost:5000/api/signin',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/signin`,
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
+		setLoading(true);
+		const url = '/.netlify/functions/sign-in';
 		const form_data = new FormData();
 		form_data.append('email', email_signin);
 		form_data.append('password', password_login);
 
-		axios
-			.post(url, form_data)
-			.then((res) => {
-				localStorage.setItem('token', res.data.token);
+		await fetch(url, {
+			method: 'POST',
+			body: form_data,
+		})
+			.then((response) => {
+				setLoading(false);
+				if (response.status === 200) {
+					return response.json();
+				} else {
+					throw response.text();
+				}
+			})
+			.then((data) => {
+				setLoading(false);
+				localStorage.setItem('token', data.token);
 				history.push('/');
 				window.location.reload(false);
 			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
+			.catch((error) => {
+				setLoading(false);
+				error
+					.then((someErr) => errorHandler(someErr))
+					.catch((err) => errorHandler(err));
 			});
 	};
 
-	const SignupUser = (e) => {
+	const SignupUser = async (e) => {
 		e.preventDefault();
-		const baseURL = {
-			dev: 'http://localhost:5000/api/signup',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/signup`,
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
-		// email, name, nickname, password are required
-		// The nickname will be the same as the username
+		setLoading(true);
+		const url = '/.netlify/functions/sign-up';
 		const form_data = new FormData();
 		form_data.append('email', email_signup);
 		form_data.append('password', password_signup);
 		form_data.append('nickname', username_signup);
 		form_data.append('name', firstname_signup);
-		axios
-			.post(url, form_data)
-			.then((res) => {
-				successHandler(res.data.msg);
+		form_data.append('name', firstname_signup);
+
+		await fetch(url, {
+			method: 'POST',
+			body: form_data,
+		})
+			.then((response) => {
+				setLoading(false);
+				if (response.status === 200) {
+					return response.json();
+				} else {
+					throw response.text();
+				}
 			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
+			.then((data) => {
+				setLoading(false);
+				successHandler(data.msg);
+			})
+			.catch((error) => {
+				setLoading(false);
+				error
+					.then((someErr) => errorHandler(someErr))
+					.catch((err) => errorHandler(err));
 			});
 	};
 
 	return (
 		<div className='account'>
+			{loading && <Loading />}
 			<div className='customer_container row'>
 				<div className='col-1-2'>
 					{!showforgotPassword ? (
@@ -149,7 +155,7 @@ const Auth = () => {
 							<h3 className='account__form-header'>Login</h3>
 							<p>Sign in to your existing account</p>
 							<div className='form-control'>
-								<label htmlFor='email_signin'>Email</label>
+								<label htmlFor='email_signin'>Email *</label>
 								<input
 									onChange={handleLoginChange}
 									id='email_signin'
@@ -158,7 +164,7 @@ const Auth = () => {
 								/>
 							</div>
 							<div className='form-control'>
-								<label htmlFor='password'>Password</label>
+								<label htmlFor='password'>Password *</label>
 								<input
 									type='password'
 									required
@@ -185,7 +191,7 @@ const Auth = () => {
 							<h3 className='account__form-header'>Reset Password</h3>
 							<p>We will send you an email to reset your password</p>
 							<div className='form-control'>
-								<label htmlFor='email'>Email Address</label>
+								<label htmlFor='email'>Email Address *</label>
 								<input type='email' required id='email' />
 							</div>
 							<div className='account__forgotpassword-buttons'>
@@ -207,7 +213,7 @@ const Auth = () => {
 						<h3 className='account__form-header'>Sign Up</h3>
 						<p>Create a New Account</p>
 						<div className='form-control'>
-							<label htmlFor='name'>First Name</label>
+							<label htmlFor='name'>First Name *</label>
 							<input
 								style={{marginBottom: '1rem'}}
 								onChange={handleSignupChange}
@@ -215,7 +221,7 @@ const Auth = () => {
 								type='text'
 								required
 							/>
-							<label htmlFor='name'>Username</label>
+							<label htmlFor='name'>Username *</label>
 							<input
 								onChange={handleSignupChange}
 								id='username_signup'
@@ -224,7 +230,7 @@ const Auth = () => {
 							/>
 						</div>
 						<div className='form-control'>
-							<label htmlFor='register-email'>Email Address</label>
+							<label htmlFor='register-email'>Email Address *</label>
 							<input
 								type='email'
 								required
@@ -233,7 +239,7 @@ const Auth = () => {
 							/>
 						</div>
 						<div className='form-control'>
-							<label htmlFor='register-password'>Password</label>
+							<label htmlFor='register-password'>Password *</label>
 							<input
 								type='password'
 								required

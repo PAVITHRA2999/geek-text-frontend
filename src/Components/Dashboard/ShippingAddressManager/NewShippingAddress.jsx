@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import '../PersonalInfoManager/ManagePersonalInfo.css';
 import Notification from '../../Cart/UI/Notification';
-import axios from 'axios';
 
 export const NewShippingAddress = () => {
 	const [street, setStreet] = useState('');
@@ -66,14 +65,8 @@ export const NewShippingAddress = () => {
 		e.preventDefault();
 		try {
 			BlankValidation();
-			const baseURL = {
-				dev: 'http://localhost:5000/api/insert-shipping-address',
-				prod: `${process.env.REACT_APP_BACKEND_URL}/api/insert-shipping-address`,
-			};
-
-			const url =
-				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
 			const form_data = new FormData();
+			const url = '/.netlify/functions/add-shipping-address';
 
 			form_data.append('street', street);
 			form_data.append('city', city);
@@ -81,27 +74,18 @@ export const NewShippingAddress = () => {
 			form_data.append('postalCode', postalCode);
 			form_data.append('country', country);
 			const token = localStorage.getItem('token');
-			axios
-				.post(url, form_data, {
-					headers: {
-						'x-auth-token': token,
-					},
-				})
-				.then((res) => {
-					history.push('/dashboard/manage-shipping-address');
-				})
-				.catch((err) => {
-					errorHandler(
-						err && err.response && err.response.data && err.response.data.msg
-							? err.response.data.msg
-							: 'Something unexpected happened. Please try again later'
-					);
-				});
-		} catch (e) {
+
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'x-auth-token': token,
+				},
+				body: form_data,
+			}).then((res) => history.push('/dashboard/manage-shipping-address'));
+		} catch (err) {
 			errorHandler(
-				e ? e : 'Something unexpected happened. Please try again later'
+				err ? err : 'Something unexpected happened. Please try again later'
 			);
-			return;
 		}
 	};
 

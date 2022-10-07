@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Notification from '../../Cart/UI/Notification';
 import {useHistory} from 'react-router-dom';
 import '../PersonalInfoManager/ManagePersonalInfo.css';
-import axios from 'axios';
 
 export const UpdateShippingAddress = () => {
 	const [street, setStreet] = useState('');
@@ -12,6 +11,12 @@ export const UpdateShippingAddress = () => {
 	const [country, setCountry] = useState('');
 	const [id, setId] = useState(null);
 	const history = useHistory();
+
+	const [streetMod, setStreetMod] = useState('');
+	const [cityMod, setCityMod] = useState('');
+	const [stateMod, setStateMod] = useState('');
+	const [postalCodeMod, setPostalCodeMod] = useState('');
+	const [countryMod, setCountryMod] = useState('');
 
 	const [notify, setNotify] = useState({
 		isOpen: false,
@@ -42,18 +47,23 @@ export const UpdateShippingAddress = () => {
 		switch (e.target.id) {
 			case 'street':
 				setStreet(e.target.value);
+				setStreetMod(true);
 				break;
 			case 'city':
 				setCity(e.target.value);
+				setCityMod(true);
 				break;
 			case 'state':
 				setState(e.target.value);
+				setStateMod(true);
 				break;
 			case 'postalCode':
 				setPostalCode(e.target.value);
+				setPostalCodeMod(true);
 				break;
 			case 'country':
 				setCountry(e.target.value);
+				setCountryMod(true);
 				break;
 			default:
 				break;
@@ -61,8 +71,8 @@ export const UpdateShippingAddress = () => {
 	};
 
 	const BlankValidation = () => {
-		if (!street && !city && !state && !postalCode && !country) {
-			throw 'At least 1 field is required';
+		if (!streetMod && !cityMod && !stateMod && !postalCodeMod && !countryMod) {
+			throw "You didn't make any changes.";
 		}
 	};
 
@@ -74,13 +84,7 @@ export const UpdateShippingAddress = () => {
 		e.preventDefault();
 		try {
 			BlankValidation();
-
-			const baseURL = {
-				dev: 'http://localhost:5000/api/updating-shipping-adress',
-				prod: `${process.env.REACT_APP_BACKEND_URL}/api/updating-shipping-adress`,
-			};
-			const url =
-				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+			const url = '/.netlify/functions/update-shipping-address';
 			const form_data = new FormData();
 
 			// street, cardNumber, expirationMonth, expirationYear, securityNumber
@@ -92,27 +96,17 @@ export const UpdateShippingAddress = () => {
 			form_data.append('id', id);
 			const token = localStorage.getItem('token');
 
-			axios
-				.post(url, form_data, {
-					headers: {
-						'x-auth-token': token,
-					},
-				})
-				.then((res) => {
-					history.push('/dashboard/manage-shipping-address');
-				})
-				.catch((err) => {
-					errorHandler(
-						err && err.response && err.response.data && err.response.data.msg
-							? err.response.data.msg
-							: 'Something unexpected happened. Please try again later'
-					);
-				});
-		} catch (e) {
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'x-auth-token': token,
+				},
+				body: form_data,
+			}).then((res) => history.push('/dashboard/manage-shipping-address'));
+		} catch (err) {
 			errorHandler(
-				e ? e : 'Something unexpected happened. Please try again later'
+				err ? err : 'Something unexpected happened. Please try again later'
 			);
-			return;
 		}
 	};
 

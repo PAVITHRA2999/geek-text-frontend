@@ -9,7 +9,9 @@ Visit [geek-text.ga](https://www.geek-text.ga/) to see it live.
 <img alt="demo" src="demo.gif" height="auto"/>
 
 ## Development Team
+
 Below are the developers of this project and their assigned features.
+
 - [Andrew Andersen](https://github.com/pandamon99) (Book Browsing and Sorting)
 - [Azhar Ali](https://github.com/azhareus) (Book Rating and Commenting)
 - [Celeste Amengual](https://github.com/celesteamen) (Wishlist Management)
@@ -27,6 +29,10 @@ Below are the developers of this project and their assigned features.
 | Book Details                           | Display book name, book cover (which can be enlarged when clicked), author and bio, book description, genre, publishing info (publisher, release date, etc.), book rating, and comments. Hyperlink author’s name to a list of other books by the same author.                                                                                                              | Users can see informative and enticing details about a book                                              |
 | Book Rating and Commenting             | For Rating: Use a five-star rating system. Users can rate any book. For Commenting: A single comment should be limited to the number of characters, which can fit within half the browser window (so that there are at least two comments which can appear at the same time).                                                                                              | Users can rate AND comment on books they’ve purchased to help others in their selection                  |
 | Wishlist Management                    | The wishlist section shows the items that have been added to the list by the user and each item can be added to the cart. Items can be added to the list from the item details page, browser, and cart. Items can be removed from the list in this section.                                                                                                                | Users can have a wishlist which can have books moved to the shopping cart.                               |
+
+## Requirements
+
+node v16.10 (some later versions of node do not work with netlify dev)
 
 ## Running Locally
 
@@ -47,7 +53,7 @@ cd geek-text-frontend
 Install dependencies
 
 ```
-npm install
+yarn install
 ```
 
 Add environment variable
@@ -57,8 +63,8 @@ touch .env
 echo REACT_APP_BACKEND_URL={enter_backend_url_here} >> .env
 ```
 
-Run app
+Run app and netlify serverless functions
 
 ```
-npm start
+netlify dev
 ```

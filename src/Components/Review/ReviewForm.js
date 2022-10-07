@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Rating from "@material-ui/lab/Rating";
+import { useHistory } from "react-router";
 import Notification from '../Cart/UI/Notification';
-import axios from 'axios';
 import { useParams } from "react-router";
 
 const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
@@ -9,7 +9,7 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
   const [commenterInput, setCommenterInput] = useState("");
   const [ratingInput, setRatingInput] = useState(0);
   const [contentInput, setContentInput] = useState("");
-
+  const history = useHistory();
   const { id } = useParams();
 
   const handleRatingChange = (e) => {
@@ -57,51 +57,40 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
     });
   };
 
-
-  // Update sold count of book and stop displaying it in cart
   const UpdateInfo = (e) => {
     e.preventDefault();
     try {
       BlankValidation();
-      const baseURL = {
-        dev: 'http://localhost:5000/books/review/',
-        prod: `${process.env.REACT_APP_BACKEND_URL}/books/review/`,
-      };
-      const url =
-        process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
       const newAverage = ((numComments * oldRating) + ratingInput) / (numComments + 1);
-      const token = localStorage.getItem('token');
-      axios.put(`${url}${id}`, {
+      const url = `/.netlify/functions/add-review/`;
 
-        headers: {
-          'x-auth-token': token,
-        },
 
-        commenter: commenterInput,
-        title: titleInput,
-        content: contentInput,
-        rating: ratingInput,
-        average: newAverage,
+      fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify({
+          id: id,
+          commenter: commenterInput,
+          title: titleInput,
+          content: contentInput,
+          rating: ratingInput,
+          average: newAverage
+        }),
+      }).then((res) => {
+        closeModal();
+        history.push(`/book/${id}`);
       });
-      closeModal();
-    }
-    catch (e) {
+    } catch (err) {
       errorHandler(
-        e ? e : 'Something unexpected happened. Please try again later'
+        err ? err : 'Something unexpected happened. Please try again later'
       );
-      return;
     }
   };
-
 
   return (
     <div className='profile-form'>
       <div className='col-1-2'>
         <form className='account__form'>
           <h3 className='account__form-header'>Your Review for "{bookTitle}"</h3>
-
-
-
           <div className='form-control'>
             <label>Your Rating*</label>
           </div>
@@ -120,24 +109,10 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
             />
           </div>
 
-
           <div className='form-control'>
             <label>Review*</label>
             <textarea
               className="review-textarea"
-              // style={{
-              //   width: "100%",
-              //   height: "150px",
-              //   padding: "14px",
-              //   fontFamily: "inherit",
-              //   boxSizing: "border-box",
-              //   border: "1px solid #ddd",
-              //   borderRadius: "0px",
-              //   touchAction: "inherit",
-              //   onFocus: "none",
-              //   fontSize: "16px",
-              //   resize: "none"
-              // }}
               id="rating-content"
               value={contentInput}
               onChange={handleChange}
@@ -146,7 +121,7 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
           </div>
 
           <div className='form-control'>
-            <label >Username (others will see this)*</label>
+            <label>Username (others will see this)*</label>
             <input
               id="rating-commenter"
               value={commenterInput}
@@ -155,8 +130,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
               placeholder="ChocolateMuffin3"
             />
           </div>
-
-
 
           <div className='account__forgotpassword-buttons'>
             <button
@@ -174,8 +147,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
       </div>
       <Notification notify={notify} setNotify={setNotify} />
     </div>
-
-
   );
 };
 

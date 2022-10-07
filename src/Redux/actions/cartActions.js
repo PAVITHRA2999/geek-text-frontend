@@ -29,7 +29,7 @@ export const addToCart = (id, qty, saved) => async (dispatch, getState) => {
 export const getCartContent = () => async (dispatch, getState) => {
     try {
         dispatch({ type: actionTypes.GET_CART_CONTENT_REQUEST });
-        const url = `/.netlify/functions/get-cart-items`;
+        const url = '/.netlify/functions/get-cart-items';
         const data = await fetch(url).then((res) => res.json());
         dispatch({
             type: actionTypes.GET_CART_CONTENT_SUCCESS,

@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import Notification from '../../Cart/UI/Notification';
 import '../PersonalInfoManager/ManagePersonalInfo.css';
-import axios from 'axios';
 
 export const UpdateCreditCard = () => {
 	const [cardHolder, setcardHolder] = useState('');
@@ -130,13 +129,9 @@ export const UpdateCreditCard = () => {
 		e.preventDefault();
 		try {
 			testingVars();
-			const baseURL = {
-				dev: 'http://localhost:5000/api/updating-credit-card',
-				prod: `${process.env.REACT_APP_BACKEND_URL}/api/updating-credit-card`,
-			};
 
-			const url =
-				process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+			const token = localStorage.getItem('token');
+			const url = '/.netlify/functions/update-credit-card';
 			const form_data = new FormData();
 
 			// cardHolder, cardNumber, expirationMonth, expirationYear, securityNumber
@@ -146,28 +141,18 @@ export const UpdateCreditCard = () => {
 			form_data.append('cardExpYear', cardExpYear);
 			form_data.append('cardCVC', cardCVC);
 			form_data.append('id', id);
-			const token = localStorage.getItem('token');
-			axios
-				.post(url, form_data, {
-					headers: {
-						'x-auth-token': token,
-					},
-				})
-				.then((res) => {
-					history.push('/dashboard/manage-credit-card');
-				})
-				.catch((err) => {
-					errorHandler(
-						err && err.response && err.response.data && err.response.data.msg
-							? err.response.data.msg
-							: 'Something unexpected happened. Please try again later'
-					);
-				});
-		} catch (e) {
+
+			fetch(url, {
+				method: 'POST',
+				headers: {
+					'x-auth-token': token,
+				},
+				body: form_data,
+			}).then((res) => history.push('/dashboard/manage-credit-card'));
+		} catch (err) {
 			errorHandler(
-				e ? e : 'Something unexpected happened. Please try again later'
+				err ? err : 'Something unexpected happened. Please try again later'
 			);
-			return;
 		}
 	};
 
