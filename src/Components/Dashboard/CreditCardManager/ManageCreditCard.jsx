@@ -89,7 +89,6 @@ export const ManageCreditCard = (props) => {
 				body: form_data,
 			}).then((res) => {
 				res.json();
-				console.log(res);
 			});
 			setEmployees(del);
 			setDeletedCard(del);

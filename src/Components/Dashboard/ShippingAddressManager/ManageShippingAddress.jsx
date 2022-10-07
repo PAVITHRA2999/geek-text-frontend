@@ -68,7 +68,6 @@ export const ManageShippingAddress = () => {
 				body: form_data,
 			}).then((res) => {
 				res.json();
-				console.log(res);
 			});
 			setDeletedEmployee(del);
 			setEmployees(del);

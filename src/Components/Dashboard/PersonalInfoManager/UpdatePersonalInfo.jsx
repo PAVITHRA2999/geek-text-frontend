@@ -47,7 +47,6 @@ export const UpdatePersonalInfo = () => {
 	};
 
 	useEffect(() => {
-		console.log();
 		getDataPay();
 	}, []);
 

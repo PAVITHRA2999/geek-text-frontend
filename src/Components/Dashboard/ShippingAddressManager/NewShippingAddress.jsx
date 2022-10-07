@@ -83,7 +83,6 @@ export const NewShippingAddress = () => {
 				body: form_data,
 			}).then((res) => history.push('/dashboard/manage-shipping-address'));
 		} catch (err) {
-			console.log(err);
 			errorHandler(
 				err ? err : 'Something unexpected happened. Please try again later'
 			);
