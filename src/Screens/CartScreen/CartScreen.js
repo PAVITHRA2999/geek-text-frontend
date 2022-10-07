@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../../Redux/actions/cartActions";
 import { addToWishlist, removeFromWishlist } from "../../Redux/actions/wishlistActions";
-import axios from "axios";
 
 import CartItem from "../../Components/Cart/CartItem/CartItem";
 import Notification from "../../Components/Cart/UI/Notification";
@@ -92,6 +91,14 @@ const CartScreen = (props) => {
     });
   };
 
+  const errorHandler = (text) => {
+    setNotify({
+      isOpen: true,
+      message: text,
+      type: 'error',
+    });
+  };
+
   // Add item to wishlist, remove it from shopping cart, and display message
   const addCartItemToWishlistHandler = (id, title) => {
     addToWishlistHandler(id, title);
@@ -124,20 +131,22 @@ const CartScreen = (props) => {
     });
   };
 
-  // Update sold count of book and stop displaying it in cart
+  // Update sold count of book and remove it from cart
   const checkout = (id, qty) => {
     // TODO: Database update: add books to user's purchased books
-    const baseURL = {
-      dev: 'http://localhost:5000/books/purchase',
-      prod: `${process.env.REACT_APP_BACKEND_URL}/books/purchase`,
-    };
-    const url =
-      process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
+    try {
+      const url = `/.netlify/functions/purchase-book/?id=${id}&qty=${qty}`;
 
-    axios.patch(`${url}/${id}`, {
-      sold: qty,
-    });
-    dispatch(removeFromCart(id));
+      fetch(url, {
+        method: 'PATCH'
+      }).then((res) => {
+        dispatch(removeFromCart(id));
+      });
+    } catch (err) {
+      errorHandler(
+        err ? err : 'Something unexpected happened. Please try again later'
+      );
+    }
   };
 
   // Checkout all books in cart and display success message
