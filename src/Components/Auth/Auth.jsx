@@ -3,7 +3,6 @@ import {Link, useHistory} from 'react-router-dom';
 import Notification from '../Cart/UI/Notification';
 import Loading from '../Loading/Loading';
 import './Auth.css';
-import axios from 'axios';
 
 const Auth = () => {
 	const [showforgotPassword, setShowForgotPassword] = useState(false);
@@ -77,35 +76,39 @@ const Auth = () => {
 		}
 	};
 
-	const LoginUser = (e) => {
+	const LoginUser = async (e) => {
 		e.preventDefault();
 		setLoading(true);
-		const baseURL = {
-			dev: 'http://localhost:5000/api/signin',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/signin`,
-		};
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
+		const url = '/.netlify/functions/sign-in';
 		const form_data = new FormData();
 		form_data.append('email', email_signin);
 		form_data.append('password', password_login);
 
-		axios
-			.post(url, form_data)
-			.then((res) => {
+		await fetch(url, {
+			method: 'POST',
+			body: form_data,
+		})
+			.then((response) => {
 				setLoading(false);
-				localStorage.setItem('token', res.data.token);
+				if (response.status === 200) {
+					return response.json();
+				} else {
+					throw response.text();
+				}
+			})
+			.then((data) => {
+				setLoading(false);
+				console.log(data);
+				console.log(data.token);
+				localStorage.setItem('token', data.token);
 				history.push('/');
 				window.location.reload(false);
 			})
-			.catch((err) => {
+			.catch((error) => {
 				setLoading(false);
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
+				error
+					.then((someErr) => errorHandler(someErr))
+					.catch((err) => errorHandler(err));
 			});
 	};
 
