@@ -13,7 +13,7 @@ export const ManageCreditCard = (props) => {
 		const getDataPay = async () => {
 			const form_data = new FormData();
 			const token = localStorage.getItem('token');
-			const url = `/.netlify/functions/get-credit-card-info`;
+			const url = '/.netlify/functions/get-credit-card-info';
 
 			try {
 				const data = await fetch(url, {
@@ -76,7 +76,7 @@ export const ManageCreditCard = (props) => {
 		const form_data = new FormData();
 		form_data.append('id', cardNumber);
 		const token = localStorage.getItem('token');
-		const url = `/.netlify/functions/delete-credit-card`;
+		const url = '/.netlify/functions/delete-credit-card';
 		const del = employees.filter(
 			(employee) => cardNumber !== employee.cardNumber
 		);

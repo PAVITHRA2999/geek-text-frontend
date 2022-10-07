@@ -101,7 +101,7 @@ export const UpdatePersonalInfo = () => {
 		e.preventDefault();
 		try {
 			BlankValidation();
-			const url = `/.netlify/functions/update-personal-info`;
+			const url = '/.netlify/functions/update-personal-info';
 			const form_data = new FormData();
 
 			// name,email,nickname,home_address

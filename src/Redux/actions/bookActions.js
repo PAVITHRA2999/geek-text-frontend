@@ -4,7 +4,7 @@ import * as actionTypes from "../constants/bookConstants";
 export const getBooks = () => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.GET_BOOKS_REQUEST });
-    const url = `/.netlify/functions/get-all-books`;
+    const url = '/.netlify/functions/get-all-books';
     const data = await fetch(url).then((res) => res.json());
 
     dispatch({

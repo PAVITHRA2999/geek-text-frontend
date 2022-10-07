@@ -55,7 +55,7 @@ export const ManageShippingAddress = () => {
 		const form_data = new FormData();
 		form_data.append('id', cardNumber);
 		const token = localStorage.getItem('token');
-		const url = `/.netlify/functions/delete-shipping-address`;
+		const url = '/.netlify/functions/delete-shipping-address';
 		const del = employees.filter(
 			(employee) => cardNumber !== employee.cardNumber
 		);

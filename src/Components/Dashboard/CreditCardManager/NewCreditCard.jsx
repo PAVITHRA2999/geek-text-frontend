@@ -67,7 +67,7 @@ export const NewCreditCard = () => {
 		try {
 			BlankValidation();
 			checkCreditCardValidation();
-			const url = `/.netlify/functions/add-credit-card`;
+			const url = '/.netlify/functions/add-credit-card';
 			const form_data = new FormData();
 
 			// cardHolder, cardNumber, expirationMonth, expirationYear, securityNumber

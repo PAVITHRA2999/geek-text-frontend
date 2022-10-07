@@ -131,7 +131,7 @@ export const UpdateCreditCard = () => {
 			testingVars();
 
 			const token = localStorage.getItem('token');
-			const url = `/.netlify/functions/update-credit-card`;
+			const url = '/.netlify/functions/update-credit-card';
 			const form_data = new FormData();
 
 			// cardHolder, cardNumber, expirationMonth, expirationYear, securityNumber

@@ -66,7 +66,7 @@ export const NewShippingAddress = () => {
 		try {
 			BlankValidation();
 			const form_data = new FormData();
-			const url = `/.netlify/functions/add-shipping-address`;
+			const url = '/.netlify/functions/add-shipping-address';
 
 			form_data.append('street', street);
 			form_data.append('city', city);
