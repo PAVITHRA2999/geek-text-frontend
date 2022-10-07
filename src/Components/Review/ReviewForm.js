@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Rating from "@material-ui/lab/Rating";
+import { useHistory } from "react-router";
 import Notification from '../Cart/UI/Notification';
 import axios from 'axios';
 import { useParams } from "react-router";
@@ -9,7 +10,7 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
   const [commenterInput, setCommenterInput] = useState("");
   const [ratingInput, setRatingInput] = useState(0);
   const [contentInput, setContentInput] = useState("");
-
+  const history = useHistory();
   const { id } = useParams();
 
   const handleRatingChange = (e) => {
@@ -57,42 +58,34 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
     });
   };
 
-
-  // Update sold count of book and stop displaying it in cart
   const UpdateInfo = (e) => {
     e.preventDefault();
     try {
       BlankValidation();
-      const baseURL = {
-        dev: 'http://localhost:5000/books/review/',
-        prod: `${process.env.REACT_APP_BACKEND_URL}/books/review/`,
-      };
-      const url =
-        process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
       const newAverage = ((numComments * oldRating) + ratingInput) / (numComments + 1);
-      const token = localStorage.getItem('token');
-      axios.put(`${url}${id}`, {
+      const url = `/.netlify/functions/add-review/`;
 
-        headers: {
-          'x-auth-token': token,
-        },
 
-        commenter: commenterInput,
-        title: titleInput,
-        content: contentInput,
-        rating: ratingInput,
-        average: newAverage,
+      fetch(url, {
+        method: 'PUT',
+        body: JSON.stringify({
+          id: id,
+          commenter: commenterInput,
+          title: titleInput,
+          content: contentInput,
+          rating: ratingInput,
+          average: newAverage
+        }),
+      }).then((res) => {
+        closeModal();
+        history.push(`/book/${id}`);
       });
-      closeModal();
-    }
-    catch (e) {
+    } catch (err) {
       errorHandler(
-        e ? e : 'Something unexpected happened. Please try again later'
+        err ? err : 'Something unexpected happened. Please try again later'
       );
-      return;
     }
   };
-
 
   return (
     <div className='profile-form'>
