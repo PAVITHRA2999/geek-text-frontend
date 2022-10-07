@@ -6,6 +6,8 @@ This is the frontend for the Geek Text web app developed as a group project for 
 
 Visit [geek-text.ga](https://www.geek-text.ga/) to see it live.
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/667ba2ae-ce77-4c66-9c01-b0c2200f040a/deploy-status)](https://app.netlify.com/sites/geek-text-333/deploys)
+
 <img alt="demo" src="demo.gif" height="auto"/>
 
 ## Development Team

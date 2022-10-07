@@ -147,7 +147,11 @@ const Auth = () => {
 
 	return (
 		<div className='account'>
-			{loading && <Loading />}
+			{loading && (
+				<div className='blur'>
+					<Loading />
+				</div>
+			)}
 			<div className='customer_container row'>
 				<div className='col-1-2'>
 					{!showforgotPassword ? (

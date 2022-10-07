@@ -48,7 +48,14 @@ a {
 	color: var(--tertiary-color);
 	text-decoration: none;
 }
-
+.blur {
+	height: 100%;
+	width: 100%;
+	z-index: 4;
+	background: rgba(255, 255, 255, 0.094);
+	backdrop-filter: blur(2px);
+	position: absolute;
+}
 .Router_Link {
 	text-decoration: none;
 	color: var(--router-link-color);
