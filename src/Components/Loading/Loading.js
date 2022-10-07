@@ -8,6 +8,7 @@ const Loading = () => {
         <div className="loading">
             <CircularProgress
                 style={{
+                    zIndex: "4",
                     color: "#7a9ea7",
                     width: "2.4rem",
                     height: "2.4rem",
