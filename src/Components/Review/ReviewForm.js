@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Rating from "@material-ui/lab/Rating";
 import { useHistory } from "react-router";
 import Notification from '../Cart/UI/Notification';
-import axios from 'axios';
 import { useParams } from "react-router";
 
 const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
@@ -92,9 +91,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
       <div className='col-1-2'>
         <form className='account__form'>
           <h3 className='account__form-header'>Your Review for "{bookTitle}"</h3>
-
-
-
           <div className='form-control'>
             <label>Your Rating*</label>
           </div>
@@ -113,24 +109,10 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
             />
           </div>
 
-
           <div className='form-control'>
             <label>Review*</label>
             <textarea
               className="review-textarea"
-              // style={{
-              //   width: "100%",
-              //   height: "150px",
-              //   padding: "14px",
-              //   fontFamily: "inherit",
-              //   boxSizing: "border-box",
-              //   border: "1px solid #ddd",
-              //   borderRadius: "0px",
-              //   touchAction: "inherit",
-              //   onFocus: "none",
-              //   fontSize: "16px",
-              //   resize: "none"
-              // }}
               id="rating-content"
               value={contentInput}
               onChange={handleChange}
@@ -139,7 +121,7 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
           </div>
 
           <div className='form-control'>
-            <label >Username (others will see this)*</label>
+            <label>Username (others will see this)*</label>
             <input
               id="rating-commenter"
               value={commenterInput}
@@ -148,8 +130,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
               placeholder="ChocolateMuffin3"
             />
           </div>
-
-
 
           <div className='account__forgotpassword-buttons'>
             <button
@@ -167,8 +147,6 @@ const ReviewForm = ({ numComments, oldRating, bookTitle, closeModal }) => {
       </div>
       <Notification notify={notify} setNotify={setNotify} />
     </div>
-
-
   );
 };
 

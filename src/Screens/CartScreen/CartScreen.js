@@ -19,10 +19,6 @@ const CartScreen = (props) => {
 
   useEffect(() => { }, []);
 
-
-
-
-
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -91,6 +87,7 @@ const CartScreen = (props) => {
     });
   };
 
+  // Notify if an error occurs
   const errorHandler = (text) => {
     setNotify({
       isOpen: true,
@@ -368,7 +365,6 @@ const CartScreen = (props) => {
               </Link>
             }
           </div>}
-        {/* <div className="filler-space"></div> */}
         {savedForLater.length !== 0 &&
           <>
             <div className="collapsible_items">
