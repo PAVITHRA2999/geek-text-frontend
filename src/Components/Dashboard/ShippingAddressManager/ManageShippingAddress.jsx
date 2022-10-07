@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import '../PersonalInfoManager/ManagePersonalInfo.css';
-import axios from 'axios';
 import '../CreditCardManager/ManageCreditCard.css';
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-
 import Notification from '../../Cart/UI/Notification';
 
 export const ManageShippingAddress = () => {
@@ -35,83 +33,52 @@ export const ManageShippingAddress = () => {
 	const getDataPay = async () => {
 		const form_data = new FormData();
 		const token = localStorage.getItem('token');
-		const baseURL = {
-			dev: 'http://localhost:5000/api/managing-shipping-adress',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/managing-shipping-adress`,
-		};
+		const url = '/.netlify/functions/get-shipping-info';
 
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
-		axios
-			.post(url, form_data, {
+		try {
+			const data = await fetch(url, {
+				method: 'POST',
 				headers: {
 					'x-auth-token': token,
 				},
-			})
-			.then((res) => {
-				setEmployees(res.data.shippingAddress);
-			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
-			});
+				body: form_data,
+			}).then((res) => res.json());
+			setEmployees(data.shippingAddress);
+		} catch (err) {
+			errorHandler(
+				err ? err : 'Something unexpected happened. Please try again later'
+			);
+		}
 	};
 
-	const renderHeader = () => {
-		let headerElement = [
-			'Street',
-			'City',
-			'State',
-			'Postal Code',
-			'Country',
-			'Edit',
-			'Delete',
-		];
-
-		return headerElement.map((key, index) => {
-			return <th key={index}>{key}</th>;
-		});
-	};
-
-	// Remove Credit card info.
 	const removeData = async (cardNumber) => {
 		const form_data = new FormData();
-		const token = localStorage.getItem('token');
 		form_data.append('id', cardNumber);
-
-		const baseURL = {
-			dev: 'http://localhost:5000/api/deleting-shipping-adress',
-			prod: `${process.env.REACT_APP_BACKEND_URL}/api/deleting-shipping-adress`,
-		};
-
-		const url =
-			process.env.NODE_ENV === 'production' ? baseURL.prod : baseURL.dev;
-
-		axios
-			.post(url, form_data, {
+		const token = localStorage.getItem('token');
+		const url = `/.netlify/functions/delete-shipping-address`;
+		const del = employees.filter(
+			(employee) => cardNumber !== employee.cardNumber
+		);
+		try {
+			await fetch(url, {
+				method: 'POST',
 				headers: {
 					'x-auth-token': token,
 				},
-			})
-			.then((res) => {
-				const del = employees.filter(
-					(employee) => cardNumber !== employee.cardNumber
-				);
-				setDeletedEmployee(del);
-				setEmployees(del);
-			})
-			.catch((err) => {
-				errorHandler(
-					err && err.response && err.response.data && err.response.data.msg
-						? err.response.data.msg
-						: 'Something unexpected happened. Please try again later'
-				);
+				body: form_data,
+			}).then((res) => {
+				res.json();
+				console.log(res);
 			});
+			setDeletedEmployee(del);
+			setEmployees(del);
+		} catch (err) {
+			errorHandler(
+				err ? err : 'Something unexpected happened. Please try again later'
+			);
+		}
 	};
+
 	const updateData = (street, city, state, postalCode, country, _id) => {
 		const data = {
 			street,
