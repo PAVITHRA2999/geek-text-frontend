@@ -24,9 +24,10 @@ exports.handler = async function (event) {
             body: JSON.stringify(data),
         };
     } catch (err) {
+        console.log(err);
         return {
             statusCode: 404,
-            body: err.response.data.msg.toString(),
+            body: err.response ? err.response.data.msg.toString() : "Sorry, you can't login right now. Please try again later.",
         };
     }
 };
