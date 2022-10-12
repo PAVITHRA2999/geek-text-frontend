@@ -192,138 +192,132 @@ const Browser = ({ match, history }) => {
 
     if (loading)
         return <Loading />;
+    else if (error) {
+        console.log(error);
+        return <div className='screen screen-h-padding browser-screen'>
+            <h2 className='centered_header'>Sorry, you can't browse books right now. Please try again later.</h2>
+        </div>;
+    }
     else {
         return (
-            <><div className='screen screen-h-padding browser-screen'>
-                {
-                    error ? (
-                        <h2 className='centered_header'>{error}</h2>
-                    ) : (
+            <div className='screen screen-h-padding browser-screen'>
+                <h2 className='centered_header'>Top Picks</h2>
+                <div className='nav browser-nav'>
+                    <div className='nav-left'>
+                        <div className='separated-inputs'>
+                            <CustomSelect
+                                inputLabel='Items per page'
+                                inputLabelId='browser-select-label'
+                                labelId='ShowBooksPerPage'
+                                id='select'
+                                value={perPage}
+                                handleChange={handlePerPageChange}
+                                items={PAGES}
+                            />
 
-                        <>
-                            <h2 className='centered_header'>Top Picks</h2>
+                            <CustomSelect
+                                inputLabel='Average Rating'
+                                inputLabelId='browser-select-label'
+                                labelId='Rating'
+                                id='select-rating'
+                                value={ratingDD}
+                                handleChange={handleRatingChange}
+                                items={RATINGS}
+                            />
 
-                            <div className='nav browser-nav'>
-                                <div className='nav-left'>
-                                    <div className='separated-inputs'>
-                                        <CustomSelect
-                                            inputLabel='Items per page'
-                                            inputLabelId='browser-select-label'
-                                            labelId='ShowBooksPerPage'
-                                            id='select'
-                                            value={perPage}
-                                            handleChange={handlePerPageChange}
-                                            items={PAGES}
-                                        />
-
-                                        <CustomSelect
-                                            inputLabel='Average Rating'
-                                            inputLabelId='browser-select-label'
-                                            labelId='Rating'
-                                            id='select-rating'
-                                            value={ratingDD}
-                                            handleChange={handleRatingChange}
-                                            items={RATINGS}
-                                        />
-
-                                        <CustomSelect
-                                            inputLabel='Genre'
-                                            inputLabelId='browser-select-label'
-                                            labelId='Genre'
-                                            id='select-genre'
-                                            value={genreDD}
-                                            handleChange={handleGenreChange}
-                                            items={GENRES}
-                                        />
-                                        <CustomSelect
-                                            inputLabel='Sort by'
-                                            inputLabelId='browser-select-label'
-                                            labelId='Sort'
-                                            id='select-sort'
-                                            value={sortType || 'getByTS'}
-                                            handleChange={handleSortTypeChange}
-                                            items={SORT_TYPES}
-                                        />
-                                    </div>
-                                    <div className='browser-buttons'>
-                                        <div onClick={() => handlePerPageClick(10)}>
-                                            <ItemsPerPageCompressed
-                                                itemsNumber={10}
-                                                selected={perPage === 10}
-                                            />
-                                        </div>
-                                        <div onClick={() => handlePerPageClick(20)}>
-                                            <ItemsPerPageCompressed
-                                                itemsNumber={20}
-                                                selected={perPage === 20}
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='nav-right nav-total-items'>
-                                    {page * perPage - perPage + 1}-
-                                    {page * perPage -
-                                        perPage +
-                                        currBooks.length} of {mybooks.length} results
-                                </div>
+                            <CustomSelect
+                                inputLabel='Genre'
+                                inputLabelId='browser-select-label'
+                                labelId='Genre'
+                                id='select-genre'
+                                value={genreDD}
+                                handleChange={handleGenreChange}
+                                items={GENRES}
+                            />
+                            <CustomSelect
+                                inputLabel='Sort by'
+                                inputLabelId='browser-select-label'
+                                labelId='Sort'
+                                id='select-sort'
+                                value={sortType || 'getByTS'}
+                                handleChange={handleSortTypeChange}
+                                items={SORT_TYPES}
+                            />
+                        </div>
+                        <div className='browser-buttons'>
+                            <div onClick={() => handlePerPageClick(10)}>
+                                <ItemsPerPageCompressed
+                                    itemsNumber={10}
+                                    selected={perPage === 10}
+                                />
                             </div>
-                            <div className='nav browser-nav'>
-                                <div className='nav-left'>
-                                    <Accordion
-                                        screen='browser'
-                                        data={accordion_data}
-                                        closeAccordion={closeAccordion}
-                                        handleOpenAccordionCallback={handleOpenAccordionCallback}
-                                        handleCloseAccordionCallback={handleCloseAccordionCallback}
-                                    />
-                                </div>
+                            <div onClick={() => handlePerPageClick(20)}>
+                                <ItemsPerPageCompressed
+                                    itemsNumber={20}
+                                    selected={perPage === 20}
+                                />
                             </div>
-                            <div className='homescreen__products'>
-                                {currBooks.map(
-                                    (book) => (
-                                        <Book
-                                            key={book._id}
-                                            title={book.title}
-                                            price={book.price}
-                                            rating={book.rating}
-                                            cover={book.cover}
-                                            bookId={book._id}
-                                            authorId={book.author}
-                                            authorName={book.authorName}
-                                        />
-                                    ),
-                                    {}
-                                )}
-                            </div>
-                            <div className='nav'>
-                                <div className='nav-left'>
-                                    <i
-                                        className='fa-solid fa fa-chevron-left fa-lg'
-                                        disabled={page === 1}
-                                        onClick={() => goBack()}
-                                    ></i>
-                                </div>
-                                <div className='centered-footer'>
-                                    <div>
-                                        {page} of {lastPage}
-                                    </div>
-                                </div>
-                                <div className='nav-right'>
-                                    <i
-                                        className='fa-solid fa fa-chevron-right fa-lg'
-                                        disabled={page === lastPage}
-                                        onClick={() => goNext()}
-                                    ></i>
-                                </div>
-                            </div>
-                        </>
-                    )
-                }
+                        </div>
+                    </div>
+                    <div className='nav-right nav-total-items'>
+                        {page * perPage - perPage + 1}-
+                        {page * perPage -
+                            perPage +
+                            currBooks.length} of {mybooks.length} results
+                    </div>
+                </div>
+                <div className='nav browser-nav'>
+                    <div className='nav-left'>
+                        <Accordion
+                            screen='browser'
+                            data={accordion_data}
+                            closeAccordion={closeAccordion}
+                            handleOpenAccordionCallback={handleOpenAccordionCallback}
+                            handleCloseAccordionCallback={handleCloseAccordionCallback}
+                        />
+                    </div>
+                </div>
+                <div className='homescreen__products'>
+                    {currBooks.map(
+                        (book) => (
+                            <Book
+                                key={book._id}
+                                title={book.title}
+                                price={book.price}
+                                rating={book.rating}
+                                cover={book.cover}
+                                bookId={book._id}
+                                authorId={book.author}
+                                authorName={book.authorName}
+                            />
+                        ),
+                        {}
+                    )}
+                </div>
+                <div className='nav'>
+                    <div className='nav-left'>
+                        <i
+                            className='fa-solid fa fa-chevron-left fa-lg'
+                            disabled={page === 1}
+                            onClick={() => goBack()}
+                        ></i>
+                    </div>
+                    <div className='centered-footer'>
+                        <div>
+                            {page} of {lastPage}
+                        </div>
+                    </div>
+                    <div className='nav-right'>
+                        <i
+                            className='fa-solid fa fa-chevron-right fa-lg'
+                            disabled={page === lastPage}
+                            onClick={() => goNext()}
+                        ></i>
+                    </div>
+                </div>
             </div>
-            </>
         );
     }
 };
-
 
 export default Browser;
