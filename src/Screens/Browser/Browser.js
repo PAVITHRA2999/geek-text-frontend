@@ -111,10 +111,12 @@ const Browser = ({ match, history }) => {
 
     const handlePerPageChange = (event) => {
         setPerPage(event.target.value);
+        setPage(1);
     };
 
     const handlePerPageClick = (value) => {
         setPerPage(value);
+        setPage(1);
     };
 
     const handleRatingChange = (event) => {
