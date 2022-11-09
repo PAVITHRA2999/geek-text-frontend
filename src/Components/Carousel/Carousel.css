@@ -47,3 +47,35 @@
 	pointer-events: none;
 	color: var(--disabled-color);
 }
+
+@media (max-width: 1550px) {
+	.auto-scroll {
+		margin-top: 11rem;
+		position: absolute;
+	}
+	.half-scroll {
+		float: left;
+		width: 50%;
+		position: relative;
+	}
+
+	.auto-scroll-inner {
+		display: block;
+		width: 200%;
+		position: relative;
+		animation: auto-scroll 30s linear infinite;
+	}
+
+	.auto-scroll-inner:hover {
+		animation-play-state: paused;
+	}
+
+	@keyframes auto-scroll {
+		0% {
+			left: 0;
+		}
+		100% {
+			left: -100%;
+		}
+	}
+}

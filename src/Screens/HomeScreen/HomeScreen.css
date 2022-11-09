@@ -1,9 +1,8 @@
 #home {
 	display: flex;
 	flex-flow: column;
-	/* height: 100%; */
-	margin-top: 42px;
-	/* padding-top: 42px; */
+	/* margin-top: 42px; */
+	padding-top: 42px;
 }
 
 #fixed-height-1 {
@@ -68,12 +67,13 @@
 	padding: 0rem 1rem;
 }
 
-.home-screen {
-	/* margin-top: 42px */
-}
-
 .banner-icon {
 	font-size: 80px;
+}
+.banner-icon img {
+	height: 4rem;
+	width: auto;
+	align-self: center;
 }
 
 .banner-icon p {
@@ -86,7 +86,6 @@
 	color: var(--tertiary-color);
 	text-transform: uppercase;
 	letter-spacing: 5px;
-	animation: slideInLeft 2s;
 }
 
 .banner-items {
@@ -121,21 +120,6 @@
 	box-shadow: 0 5px 8px rgba(0, 0, 0, 0.2);
 	transform: translateY(-1px);
 }
-/*Animation for the text in the middle of the page*/
-@keyframes slideInLeft {
-	0% {
-		opacity: 0;
-		transform: translateX(-100px);
-	}
-	80% {
-		opacity: 0.5;
-		transform: translateX(20px);
-	}
-	100% {
-		opacity: 1;
-		transform: translate(0);
-	}
-}
 
 @media (max-width: 780px) {
 	.banner-item {
@@ -147,6 +131,9 @@
 	}
 	.banner-icon p {
 		font-size: 10px !important;
+	}
+	.banner-icon img {
+		height: 3rem;
 	}
 
 	#remaining-height {
@@ -176,6 +163,10 @@
 	.banner-icon p {
 		font-size: 10px !important;
 	}
+	.banner-icon img {
+		height: 2rem;
+	}
+
 	#remaining-height {
 		--this-vh: calc(var(--my-vh, 1vh) * 100);
 		height: calc(

@@ -6,7 +6,7 @@ import GenreCategories from '../../Components/GenreCategories/GenreCategories';
 
 const HomeScreen = () => {
 	return (
-		<div id='home' className='home-screen'>
+		<div id='home'>
 			<Link to='/auth'>
 				<div id='fixed-height-1'>
 					<p>
@@ -21,7 +21,7 @@ const HomeScreen = () => {
 				id='remaining-height'
 				onClick={(event) => (window.location.href = '/browse')}
 			>
-				<h3 className='banner-text-header'>Check out our top sellers</h3>
+				<h3 className='banner-text-header'>Check out our top picks</h3>
 				<Link to='/browse'>
 					<div className='banner-button'>
 						<button className='btn btn-dark'>Shop Now</button>
