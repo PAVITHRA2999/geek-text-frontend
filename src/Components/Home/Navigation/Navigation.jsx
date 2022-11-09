@@ -20,7 +20,6 @@ export const Navigation = () => {
 				<Link to='/' className='Router_Link'>
 					<img className='logo text-logo' src={TextLogo} alt='logo' />
 					<img className='logo icon-logo' src={IconLogo} alt='logo' />
-					{/* <h1 className='inlineheader app-name'>Geek Text</h1> */}
 				</Link>
 			</div>
 
