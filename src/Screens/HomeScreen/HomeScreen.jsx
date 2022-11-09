@@ -6,7 +6,7 @@ import GenreCategories from '../../Components/GenreCategories/GenreCategories';
 
 const HomeScreen = () => {
 	return (
-		<div id='home' className='home-screen'>
+		<div id='home'>
 			<Link to='/auth'>
 				<div id='fixed-height-1'>
 					<p>
